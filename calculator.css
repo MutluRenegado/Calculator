@@ -1,5 +1,6 @@
+/* Body and background */
 body {
-  background: #d3d3d3; /* light gray */
+  background: #d3d3d3;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,8 +14,9 @@ body.dark {
   background: #111;
 }
 
+/* Calculator box */
 .calculator {
-  background: #444; /* dark gray */
+  background: #444;
   border-radius: 15px;
   padding: 20px;
   width: 360px;
@@ -30,6 +32,7 @@ body.dark .calculator {
   box-shadow: 0 0 30px #0ff;
 }
 
+/* Toggle section */
 .toggles {
   width: 100%;
   display: flex;
@@ -43,6 +46,7 @@ body.dark .toggles {
   color: #0ff;
 }
 
+/* Screen input */
 .calculator-screen {
   width: 100%;
   height: 50px;
@@ -64,6 +68,7 @@ body.dark .calculator-screen {
   box-shadow: inset 0 0 12px #0ff;
 }
 
+/* Buttons Grid */
 .calculator-buttons {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -76,16 +81,15 @@ body.dark .calculator-screen {
   grid-template-columns: repeat(6, 1fr);
 }
 
+/* Buttons Style */
 button {
   padding: 15px 0;
   font-size: 1.3rem;
   border: none;
   border-radius: 10px;
   color: #fff;
-  background: #800080; /* purple */
-  box-shadow:
-    0 0 8px #800080cc,
-    inset 0 0 8px #800080cc;
+  background: #800080;
+  box-shadow: 0 0 8px #800080cc, inset 0 0 8px #800080cc;
   cursor: pointer;
   transition: all 0.2s ease;
   user-select: none;
@@ -93,30 +97,26 @@ button {
 
 button:hover {
   background: #a040a0;
-  box-shadow:
-    0 0 18px #a040a0cc,
-    inset 0 0 18px #a040a0cc;
+  box-shadow: 0 0 18px #a040a0cc, inset 0 0 18px #a040a0cc;
 }
 
+/* Equals button */
 button.equals {
-  grid-column: 4 / span 1; /* last column */
-  background: #b22222; /* dark pink/red */
+  grid-column: 3 / span 2;
+  background: #b22222;
   font-weight: bold;
   font-size: 1.4rem;
-  box-shadow:
-    0 0 20px #b22222cc,
-    inset 0 0 20px #b22222cc;
+  box-shadow: 0 0 20px #b22222cc, inset 0 0 20px #b22222cc;
 }
 
 button.equals:hover {
   background: #ff4040;
-  box-shadow:
-    0 0 25px #ff4040cc,
-    inset 0 0 25px #ff4040cc;
+  box-shadow: 0 0 25px #ff4040cc, inset 0 0 25px #ff4040cc;
 }
 
+/* Special buttons */
 .special-btn {
-  width: 100%; /* full width to match last calculation */
+  width: 100%;
   padding: 12px 0;
   font-size: 1.1rem;
   border-radius: 10px;
@@ -138,7 +138,6 @@ button.equals:hover {
 .clear-btn {
   background: #800000cc;
   box-shadow: 0 0 12px #b22222cc;
-  margin-top: 0; /* no extra margin, sits right below lastCalcBtn */
 }
 
 .clear-btn:hover {
