@@ -10,8 +10,8 @@ let lastCalculation = '';
 const simpleButtons = [
   '7', '8', '9', '÷',
   '4', '5', '6', '×',
-  '1', '2', '3', '-',
-  '0', '.', '=', '+'
+  '1', '2', '3', '+',
+  '0', '.', '=', '-'
 ];
 
 const proButtons = [
@@ -22,8 +22,9 @@ function renderButtons(pro = false) {
   buttonsContainer.innerHTML = '';
 
   let allButtons = [...simpleButtons];
+
   if (pro) {
-    allButtons = [...proButtons, ...allButtons];
+    allButtons = [...proButtons, ...simpleButtons];
     buttonsContainer.classList.add('pro');
   } else {
     buttonsContainer.classList.remove('pro');
