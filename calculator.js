@@ -2,13 +2,13 @@ const buttonsContainer = document.getElementById('buttons');
 const result = document.getElementById('result');
 const toggleMode = document.getElementById('toggleMode');
 
-// Simple mode buttons
+// Simple mode buttons - equals at the end so it goes to the last grid positions
 const simpleButtons = [
   'C', '/', '*', '-',
   '7', '8', '9', '+',
-  '4', '5', '6', '=',
+  '4', '5', '6',
   '1', '2', '3', '0',
-  '.'
+  '.', '='  // '=' is last for correct grid placement
 ];
 
 // Professional mode extra buttons
@@ -45,7 +45,6 @@ function buttonClicked(value) {
   } else if (value === '=') {
     calculateResult();
   } else if (value === '√') {
-    // sqrt symbol replaced with Math.sqrt(
     result.value += '√(';
   } else {
     result.value += value;
@@ -66,10 +65,10 @@ function calculateResult() {
       .replace(/tan/g, 'Math.tan')
       .replace(/log/g, 'Math.log10');
 
-    // Use eval safely (assuming controlled input)
+    // Evaluate expression
     let answer = eval(expression);
 
-    // Limit answer decimal places
+    // Limit decimals
     if (typeof answer === 'number') {
       answer = +answer.toFixed(8);
     }
@@ -86,5 +85,5 @@ toggleMode.addEventListener('change', () => {
   result.value = '';
 });
 
-// Initial render simple mode
+// Initial render in simple mode
 renderButtons(false);
