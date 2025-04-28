@@ -75,8 +75,9 @@ button:hover {
     inset 0 0 20px #0ff;
 }
 
+/* EQUALS button on right spanning columns 3 and 4 */
 button.equals {
-  grid-column: 3 / span 2; /* Start at column 3, span 2 columns on the right */
+  grid-column: 3 / span 2;
   background: #0ff;
   color: #111;
   font-weight: bold;
