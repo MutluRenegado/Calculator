@@ -15,11 +15,17 @@ const basicButtons = [
 ];
 
 const proButtons = [
+  // Row 1 (unchanged)
   '7', '8', '9', '÷', '', '', '',
+  // Row 2 (unchanged)
   '4', '5', '6', '×', '', '', '',
+  // Row 3
   '', '[', ']', '4', '5', '6', '-',
+  // Row 4
   '', 'M-', 'M+', '1', '2', '3', '×',
+  // Row 5
   '', 'Fn', '{', '}', '0', '.', '=',
+  // Row 6
   '+', '⌫', '', '', '', '', ''
 ];
 
@@ -78,7 +84,7 @@ function calculateResult() {
       .replace(/cos/g, 'Math.cos')
       .replace(/tan/g, 'Math.tan')
       .replace(/log/g, 'Math.log10');
-    
+
     let answer = eval(expression);
 
     if (typeof answer === 'number') {
