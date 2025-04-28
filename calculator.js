@@ -1,138 +1,134 @@
 const buttonsContainer = document.getElementById('buttons');
 const result = document.getElementById('result');
-const toggleProMode = document.getElementById('toggleProMode');
-const toggleDarkMode = document.getElementById('toggleDarkMode');
+const toggleDark = document.getElementById('toggleDark');
+const togglePro = document.getElementById('togglePro');
 const lastCalcBtn = document.getElementById('lastCalcBtn');
+const clearBtn = document.getElementById('clearBtn');
 
 let lastCalculation = '';
-let isProMode = false;
 
-// Buttons layout for simple mode (4x4 grid)
-const simpleButtonsOrder = [
-  ['7', '8', '9', '÷'],
-  ['4', '5', '6', '×'],
-  ['1', '2', '3', '-'],
-  ['0', '.', '=', '+']
+// Buttons as per your layout and requirements
+const simpleButtons = [
+  '7', '÷', '×', '-',
+  '4', '5', '6', '+',
+  '1', '2', '3', '=',
+  '0', '.', 
 ];
 
-// Extra scientific buttons for professional mode
-const proExtraButtons = ['(', ')', 'sin', 'cos', 'tan', 'log', '√', '^'];
+// Professional mode extra buttons
+const proButtons = [
+  '(', ')', 'sin', 'cos', 'tan', 'log',
+  '√', '^'
+];
 
-// Render buttons depending on mode
-function renderButtons() {
+// Map for replacing operators with JS equivalents in calculation
+const operatorMap = {
+  '÷': '/',
+  '×': '*',
+  '^': '**',
+  '√': 'Math.sqrt',
+  'sin': 'Math.sin',
+  'cos': 'Math.cos',
+  'tan': 'Math.tan',
+  'log': 'Math.log10'
+};
+
+function renderButtons(pro = false) {
   buttonsContainer.innerHTML = '';
 
-  if (!isProMode) {
-    // Simple mode
-    buttonsContainer.classList.remove('pro');
-    simpleButtonsOrder.forEach(row => {
-      row.forEach(btn => {
-        const button = document.createElement('button');
-        button.textContent = btn;
-        button.onclick = () => buttonClicked(btn);
-        if (btn === '=') button.classList.add('equals');
-        buttonsContainer.appendChild(button);
-      });
-    });
-  } else {
-    // Professional mode
+  let allButtons = [...simpleButtons];
+  if (pro) {
+    allButtons = [...proButtons, ...allButtons];
     buttonsContainer.classList.add('pro');
-    // Add scientific buttons first (6 columns grid)
-    proExtraButtons.forEach(btn => {
-      const button = document.createElement('button');
-      button.textContent = btn;
-      button.onclick = () => buttonClicked(btn);
-      buttonsContainer.appendChild(button);
-    });
-    // Then add simple buttons flattened
-    simpleButtonsOrder.flat().forEach(btn => {
-      const button = document.createElement('button');
-      button.textContent = btn;
-      button.onclick = () => buttonClicked(btn);
-      if (btn === '=') button.classList.add('equals');
-      buttonsContainer.appendChild(button);
-    });
-  }
-}
-
-// Handle button clicks
-function buttonClicked(value) {
-  if (value === 'C') {
-    result.value = '';
-  } else if (value === '=') {
-    calculateResult();
-  } else if (value === '√') {
-    // sqrt function
-    try {
-      let val = parseFloat(result.value);
-      if (!isNaN(val)) {
-        const res = Math.sqrt(val);
-        lastCalculation = result.value + '√ = ' + res;
-        result.value = res;
-      }
-    } catch {
-      result.value = 'Error';
-    }
-  } else if (['sin', 'cos', 'tan', 'log'].includes(value)) {
-    // Trigonometric and log functions - convert degrees to radians
-    try {
-      let val = parseFloat(result.value);
-      if (!isNaN(val)) {
-        let radians = val * (Math.PI / 180);
-        let res;
-        switch (value) {
-          case 'sin': res = Math.sin(radians); break;
-          case 'cos': res = Math.cos(radians); break;
-          case 'tan': res = Math.tan(radians); break;
-          case 'log': res = Math.log10(val); break;
-        }
-        lastCalculation = `${value}(${val}) = ${res}`;
-        result.value = res;
-      }
-    } catch {
-      result.value = 'Error';
-    }
-  } else if (value === '^') {
-    result.value += '**';
   } else {
-    // Add button value to expression, convert ÷, × to JS operators
-    let val = value;
-    if (val === '÷') val = '/';
-    if (val === '×') val = '*';
-    result.value += val;
+    buttonsContainer.classList.remove('pro');
+  }
+
+  allButtons.forEach(btn => {
+    const button = document.createElement('button');
+    button.textContent = btn;
+    if (btn === '=') button.classList.add('equals');
+    button.onclick = () => buttonClicked(btn);
+    buttonsContainer.appendChild(button);
+  });
+}
+
+function buttonClicked(value) {
+  if (value === '=') {
+    calculateResult();
+  } else {
+    // Append operator with proper replacements
+    if (operatorMap[value]) {
+      // For sqrt and functions append '(' after them for usability
+      if (['√', 'sin', 'cos', 'tan', 'log'].includes(value)) {
+        result.value += value + '(';
+      } else {
+        result.value += value;
+      }
+    } else {
+      result.value += value;
+    }
   }
 }
 
-// Calculate and display result safely
 function calculateResult() {
   try {
-    // Evaluate using Function constructor for security (simple math only)
-    // Replace '√' if any (should not be here) and convert operators:
-    let expression = result.value.replace(/√/g, 'Math.sqrt').replace(/÷/g, '/').replace(/×/g, '*');
-    let res = Function(`"use strict";return (${expression})`)();
-    lastCalculation = result.value + ' = ' + res;
-    result.value = res;
-  } catch {
+    let expression = result.value;
+
+    // Replace all operators/functions in expression by JS equivalents
+    Object.entries(operatorMap).forEach(([key, val]) => {
+      // Replace all occurrences of key with val in expression
+      // Special handling for functions - use RegExp for word boundaries
+      if (['sin', 'cos', 'tan', 'log', 'Math.sqrt'].includes(val)) {
+        const regex = new RegExp(key + '\\(', 'g');
+        expression = expression.replace(regex, val + '(');
+      } else {
+        const regex = new RegExp('\\' + key, 'g');
+        expression = expression.replace(regex, val);
+      }
+    });
+
+    // Evaluate safely using Function constructor
+    // eslint-disable-next-line no-new-func
+    let evalResult = Function('"use strict";return (' + expression + ')')();
+
+    if (evalResult === undefined) {
+      result.value = 'Error';
+    } else {
+      lastCalculation = result.value + ' = ' + evalResult;
+      result.value = evalResult;
+    }
+  } catch (e) {
     result.value = 'Error';
   }
 }
 
-// Toggle Professional mode
-toggleProMode.addEventListener('change', (e) => {
-  isProMode = e.target.checked;
-  renderButtons();
+// Toggle Dark Mode
+toggleDark.addEventListener('change', () => {
+  if (toggleDark.checked) {
+    document.body.classList.add('dark-mode');
+  } else {
+    document.body.classList.remove('dark-mode');
+  }
 });
 
-// Toggle Dark mode
-toggleDarkMode.addEventListener('change', (e) => {
-  document.body.classList.toggle('dark', e.target.checked);
+// Toggle Professional Mode
+togglePro.addEventListener('change', () => {
+  renderButtons(togglePro.checked);
 });
 
 // Last Calculation button
 lastCalcBtn.addEventListener('click', () => {
   if (lastCalculation) {
-    result.value = lastCalculation.split(' = ')[1] || lastCalculation;
+    alert('Last Calculation:\n' + lastCalculation);
+  } else {
+    alert('No previous calculation.');
   }
+});
+
+// Clear button
+clearBtn.addEventListener('click', () => {
+  result.value = '';
 });
 
 // Initial render
