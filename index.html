@@ -3,20 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Custom Color Calculator</title>
+  <title>Shining Calculator</title>
   <link rel="stylesheet" href="calculator.css" />
 </head>
 <body>
   <div class="calculator">
-    <div class="toggles">
-      <label><input type="checkbox" id="toggleDark" /> Dark Mode</label>
-      <label><input type="checkbox" id="togglePro" /> Professional Mode</label>
+    <div class="top-bar">
+      <label class="toggle-label">
+        <input type="checkbox" id="toggleDarkMode" />
+        Dark Mode
+      </label>
+      <label class="toggle-label">
+        <input type="checkbox" id="toggleProMode" />
+        Professional Mode
+      </label>
     </div>
-
-    <input type="text" class="calculator-screen" id="result" disabled value="⧸" />
-
+    <input type="text" class="calculator-screen" id="result" disabled placeholder="∖" />
     <div class="calculator-buttons" id="buttons"></div>
-
     <button id="lastCalcBtn" class="last-calc-btn">Last Calculation</button>
   </div>
 
