@@ -7,48 +7,61 @@ const clearBtn = document.getElementById('clearBtn');
 
 let lastCalculation = '';
 
-const simpleButtons = [
-  '7', '8', '9', '÷',
-  '4', '5', '6', '×',
-  '1', '2', '3', '+',
-  '0', '.', '=', '-'
+const basicButtons = [
+  '7', '8', '9', '+',
+  '4', '5', '6', '-',
+  '1', '2', '3', '×',
+  '0', '.', '=', '÷'
 ];
 
 const proButtons = [
-  '(', ')', 'sin', 'cos', 'tan', 'log', '√', '^'
+  '7', '8', '9', '÷', '', '', '',
+  '4', '5', '6', '×', '', '', '',
+  '', '[', ']', '4', '5', '6', '-',
+  '', 'M-', 'M+', '1', '2', '3', '×',
+  '', 'Fn', '{', '}', '0', '.', '=',
+  '+', '⌫', '', '', '', '', ''
 ];
 
-function renderButtons(pro = false) {
+function renderButtons(isPro = false) {
   buttonsContainer.innerHTML = '';
 
-  let allButtons = [...simpleButtons];
-
-  if (pro) {
-    allButtons = [...proButtons, ...simpleButtons];
-    buttonsContainer.classList.add('pro');
+  if (isPro) {
+    buttonsContainer.classList.remove('basic');
+    proButtons.forEach(btn => {
+      if (btn !== '') {
+        const button = document.createElement('button');
+        button.textContent = btn;
+        button.onclick = () => buttonClicked(btn);
+        if (btn === '=') button.classList.add('equals');
+        buttonsContainer.appendChild(button);
+      } else {
+        const empty = document.createElement('div');
+        buttonsContainer.appendChild(empty);
+      }
+    });
   } else {
-    buttonsContainer.classList.remove('pro');
+    buttonsContainer.classList.add('basic');
+    basicButtons.forEach(btn => {
+      const button = document.createElement('button');
+      button.textContent = btn;
+      button.onclick = () => buttonClicked(btn);
+      if (btn === '=') button.classList.add('equals');
+      buttonsContainer.appendChild(button);
+    });
   }
-
-  allButtons.forEach(btn => {
-    const button = document.createElement('button');
-    button.textContent = btn;
-    button.onclick = () => buttonClicked(btn);
-    if (btn === '=') button.classList.add('equals');
-    buttonsContainer.appendChild(button);
-  });
 }
 
 function buttonClicked(value) {
   if (value === '=') {
     calculateResult();
+  } else if (value === '⌫') {
+    result.value = result.value.slice(0, -1);
   } else {
     if (value === '÷') {
       result.value += '/';
     } else if (value === '×') {
       result.value += '*';
-    } else if (value === '√') {
-      result.value += '√(';
     } else {
       result.value += value;
     }
@@ -58,7 +71,6 @@ function buttonClicked(value) {
 function calculateResult() {
   try {
     let expression = result.value;
-
     expression = expression
       .replace(/√\(/g, 'Math.sqrt(')
       .replace(/\^/g, '**')
@@ -66,7 +78,7 @@ function calculateResult() {
       .replace(/cos/g, 'Math.cos')
       .replace(/tan/g, 'Math.tan')
       .replace(/log/g, 'Math.log10');
-
+    
     let answer = eval(expression);
 
     if (typeof answer === 'number') {
