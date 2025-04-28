@@ -7,7 +7,6 @@ const clearBtn = document.getElementById('clearBtn');
 
 let lastCalculation = '';
 
-// Simple buttons as per your layout: only these numbers in four rows and operations
 const simpleButtons = [
   '7', '8', '9', '÷',
   '4', '5', '6', '×',
@@ -15,7 +14,6 @@ const simpleButtons = [
   '0', '.', '=', '+'
 ];
 
-// Professional extra buttons
 const proButtons = [
   '(', ')', 'sin', 'cos', 'tan', 'log', '√', '^'
 ];
@@ -44,7 +42,6 @@ function buttonClicked(value) {
   if (value === '=') {
     calculateResult();
   } else {
-    // Append with operator conversion
     if (value === '÷') {
       result.value += '/';
     } else if (value === '×') {
@@ -61,7 +58,6 @@ function calculateResult() {
   try {
     let expression = result.value;
 
-    // Replace special math operators & functions for eval
     expression = expression
       .replace(/√\(/g, 'Math.sqrt(')
       .replace(/\^/g, '**')
@@ -70,10 +66,8 @@ function calculateResult() {
       .replace(/tan/g, 'Math.tan')
       .replace(/log/g, 'Math.log10');
 
-    // Evaluate safely (input is from buttons only)
     let answer = eval(expression);
 
-    // Limit decimal places
     if (typeof answer === 'number') {
       answer = +answer.toFixed(8);
     }
@@ -85,7 +79,6 @@ function calculateResult() {
   }
 }
 
-// Last Calculation button shows last calculation
 lastCalcBtn.addEventListener('click', () => {
   if (lastCalculation) {
     result.value = lastCalculation;
@@ -94,23 +87,19 @@ lastCalcBtn.addEventListener('click', () => {
   }
 });
 
-// Clear button resets everything
 clearBtn.addEventListener('click', () => {
   result.value = '';
   lastCalculation = '';
 });
 
-// Dark mode toggle
 toggleDark.addEventListener('change', () => {
   document.body.classList.toggle('dark', toggleDark.checked);
 });
 
-// Professional mode toggle
 togglePro.addEventListener('change', () => {
   renderButtons(togglePro.checked);
   result.value = '';
   lastCalculation = '';
 });
 
-// Initial render: simple mode, light theme
 renderButtons(false);
