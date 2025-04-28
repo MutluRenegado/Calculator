@@ -1,7 +1,5 @@
-/* Base styles */
-
 body {
-  background: #d3d3d3; /* Light gray */
+  background: #d3d3d3; /* light gray */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,47 +9,59 @@ body {
   transition: background 0.3s ease;
 }
 
+body.dark {
+  background: #111;
+}
+
 .calculator {
-  background: #444; /* Dark gray */
+  background: #444; /* dark gray */
   border-radius: 15px;
   padding: 20px;
   width: 360px;
-  box-shadow: 0 0 20px #800080aa; /* purple glow */
+  box-shadow: 0 0 25px #800080cc;
   display: flex;
   flex-direction: column;
   align-items: center;
   transition: background 0.3s ease;
 }
 
+body.dark .calculator {
+  background: #222;
+  box-shadow: 0 0 30px #0ff;
+}
+
 .toggles {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 15px;
-  color: #800080;
+  margin-bottom: 10px;
   font-weight: 600;
+  color: #800080;
 }
 
-.toggles label {
-  user-select: none;
-  cursor: pointer;
-  font-size: 0.9rem;
+body.dark .toggles {
+  color: #0ff;
 }
 
 .calculator-screen {
   width: 100%;
   height: 50px;
   font-size: 2rem;
-  color: #eee;
-  background: #222; /* Dark gray */
+  color: #ddd;
+  background: #333;
   border: none;
   border-radius: 10px;
   text-align: right;
   padding: 0 15px;
-  box-shadow: inset 0 0 10px #800080aa;
+  box-shadow: inset 0 0 10px #222;
   margin-bottom: 15px;
-  user-select: text;
   transition: background 0.3s ease, color 0.3s ease;
+}
+
+body.dark .calculator-screen {
+  background: #111;
+  color: #0ff;
+  box-shadow: inset 0 0 12px #0ff;
 }
 
 .calculator-buttons {
@@ -59,7 +69,7 @@ body {
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .calculator-buttons.pro {
@@ -71,50 +81,46 @@ button {
   font-size: 1.3rem;
   border: none;
   border-radius: 10px;
-  color: #dda0dd; /* Light purple */
-  background: #800080; /* Purple */
+  color: #fff;
+  background: #800080; /* purple */
   box-shadow:
-    0 0 8px #800080aa,
-    inset 0 0 8px #800080aa;
+    0 0 8px #800080cc,
+    inset 0 0 8px #800080cc;
   cursor: pointer;
   transition: all 0.2s ease;
   user-select: none;
 }
 
 button:hover {
-  background: #dda0dd;
-  color: #222;
+  background: #a040a0;
   box-shadow:
-    0 0 20px #dda0dd,
-    inset 0 0 20px #dda0dd;
+    0 0 18px #a040a0cc,
+    inset 0 0 18px #a040a0cc;
 }
 
-/* Equal button styling on the right spanning two columns */
 button.equals {
-  grid-column: 3 / span 2;
-  background: #b03060; /* Dark pink/red */
-  color: #fff;
+  grid-column: 4 / span 1; /* last column */
+  background: #b22222; /* dark pink/red */
   font-weight: bold;
   font-size: 1.4rem;
   box-shadow:
-    0 0 25px #b03060,
-    inset 0 0 25px #b03060;
+    0 0 20px #b22222cc,
+    inset 0 0 20px #b22222cc;
 }
 
 button.equals:hover {
-  background: #c04070;
+  background: #ff4040;
   box-shadow:
-    0 0 30px #c04070,
-    inset 0 0 30px #c04070;
+    0 0 25px #ff4040cc,
+    inset 0 0 25px #ff4040cc;
 }
 
-/* Special buttons: Last Calculation and Clear */
 .special-btn {
   width: 100%;
   padding: 12px 0;
   font-size: 1.1rem;
   border-radius: 10px;
-  background: #800080cc; /* purple */
+  background: #800080cc;
   color: #fff;
   border: none;
   margin-bottom: 8px;
@@ -125,74 +131,16 @@ button.equals:hover {
 }
 
 .special-btn:hover {
-  background: #a050a0cc;
+  background: #a040a0cc;
+  box-shadow: 0 0 18px #a040a0cc;
 }
 
 .clear-btn {
-  background: #800000cc; /* dark red */
+  background: #800000cc;
   box-shadow: 0 0 12px #b22222cc;
 }
 
 .clear-btn:hover {
   background: #b22222cc;
-}
-
-/* Dark mode styles */
-body.dark-mode {
-  background: #111;
-}
-
-body.dark-mode .calculator {
-  background: #222;
-  box-shadow: 0 0 20px #ff1493cc; /* pink glow */
-}
-
-body.dark-mode .calculator-screen {
-  background: #111;
-  color: #ff69b4;
-  box-shadow: inset 0 0 10px #ff1493cc;
-}
-
-body.dark-mode button {
-  background: #9400d3;
-  color: #ffc0cb;
-  box-shadow:
-    0 0 8px #9400d3,
-    inset 0 0 8px #9400d3;
-}
-
-body.dark-mode button:hover {
-  background: #ff69b4;
-  color: #111;
-  box-shadow:
-    0 0 20px #ff69b4,
-    inset 0 0 20px #ff69b4;
-}
-
-body.dark-mode button.equals {
-  background: #ff1493;
-  box-shadow:
-    0 0 25px #ff1493,
-    inset 0 0 25px #ff1493;
-}
-
-body.dark-mode button.equals:hover {
-  background: #ff69b4;
-  box-shadow:
-    0 0 30px #ff69b4,
-    inset 0 0 30px #ff69b4;
-}
-
-body.dark-mode .special-btn {
-  background: #ff1493cc;
-  box-shadow: 0 0 12px #ff1493cc;
-}
-
-body.dark-mode .special-btn.clear-btn {
-  background: #8b0000cc;
-  box-shadow: 0 0 12px #ff4500cc;
-}
-
-body.dark-mode .special-btn.clear-btn:hover {
-  background: #ff4500cc;
+  box-shadow: 0 0 18px #ff4040cc;
 }
