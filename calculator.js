@@ -7,31 +7,18 @@ const clearBtn = document.getElementById('clearBtn');
 
 let lastCalculation = '';
 
-// Buttons as per your layout and requirements
+// Simple buttons as per your layout: only these numbers in four rows and operations
 const simpleButtons = [
-  '7', '÷', '×', '-',
-  '4', '5', '6', '+',
-  '1', '2', '3', '=',
-  '0', '.', 
+  '7', '8', '9', '÷',
+  '4', '5', '6', '×',
+  '1', '2', '3', '-',
+  '0', '.', '=', '+'
 ];
 
-// Professional mode extra buttons
+// Professional extra buttons
 const proButtons = [
-  '(', ')', 'sin', 'cos', 'tan', 'log',
-  '√', '^'
+  '(', ')', 'sin', 'cos', 'tan', 'log', '√', '^'
 ];
-
-// Map for replacing operators with JS equivalents in calculation
-const operatorMap = {
-  '÷': '/',
-  '×': '*',
-  '^': '**',
-  '√': 'Math.sqrt',
-  'sin': 'Math.sin',
-  'cos': 'Math.cos',
-  'tan': 'Math.tan',
-  'log': 'Math.log10'
-};
 
 function renderButtons(pro = false) {
   buttonsContainer.innerHTML = '';
@@ -47,8 +34,8 @@ function renderButtons(pro = false) {
   allButtons.forEach(btn => {
     const button = document.createElement('button');
     button.textContent = btn;
-    if (btn === '=') button.classList.add('equals');
     button.onclick = () => buttonClicked(btn);
+    if (btn === '=') button.classList.add('equals');
     buttonsContainer.appendChild(button);
   });
 }
@@ -57,14 +44,13 @@ function buttonClicked(value) {
   if (value === '=') {
     calculateResult();
   } else {
-    // Append operator with proper replacements
-    if (operatorMap[value]) {
-      // For sqrt and functions append '(' after them for usability
-      if (['√', 'sin', 'cos', 'tan', 'log'].includes(value)) {
-        result.value += value + '(';
-      } else {
-        result.value += value;
-      }
+    // Append with operator conversion
+    if (value === '÷') {
+      result.value += '/';
+    } else if (value === '×') {
+      result.value += '*';
+    } else if (value === '√') {
+      result.value += '√(';
     } else {
       result.value += value;
     }
@@ -75,61 +61,56 @@ function calculateResult() {
   try {
     let expression = result.value;
 
-    // Replace all operators/functions in expression by JS equivalents
-    Object.entries(operatorMap).forEach(([key, val]) => {
-      // Replace all occurrences of key with val in expression
-      // Special handling for functions - use RegExp for word boundaries
-      if (['sin', 'cos', 'tan', 'log', 'Math.sqrt'].includes(val)) {
-        const regex = new RegExp(key + '\\(', 'g');
-        expression = expression.replace(regex, val + '(');
-      } else {
-        const regex = new RegExp('\\' + key, 'g');
-        expression = expression.replace(regex, val);
-      }
-    });
+    // Replace special math operators & functions for eval
+    expression = expression
+      .replace(/√\(/g, 'Math.sqrt(')
+      .replace(/\^/g, '**')
+      .replace(/sin/g, 'Math.sin')
+      .replace(/cos/g, 'Math.cos')
+      .replace(/tan/g, 'Math.tan')
+      .replace(/log/g, 'Math.log10');
 
-    // Evaluate safely using Function constructor
-    // eslint-disable-next-line no-new-func
-    let evalResult = Function('"use strict";return (' + expression + ')')();
+    // Evaluate safely (input is from buttons only)
+    let answer = eval(expression);
 
-    if (evalResult === undefined) {
-      result.value = 'Error';
-    } else {
-      lastCalculation = result.value + ' = ' + evalResult;
-      result.value = evalResult;
+    // Limit decimal places
+    if (typeof answer === 'number') {
+      answer = +answer.toFixed(8);
     }
-  } catch (e) {
+
+    lastCalculation = result.value + ' = ' + answer;
+    result.value = answer;
+  } catch {
     result.value = 'Error';
   }
 }
 
-// Toggle Dark Mode
-toggleDark.addEventListener('change', () => {
-  if (toggleDark.checked) {
-    document.body.classList.add('dark-mode');
-  } else {
-    document.body.classList.remove('dark-mode');
-  }
-});
-
-// Toggle Professional Mode
-togglePro.addEventListener('change', () => {
-  renderButtons(togglePro.checked);
-});
-
-// Last Calculation button
+// Last Calculation button shows last calculation
 lastCalcBtn.addEventListener('click', () => {
   if (lastCalculation) {
-    alert('Last Calculation:\n' + lastCalculation);
+    result.value = lastCalculation;
   } else {
-    alert('No previous calculation.');
+    result.value = 'No last calculation';
   }
 });
 
-// Clear button
+// Clear button resets everything
 clearBtn.addEventListener('click', () => {
   result.value = '';
+  lastCalculation = '';
 });
 
-// Initial render
-renderButtons();
+// Dark mode toggle
+toggleDark.addEventListener('change', () => {
+  document.body.classList.toggle('dark', toggleDark.checked);
+});
+
+// Professional mode toggle
+togglePro.addEventListener('change', () => {
+  renderButtons(togglePro.checked);
+  result.value = '';
+  lastCalculation = '';
+});
+
+// Initial render: simple mode, light theme
+renderButtons(false);
