@@ -116,7 +116,7 @@ button.equals:hover {
 }
 
 .special-btn {
-  width: 100%;
+  width: 100%; /* full width to match last calculation */
   padding: 12px 0;
   font-size: 1.1rem;
   border-radius: 10px;
@@ -138,6 +138,7 @@ button.equals:hover {
 .clear-btn {
   background: #800000cc;
   box-shadow: 0 0 12px #b22222cc;
+  margin-top: 0; /* no extra margin, sits right below lastCalcBtn */
 }
 
 .clear-btn:hover {
