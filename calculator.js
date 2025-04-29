@@ -8,10 +8,11 @@ const clearBtn = document.getElementById('clearBtn');
 let lastCalculation = '';
 
 const basicButtons = [
-  '7', '8', '9', '+',
+  'C', '±', '%', '÷'
+  '7', '8', '9', '×',
   '4', '5', '6', '-',
-  '1', '2', '3', '×',
-  '0', '.', '=', '÷'
+  '1', '2', '3', '+',
+  '0', '<', '.', '='
 ];
 
 const proButtons = [
