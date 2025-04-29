@@ -1,11 +1,22 @@
+index.html
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Simple online calculator with dark mode and professional mode.">
   <title>Calculator</title>
   <link rel="stylesheet" href="calculator.css" />
+
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-W2GFK3NL');
+  </script>
+  <!-- End Google Tag Manager -->
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -15,7 +26,7 @@
   </noscript>
   <!-- End Google Tag Manager (noscript) -->
 
-  <main class="calculator">
+  <div class="calculator">
     <div class="toggles">
       <label><input type="checkbox" id="toggleDark" /> Dark Mode</label>
       <label><input type="checkbox" id="togglePro" /> Professional Mode</label>
@@ -29,8 +40,9 @@
 
     <button class="special-btn" id="lastCalcBtn">Last Calculation</button>
     <button class="special-btn clear-btn" id="clearBtn">C</button>
-  </main>
+  </div>
 
   <script src="calculator.js"></script>
 </body>
 </html>
+
