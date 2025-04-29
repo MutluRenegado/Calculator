@@ -1,5 +1,5 @@
 body {
-  background: #d3d3d3;
+  background: black;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,25 +9,16 @@ body {
   transition: background 0.3s ease;
 }
 
-body.dark {
-  background: #111;
-}
-
 .calculator {
-  background: #2e8b57; /* blue-green */
+  background: black;
   border-radius: 15px;
   padding: 20px;
-  width: 440px;
-  box-shadow: 0 0 25px #800080cc; /* purple */
+  width: 360px;
+  box-shadow: 0 0 25px #800080cc;
   display: flex;
   flex-direction: column;
   align-items: center;
   transition: background 0.3s ease;
-}
-
-body.dark .calculator {
-  background: #222;
-  box-shadow: 0 0 30px #ff0000cc; /* red */
 }
 
 .toggles {
@@ -36,11 +27,7 @@ body.dark .calculator {
   justify-content: space-between;
   margin-bottom: 10px;
   font-weight: 600;
-  color: #800080; /* purple */
-}
-
-body.dark .toggles {
-  color: #0ff;
+  color: #800080;
 }
 
 .calculator-screen {
@@ -48,7 +35,7 @@ body.dark .toggles {
   height: 50px;
   font-size: 2rem;
   color: #ddd;
-  background: #20b2aa; /* light blue-green */
+  background: #111;
   border: none;
   border-radius: 10px;
   text-align: right;
@@ -58,22 +45,12 @@ body.dark .toggles {
   transition: background 0.3s ease, color 0.3s ease;
 }
 
-body.dark .calculator-screen {
-  background: #111;
-  color: #0ff;
-  box-shadow: inset 0 0 12px #0ff;
-}
-
 .calculator-buttons {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
   width: 100%;
   margin-bottom: 10px;
-}
-
-.calculator-buttons.basic {
-  grid-template-columns: repeat(4, 1fr);
 }
 
 button {
@@ -82,57 +59,50 @@ button {
   border: none;
   border-radius: 10px;
   color: #fff;
-  background: #800080; /* purple */
-  box-shadow: 0 0 8px #800080cc, inset 0 0 8px #800080cc;
   cursor: pointer;
   transition: all 0.2s ease;
   user-select: none;
 }
 
-button:hover {
-  background: #20b2aa; /* light blue-green */
-  box-shadow: 0 0 18px #20b2aacc, inset 0 0 18px #20b2aacc;
+button.number {
+  background: #333333;
+  box-shadow: 0 0 8px #333333cc, inset 0 0 8px #333333cc;
+}
+
+button.number:hover {
+  background: #555555;
+  box-shadow: 0 0 18px #555555cc, inset 0 0 18px #555555cc;
+}
+
+button.main-func {
+  background: #800080;
+  box-shadow: 0 0 8px #800080cc, inset 0 0 8px #800080cc;
+}
+
+button.main-func:hover {
+  background: #a040a0;
+  box-shadow: 0 0 18px #a040a0cc, inset 0 0 18px #a040a0cc;
+}
+
+button.special-btn {
+  background: #d3d3d3;
+  color: #000;
+  box-shadow: 0 0 8px #d3d3d3cc;
+}
+
+button.special-btn:hover {
+  background: #e0e0e0;
+  box-shadow: 0 0 18px #e0e0e0cc;
 }
 
 button.equals {
-  grid-row: span 2;
-  background: #b22222; /* red */
+  background: #800080;
   font-weight: bold;
   font-size: 1.4rem;
-  box-shadow: 0 0 20px #b22222cc, inset 0 0 20px #b22222cc;
+  box-shadow: 0 0 20px #800080cc, inset 0 0 20px #800080cc;
 }
 
 button.equals:hover {
-  background: #ff4040; /* bright red */
-  box-shadow: 0 0 25px #ff4040cc, inset 0 0 25px #ff4040cc;
-}
-
-.special-btn {
-  width: 100%;
-  padding: 12px 0;
-  font-size: 1.1rem;
-  border-radius: 10px;
-  background: #800080cc; /* purple */
-  color: #fff;
-  border: none;
-  margin-bottom: 8px;
-  cursor: pointer;
-  box-shadow: 0 0 12px #800080cc;
-  transition: background 0.2s ease;
-  user-select: none;
-}
-
-.special-btn:hover {
-  background: #20b2aacc; /* light blue-green */
-  box-shadow: 0 0 18px #20b2aacc;
-}
-
-.clear-btn {
-  background: #b22222cc; /* red */
-  box-shadow: 0 0 12px #b22222cc;
-}
-
-.clear-btn:hover {
-  background: #ff4040cc; /* bright red */
-  box-shadow: 0 0 18px #ff4040cc;
+  background: #a040a0;
+  box-shadow: 0 0 25px #a040a0cc, inset 0 0 25px #a040a0cc;
 }
