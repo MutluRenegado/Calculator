@@ -1,53 +1,86 @@
-const BUTTON_SIZE = 50;  // Example constant for button size
-const MEMORY_OPERATION = 'M-';
-const EQUALS = '=';
-const BACKSPACE = '⌫';
-const PI = Math.PI;
+const buttonsContainer = document.getElementById('buttons');
+const result = document.getElementById('result');
+const toggleDark = document.getElementById('toggleDark');
+const togglePro = document.getElementById('togglePro');
+const lastCalcBtn = document.getElementById('lastCalcBtn');
+const clearBtn = document.getElementById('clearBtn');
+
+let lastCalculation = '';
+
+const basicButtons = [
+  '7', '8', '9', '+',
+  '4', '5', '6', '-',
+  '1', '2', '3', '×',
+  '0', '.', '=', '÷'
+];
 
 const proButtons = [
   '7', '8', '9', '÷', 'sin', 'cos', 'tan',
   '4', '5', '6', '×', 'log', 'ln', '^',
   '1', '2', '3', '-', '(', ')', '√',
-  '0', '.', '=', '+', MEMORY_OPERATION, 'M+', 'MR', BACKSPACE
+  '0', '.', '=', '+', 'M-', 'M+', 'MR', '⌫'
 ];
 
-const buttons = [
-  '7', '8', '9', '÷',
-  '4', '5', '6', '×',
-  '1', '2', '3', '-',
-  '0', '.', '=', '+',
-  'C', '(', ')', '√'
-];
-
-let lastCalculation = '';
-
-const result = document.getElementById('result');
-const buttonsContainer = document.getElementById('buttons');
-const toggleDark = document.getElementById('toggleDark');
-const togglePro = document.getElementById('togglePro');
-const clearBtn = document.getElementById('clearBtn');
-const lastCalcBtn = document.getElementById('lastCalcBtn');
-
-function createButtons(buttonArray) {
+function renderButtons(isPro = false) {
   buttonsContainer.innerHTML = '';
-  buttonArray.forEach(button => {
-    const buttonElement = document.createElement('button');
-    buttonElement.textContent = button;
-    buttonElement.classList.add('button');
-    buttonElement.addEventListener('click', () => handleButtonClick(button));
-    buttonsContainer.appendChild(buttonElement);
-  });
+
+  if (isPro) {
+    buttonsContainer.classList.remove('basic');
+    proButtons.forEach(btn => {
+      if (btn !== '') {
+        const button = document.createElement('button');
+        button.textContent = btn;
+        button.onclick = () => buttonClicked(btn);
+        if (btn === '=') button.classList.add('equals');
+        buttonsContainer.appendChild(button);
+      } else {
+        const empty = document.createElement('div');
+        buttonsContainer.appendChild(empty);
+      }
+    });
+  } else {
+    buttonsContainer.classList.add('basic');
+    basicButtons.forEach(btn => {
+      const button = document.createElement('button');
+      button.textContent = btn;
+      button.onclick = () => buttonClicked(btn);
+      if (btn === '=') button.classList.add('equals');
+      buttonsContainer.appendChild(button);
+    });
+  }
 }
 
-function handleButtonClick(button) {
-  if (button === 'C') {
-    result.value = '';
-  } else if (button === EQUALS) {
+let memory = 0;
+
+function buttonClicked(value) {
+  if (value === '=') {
     calculateResult();
-  } else if (button === BACKSPACE) {
+  } else if (value === '⌫') {
     result.value = result.value.slice(0, -1);
+  } else if (value === 'M-') {
+    memory -= parseFloat(result.value) || 0;
+  } else if (value === 'M+') {
+    memory += parseFloat(result.value) || 0;
+  } else if (value === 'MR') {
+    result.value += memory.toString();
+  } else if (value === 'ln') {
+    result.value += 'ln(';
+  } else if (value === '√') {
+    result.value += '√(';
+  } else if (value === '^') {
+    result.value += '^';
+  } else if (value === 'log') {
+    result.value += 'log(';
+  } else if (value === 'sin' || value === 'cos' || value === 'tan') {
+    result.value += value + '(';
   } else {
-    result.value += button;
+    if (value === '÷') {
+      result.value += '/';
+    } else if (value === '×') {
+      result.value += '*';
+    } else {
+      result.value += value;
+    }
   }
 }
 
@@ -71,29 +104,32 @@ function calculateResult() {
 
     lastCalculation = result.value + ' = ' + answer;
     result.value = answer;
-  } catch (e) {
-    result.value = 'Error: Invalid Input';
+  } catch {
+    result.value = 'Error';
   }
 }
 
-clearBtn.addEventListener('click', () => {
-  result.value = '';
-});
-
 lastCalcBtn.addEventListener('click', () => {
-  result.value = lastCalculation;
-});
-
-toggleDark.addEventListener('change', () => {
-  document.body.classList.toggle('dark');
-});
-
-togglePro.addEventListener('change', () => {
-  if (togglePro.checked) {
-    createButtons(proButtons);
+  if (lastCalculation) {
+    result.value = lastCalculation;
   } else {
-    createButtons(buttons);
+    result.value = 'No last calculation';
   }
 });
 
-createButtons(buttons);
+clearBtn.addEventListener('click', () => {
+  result.value = '';
+  lastCalculation = '';
+});
+
+toggleDark.addEventListener('change', () => {
+  document.body.classList.toggle('dark', toggleDark.checked);
+});
+
+togglePro.addEventListener('change', () => {
+  renderButtons(togglePro.checked);
+  result.value = '';
+  lastCalculation = '';
+});
+
+renderButtons(false);
