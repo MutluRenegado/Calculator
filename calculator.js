@@ -15,18 +15,10 @@ const basicButtons = [
 ];
 
 const proButtons = [
-  // Row 1 (unchanged)
-  '7', '8', '9', '÷', '', '', '',
-  // Row 2 (unchanged)
-  '4', '5', '6', '×', '', '', '',
-  // Row 3
-  '', '[', ']', '4', '5', '6', '-',
-  // Row 4
-  '', 'M-', 'M+', '1', '2', '3', '×',
-  // Row 5
-  '', 'Fn', '{', '}', '0', '.', '=',
-  // Row 6
-  '+', '⌫', '', '', '', '', ''
+  '7', '8', '9', '÷', 'sin', 'cos', 'tan',
+  '4', '5', '6', '×', 'log', 'ln', '^',
+  '1', '2', '3', '-', '(', ')', '√',
+  '0', '.', '=', '+', 'M-', 'M+', 'MR', '⌫'
 ];
 
 function renderButtons(isPro = false) {
@@ -58,11 +50,29 @@ function renderButtons(isPro = false) {
   }
 }
 
+let memory = 0;
+
 function buttonClicked(value) {
   if (value === '=') {
     calculateResult();
   } else if (value === '⌫') {
     result.value = result.value.slice(0, -1);
+  } else if (value === 'M-') {
+    memory -= parseFloat(result.value) || 0;
+  } else if (value === 'M+') {
+    memory += parseFloat(result.value) || 0;
+  } else if (value === 'MR') {
+    result.value += memory.toString();
+  } else if (value === 'ln') {
+    result.value += 'ln(';
+  } else if (value === '√') {
+    result.value += '√(';
+  } else if (value === '^') {
+    result.value += '^';
+  } else if (value === 'log') {
+    result.value += 'log(';
+  } else if (value === 'sin' || value === 'cos' || value === 'tan') {
+    result.value += value + '(';
   } else {
     if (value === '÷') {
       result.value += '/';
@@ -83,7 +93,8 @@ function calculateResult() {
       .replace(/sin/g, 'Math.sin')
       .replace(/cos/g, 'Math.cos')
       .replace(/tan/g, 'Math.tan')
-      .replace(/log/g, 'Math.log10');
+      .replace(/log/g, 'Math.log10')
+      .replace(/ln/g, 'Math.log');
 
     let answer = eval(expression);
 
