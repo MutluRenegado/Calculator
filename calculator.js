@@ -1,134 +1,138 @@
-git pullconst buttonsContainer = document.getElementById('buttons');
-const result = document.getElementById('result');
-const toggleDark = document.getElementById('toggleDark');
-const togglePro = document.getElementById('togglePro');
-const lastCalcBtn = document.getElementById('lastCalcBtn');
-const clearBtn = document.getElementById('clearBtn');
-
-let lastCalculations = [];
-let lastCalcIndex = -1;
-
-const buttonsLayout = [
-  ['C', '+-', '%', '÷'],
-  ['7', '8', '9', '×'],
-  ['4', '5', '6', '-'],
-  ['1', '2', '3', '+'],
-  ['0', '.', '<', '=']
-];
-
-function renderButtons() {
-  buttonsContainer.innerHTML = '';
-  buttonsContainer.classList.add('basic');
-  buttonsContainer.style.gridTemplateColumns = 'repeat(4, 1fr)';
-
-  buttonsLayout.forEach(row => {
-    row.forEach(btn => {
-      const button = document.createElement('button');
-      button.textContent = btn;
-      button.onclick = () => buttonClicked(btn);
-
-      // Assign classes for colors
-      if (btn === 'C' || btn === '+-' || btn === '%' || btn === '<') {
-        button.classList.add('special-btn');
-      } else if (btn === '÷' || btn === '×' || btn === '-' || btn === '+' || btn === '=') {
-        if (btn === '=') {
-          button.classList.add('equals');
-        } else {
-          button.classList.add('main-func');
-        }
-      } else {
-        button.classList.add('number');
-      }
-
-      buttonsContainer.appendChild(button);
-    });
-  });
+body {
+  background: #d3d3d3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  transition: background 0.3s ease;
 }
 
-function buttonClicked(value) {
-  if (value === '=') {
-    calculateResult();
-  } else if (value === '<') {
-    showPreviousCalculation();
-  } else if (value === 'C') {
-    result.value = '';
-  } else if (value === '+-') {
-    if (result.value) {
-      if (result.value.startsWith('-')) {
-        result.value = result.value.slice(1);
-      } else {
-        result.value = '-' + result.value;
-      }
-    }
-  } else if (value === '%') {
-    if (result.value) {
-      let val = parseFloat(result.value);
-      if (!isNaN(val)) {
-        result.value = (val / 100).toString();
-      }
-    }
-  } else {
-    if (value === '÷') {
-      result.value += '/';
-    } else if (value === '×') {
-      result.value += '*';
-    } else {
-      result.value += value;
-    }
-  }
+body.dark {
+  background: #111;
 }
 
-function calculateResult() {
-  try {
-    let expression = result.value;
-    expression = expression.replace(/÷/g, '/').replace(/×/g, '*');
-
-    let answer = eval(expression);
-
-    if (typeof answer === 'number') {
-      answer = +answer.toFixed(8);
-    }
-
-    if (result.value !== '') {
-      lastCalculations.push(result.value + ' = ' + answer);
-      if (lastCalculations.length > 10) {
-        lastCalculations.shift();
-      }
-      lastCalcIndex = lastCalculations.length;
-    }
-
-    result.value = answer;
-  } catch {
-    result.value = 'Error';
-  }
+.calculator {
+  background: #444;
+  border-radius: 15px;
+  padding: 20px;
+  width: 440px;
+  box-shadow: 0 0 25px #800080cc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: background 0.3s ease;
 }
 
-function showPreviousCalculation() {
-  if (lastCalculations.length === 0) {
-    result.value = 'No last calculation';
-    return;
-  }
-  lastCalcIndex--;
-  if (lastCalcIndex < 0) {
-    lastCalcIndex = lastCalculations.length - 1;
-  }
-  result.value = lastCalculations[lastCalcIndex];
+body.dark .calculator {
+  background: #222;
+  box-shadow: 0 0 30px #0ff;
 }
 
-lastCalcBtn.style.display = 'none'; // Hide the old last calculation button
-clearBtn.addEventListener('click', () => {
-  result.value = '';
-});
+.toggles {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #800080;
+}
 
-toggleDark.addEventListener('change', () => {
-  document.body.classList.toggle('dark', toggleDark.checked);
-});
+body.dark .toggles {
+  color: #0ff;
+}
 
-togglePro.addEventListener('change', () => {
-  // Disable pro mode, always render basic buttons
-  togglePro.checked = false;
-  renderButtons();
-  result.value = '';
-});
+.calculator-screen {
+  width: 100%;
+  height: 50px;
+  font-size: 2rem;
+  color: #ddd;
+  background: #333;
+  border: none;
+  border-radius: 10px;
+  text-align: right;
+  padding: 0 15px;
+  box-shadow: inset 0 0 10px #222;
+  margin-bottom: 15px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
 
-renderButtons();
+body.dark .calculator-screen {
+  background: #111;
+  color: #0ff;
+  box-shadow: inset 0 0 12px #0ff;
+}
+
+.calculator-buttons {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.calculator-buttons.basic {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+button {
+  padding: 15px 0;
+  font-size: 1.3rem;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  background: #800080;
+  box-shadow: 0 0 8px #800080cc, inset 0 0 8px #800080cc;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+button:hover {
+  background: #a040a0;
+  box-shadow: 0 0 18px #a040a0cc, inset 0 0 18px #a040a0cc;
+}
+
+button.equals {
+  grid-row: span 2;
+  background: #b22222;
+  font-weight: bold;
+  font-size: 1.4rem;
+  box-shadow: 0 0 20px #b22222cc, inset 0 0 20px #b22222cc;
+}
+
+button.equals:hover {
+  background: #ff4040;
+  box-shadow: 0 0 25px #ff4040cc, inset 0 0 25px #ff4040cc;
+}
+
+.special-btn {
+  width: 100%;
+  padding: 12px 0;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  background: #800080cc;
+  color: #fff;
+  border: none;
+  margin-bottom: 8px;
+  cursor: pointer;
+  box-shadow: 0 0 12px #800080cc;
+  transition: background 0.2s ease;
+  user-select: none;
+}
+
+.special-btn:hover {
+  background: #a040a0cc;
+  box-shadow: 0 0 18px #a040a0cc;
+}
+
+.clear-btn {
+  background: #800000cc;
+  box-shadow: 0 0 12px #b22222cc;
+}
+
+.clear-btn:hover {
+  background: #b22222cc;
+  box-shadow: 0 0 18px #ff4040cc;
+}
