@@ -75,6 +75,9 @@ body.dark .calculator-screen {
 .calculator-buttons.basic {
   grid-template-columns: repeat(4, 1fr);
 }
+.calculator-buttons > div:empty {
+  visibility: hidden;
+}
 
 button {
   padding: 15px 0;
