@@ -55,7 +55,6 @@ body.dark .toggles {
   padding: 0 15px;
   box-shadow: inset 0 0 10px #222;
   margin-bottom: 15px;
-  transition: background 0.3s ease, color 0.3s ease;
 }
 
 body.dark .calculator-screen {
@@ -66,7 +65,6 @@ body.dark .calculator-screen {
 
 .calculator-buttons {
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
   gap: 10px;
   width: 100%;
   margin-bottom: 10px;
@@ -75,6 +73,11 @@ body.dark .calculator-screen {
 .calculator-buttons.basic {
   grid-template-columns: repeat(4, 1fr);
 }
+
+.calculator-buttons.pro {
+  grid-template-columns: repeat(8, 1fr);
+}
+
 .calculator-buttons > div:empty {
   visibility: hidden;
 }
@@ -88,8 +91,6 @@ button {
   background: #800080;
   box-shadow: 0 0 8px #800080cc, inset 0 0 8px #800080cc;
   cursor: pointer;
-  transition: all 0.2s ease;
-  user-select: none;
 }
 
 button:hover {
@@ -121,8 +122,6 @@ button.equals:hover {
   margin-bottom: 8px;
   cursor: pointer;
   box-shadow: 0 0 12px #800080cc;
-  transition: background 0.2s ease;
-  user-select: none;
 }
 
 .special-btn:hover {
