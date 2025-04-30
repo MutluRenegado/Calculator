@@ -8,7 +8,7 @@ const clearBtn = document.getElementById('clearBtn');
 let lastCalculation = '';
 
 const basicButtons = [
-  'C', '±', '%', '÷',
+  'ANS', '±', '%', '÷',
   '7', '8', '9', '×',
   '4', '5', '6', '-',
   '1', '2', '3', '+',
@@ -64,6 +64,11 @@ function buttonClicked(value) {
     calculateResult();
   } else if (value === '⌫') {
     result.value = result.value.slice(0, -1);
+  } else if (value === 'ANS') {
+    const parts = lastCalculation.split('=');
+    if (parts.length === 2) {
+      result.value += parts[1].trim();
+    }
   } else {
     if (value === '÷') {
       result.value += '/';
