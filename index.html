@@ -3,21 +3,86 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Advanced Calculator</title>
+  <title>Right-Aligned Calculator</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="calculator">
-    <div class="toggles">
-      <label><input type="checkbox" id="toggleDark"> Dark Mode</label>
-      <label><input type="checkbox" id="togglePro"> Pro Mode</label>
+    <input type="text" id="display" class="calculator-screen" disabled />
+    <div class="calculator-buttons">
+      <button onclick="buttonClicked('7')">7</button>
+      <button onclick="buttonClicked('8')">8</button>
+      <button onclick="buttonClicked('9')">9</button>
+      <button onclick="buttonClicked('/')">/</button>
+
+      <button onclick="buttonClicked('4')">4</button>
+      <button onclick="buttonClicked('5')">5</button>
+      <button onclick="buttonClicked('6')">6</button>
+      <button onclick="buttonClicked('*')">*</button>
+
+      <button onclick="buttonClicked('1')">1</button>
+      <button onclick="buttonClicked('2')">2</button>
+      <button onclick="buttonClicked('3')">3</button>
+      <button onclick="buttonClicked('-')">-</button>
+
+      <button onclick="buttonClicked('0')">0</button>
+      <button onclick="buttonClicked('.')">.</button>
+      <button onclick="buttonClicked('=')">=</button>
+      <button onclick="buttonClicked('+')">+</button>
+
+      <button onclick="buttonClicked('(')">(</button>
+      <button onclick="buttonClicked(')')">)</button>
+      <button onclick="buttonClicked('⌫')">⌫</button>
+      <button onclick="buttonClicked('ANS')">ANS</button>
+
+      <button onclick="buttonClicked('±')">±</button>
+      <button onclick="clearDisplay()">C</button>
     </div>
+  </div>
 
-    <input type="text" id="result" class="calculator-screen" disabled />
-    <div id="buttons" class="calculator-buttons basic"></div>
+  <script src="script.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Right-Aligned Calculator</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="calculator">
+    <input type="text" id="display" class="calculator-screen" disabled />
+    <div class="calculator-buttons">
+      <button onclick="buttonClicked('7')">7</button>
+      <button onclick="buttonClicked('8')">8</button>
+      <button onclick="buttonClicked('9')">9</button>
+      <button onclick="buttonClicked('/')">/</button>
 
-    <button id="lastCalcBtn" class="special-btn">Show Last Calculation</button>
-    <button id="clearBtn" class="special-btn clear-btn">Clear</button>
+      <button onclick="buttonClicked('4')">4</button>
+      <button onclick="buttonClicked('5')">5</button>
+      <button onclick="buttonClicked('6')">6</button>
+      <button onclick="buttonClicked('*')">*</button>
+
+      <button onclick="buttonClicked('1')">1</button>
+      <button onclick="buttonClicked('2')">2</button>
+      <button onclick="buttonClicked('3')">3</button>
+      <button onclick="buttonClicked('-')">-</button>
+
+      <button onclick="buttonClicked('0')">0</button>
+      <button onclick="buttonClicked('.')">.</button>
+      <button onclick="buttonClicked('=')">=</button>
+      <button onclick="buttonClicked('+')">+</button>
+
+      <button onclick="buttonClicked('(')">(</button>
+      <button onclick="buttonClicked(')')">)</button>
+      <button onclick="buttonClicked('⌫')">⌫</button>
+      <button onclick="buttonClicked('ANS')">ANS</button>
+
+      <button onclick="buttonClicked('±')">±</button>
+      <button onclick="clearDisplay()">C</button>
+    </div>
   </div>
 
   <script src="script.js"></script>
