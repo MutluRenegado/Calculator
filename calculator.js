@@ -16,17 +16,11 @@ const basicButtons = [
 ];
 
 const proButtons = [
-  // Row 1 (unchanged)
   '7', '8', '9', '÷', '', '', '',
-  // Row 2 (unchanged)
   '4', '5', '6', '×', '', '', '',
-  // Row 3
   '', '[', ']', '4', '5', '6', '-',
-  // Row 4
   '', 'M-', 'M+', '1', '2', '3', '×',
-  // Row 5
   '', 'Fn', '{', '}', '0', '.', '=',
-  // Row 6
   '+', '⌫', '', '', '', '', ''
 ];
 
@@ -103,6 +97,38 @@ function calculateResult() {
     result.value = 'Error';
   }
 }
+
+function handleKeyboardInput(event) {
+  const key = event.key;
+
+  // Handle numeric keys
+  if (/\d/.test(key)) {
+    buttonClicked(key);
+  }
+
+  // Handle operators
+  if (['+', '-', '*', '/', '=', 'Enter'].includes(key)) {
+    buttonClicked(key === 'Enter' ? '=' : key);
+  }
+
+  // Handle backspace
+  if (key === 'Backspace') {
+    buttonClicked('⌫');
+  }
+
+  // Handle dot
+  if (key === '.') {
+    buttonClicked('.');
+  }
+
+  // Handle other special cases
+  if (key.toUpperCase() === 'A' && event.shiftKey) {
+    buttonClicked('ANS');
+  }
+}
+
+// Listen for keyboard events
+document.addEventListener('keydown', handleKeyboardInput);
 
 lastCalcBtn.addEventListener('click', () => {
   if (lastCalculation) {
