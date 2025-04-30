@@ -1,73 +1,37 @@
-let currentCalculation = "";
-let lastCalculation = "";
-
-const result = document.getElementById('display');
+let display = document.getElementById('display');
+let lastAnswer = '';
 
 function buttonClicked(value) {
-  if (value === '=') {
-    calculateResult();
-  } else if (value === '⌫') {
-    currentCalculation = currentCalculation.slice(0, -1);
-    result.value = currentCalculation;
-  } else if (value === 'ANS') {
-    const lastAns = lastCalculation.split('=')[1]?.trim();
-    if (lastAns) {
-      currentCalculation += lastAns;
-      result.value = currentCalculation;
-    }
-  } else if (value === '±') {
-    if (currentCalculation.startsWith('-')) {
-      currentCalculation = currentCalculation.slice(1);
-    } else {
-      currentCalculation = '-' + currentCalculation;
-    }
-    result.value = currentCalculation;
-  } else {
-    currentCalculation += value;
-    result.value = currentCalculation;
-  }
-}
-
-function calculateResult() {
-  try {
-    const evaluated = eval(currentCalculation);
-    lastCalculation = `${currentCalculation} = ${evaluated}`;
-    currentCalculation = evaluated.toString();
-    result.value = currentCalculation;
-  } catch {
-    result.value = "Error";
-    currentCalculation = "";
-  }
+  display.value += value;
 }
 
 function clearDisplay() {
-  currentCalculation = "";
-  result.value = "";
+  display.value = '';
 }
 
-function handleKeyboardInput(event) {
-  const key = event.key;
+function backspace() {
+  display.value = display.value.slice(0, -1);
+}
 
-  if (/\d/.test(key) || ['+', '-', '*', '/', '.', '(', ')'].includes(key)) {
-    buttonClicked(key);
-  }
-
-  if (key === 'Enter') {
-    event.preventDefault();
-    buttonClicked('=');
-  }
-
-  if (key === 'Backspace') {
-    buttonClicked('⌫');
-  }
-
-  if (key.toUpperCase() === 'A') {
-    buttonClicked('ANS');
-  }
-
-  if (key === ' ') {
-    buttonClicked('±');
+function calculate() {
+  try {
+    lastAnswer = eval(display.value);
+    display.value = lastAnswer;
+  } catch {
+    display.value = 'Error';
   }
 }
 
-document.addEventListener('keydown', handleKeyboardInput);
+function useAnswer() {
+  display.value += lastAnswer;
+}
+
+function toggleSign() {
+  if (display.value) {
+    try {
+      display.value = String(eval(display.value + "* -1"));
+    } catch {
+      display.value = 'Error';
+    }
+  }
+}
