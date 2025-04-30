@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Basic Calculator</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div id="calculator">
-    <input type="text" id="result" disabled />
-    <div id="buttons"></div>
-    <button id="openProfessionalCalcBtn">Go to Professional Calculator</button>
-    <label for="toggleDark">Dark Mode</label>
-    <input type="checkbox" id="toggleDark">
+  <div class="calculator">
+    <div class="toggles">
+      <label><input type="checkbox" id="toggleDark"> Dark Mode</label>
+      <label><input type="checkbox" id="togglePro"> Pro Mode</label>
+    </div>
+
+    <input type="text" id="result" class="calculator-screen" disabled />
+
+    <div id="buttons" class="calculator-buttons basic"></div>
+
+    <button id="lastCalcBtn" class="special-btn">Show Last Calculation</button>
+    <button id="clearBtn" class="special-btn clear-btn">Clear</button>
   </div>
 
   <script src="basic_calculator.js"></script>
