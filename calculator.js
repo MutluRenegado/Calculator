@@ -15,42 +15,32 @@ const basicButtons = [
   '0', '⌫', '.', '='
 ];
 
-const proButtons = [
-  '7', '8', '9', '÷', '', '', '',
-  '4', '5', '6', '×', '', '', '',
-  '', '[', ']', '4', '5', '6', '-',
-  '', 'M-', 'M+', '1', '2', '3', '×',
-  '', 'Fn', '{', '}', '0', '.', '=',
-  '+', '⌫', '', '', '', '', ''
+const scientificButtons = [
+  'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'π', 'e',
+  '√', 'x²', 'x³', 'log', 'LN', '(', ')', 'M-', 'M+', 'MR',
+  '7', '8', '9', '÷',
+  '4', '5', '6', '×',
+  '1', '2', '3', '-',
+  '0', '⌫', '.', '+', '='
 ];
 
-function renderButtons(isPro = false) {
+function renderButtons(isScientific = false) {
   buttonsContainer.innerHTML = '';
 
-  if (isPro) {
-    buttonsContainer.classList.remove('basic');
-    proButtons.forEach(btn => {
-      if (btn !== '') {
-        const button = document.createElement('button');
-        button.textContent = btn;
-        button.onclick = () => buttonClicked(btn);
-        if (btn === '=') button.classList.add('equals');
-        buttonsContainer.appendChild(button);
-      } else {
-        const empty = document.createElement('div');
-        buttonsContainer.appendChild(empty);
-      }
-    });
-  } else {
-    buttonsContainer.classList.add('basic');
-    basicButtons.forEach(btn => {
+  const buttons = isScientific ? scientificButtons : basicButtons;
+
+  buttons.forEach(btn => {
+    if (btn !== '') {
       const button = document.createElement('button');
       button.textContent = btn;
       button.onclick = () => buttonClicked(btn);
       if (btn === '=') button.classList.add('equals');
       buttonsContainer.appendChild(button);
-    });
-  }
+    } else {
+      const empty = document.createElement('div');
+      buttonsContainer.appendChild(empty);
+    }
+  });
 }
 
 function buttonClicked(value) {
@@ -68,6 +58,22 @@ function buttonClicked(value) {
       result.value += '/';
     } else if (value === '×') {
       result.value += '*';
+    } else if (value === 'π') {
+      result.value += Math.PI;
+    } else if (value === 'e') {
+      result.value += Math.E;
+    } else if (value === '√') {
+      result.value += 'Math.sqrt(';
+    } else if (value === 'x²') {
+      result.value += '**2';
+    } else if (value === 'x³') {
+      result.value += '**3';
+    } else if (value === 'log') {
+      result.value += 'Math.log10(';
+    } else if (value === 'LN') {
+      result.value += 'Math.log(';
+    } else if (['sin', 'cos', 'tan', 'asin', 'acos', 'atan'].includes(value)) {
+      result.value += `${value}(`;
     } else {
       result.value += value;
     }
@@ -78,17 +84,24 @@ function calculateResult() {
   try {
     let expression = result.value;
     expression = expression
-      .replace(/√\(/g, 'Math.sqrt(')
-      .replace(/\^/g, '**')
+      .replace(/√/g, 'Math.sqrt')
+      .replace(/x²/g, '**2')
+      .replace(/x³/g, '**3')
+      .replace(/π/g, 'Math.PI')
+      .replace(/e/g, 'Math.E')
+      .replace(/log/g, 'Math.log10')
+      .replace(/LN/g, 'Math.log')
       .replace(/sin/g, 'Math.sin')
       .replace(/cos/g, 'Math.cos')
       .replace(/tan/g, 'Math.tan')
-      .replace(/log/g, 'Math.log10');
+      .replace(/asin/g, 'Math.asin')
+      .replace(/acos/g, 'Math.acos')
+      .replace(/atan/g, 'Math.atan');
 
     let answer = eval(expression);
 
     if (typeof answer === 'number') {
-      answer = +answer.toFixed(8);
+      answer = +answer.toFixed(8); // Optional: Round to 8 decimal places
     }
 
     lastCalculation = result.value + ' = ' + answer;
@@ -106,9 +119,14 @@ function handleKeyboardInput(event) {
     buttonClicked(key);
   }
 
-  // Handle operators
-  if (['+', '-', '*', '/', '=', 'Enter'].includes(key)) {
+  // Handle operators and functions
+  if (['+', '-', '*', '/', '=', 'Enter', '(', ')'].includes(key)) {
     buttonClicked(key === 'Enter' ? '=' : key);
+  }
+
+  // Handle scientific functions (add more if needed)
+  if (['s', 'c', 't', 'a', 'l', 'n', 'r', 'p'].includes(key)) {
+    buttonClicked(key.toUpperCase());
   }
 
   // Handle backspace
@@ -121,7 +139,7 @@ function handleKeyboardInput(event) {
     buttonClicked('.');
   }
 
-  // Handle other special cases
+  // Handle 'ANS' with Shift + A
   if (key.toUpperCase() === 'A' && event.shiftKey) {
     buttonClicked('ANS');
   }
@@ -153,4 +171,4 @@ togglePro.addEventListener('change', () => {
   lastCalculation = '';
 });
 
-renderButtons(false);
+renderButtons(false);  // Initially render basic buttons
