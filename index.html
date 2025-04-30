@@ -2,17 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pro Calculator</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Styled Calculator</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="calculator">
-    <input type="text" id="display" disabled />
-    <div id="calculator-buttons" class="buttons"></div>
-  </div>
+    <input type="text" id="display" class="calculator-screen" disabled />
 
-  <button onclick="togglePro()">Toggle Pro Mode</button>
+    <div class="calculator-buttons">
+      <button onclick="clearDisplay()">C</button>
+      <button onclick="toggleSign()">±</button>
+      <button onclick="buttonClicked('%')">%</button>
+      <button onclick="buttonClicked('/')">÷</button>
+
+      <button onclick="buttonClicked('7')">7</button>
+      <button onclick="buttonClicked('8')">8</button>
+      <button onclick="buttonClicked('9')">9</button>
+      <button onclick="buttonClicked('*')">×</button>
+
+      <button onclick="buttonClicked('4')">4</button>
+      <button onclick="buttonClicked('5')">5</button>
+      <button onclick="buttonClicked('6')">6</button>
+      <button onclick="buttonClicked('-')">−</button>
+
+      <button onclick="buttonClicked('1')">1</button>
+      <button onclick="buttonClicked('2')">2</button>
+      <button onclick="buttonClicked('3')">3</button>
+      <button onclick="buttonClicked('+')">+</button>
+
+      <button onclick="buttonClicked('0')">0</button>
+      <button onclick="buttonClicked('.')">.</button>
+      <button onclick="useAnswer()">ANS</button>
+      <button onclick="calculate()">=</button>
+    </div>
+
+    <button id="toggle-pro" onclick="togglePro()">Change to Pro</button>
+  </div>
 
   <script src="script.js"></script>
 </body>
