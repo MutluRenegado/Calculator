@@ -1,105 +1,95 @@
 const buttonsContainer = document.getElementById('buttons');
 const result = document.getElementById('result');
-const togglePro = document.getElementById('togglePro');
 const toggleDark = document.getElementById('toggleDark');
-const lastCalcBtn = document.getElementById('lastCalcBtn');
-const clearBtn = document.getElementById('clearBtn');
 
-let currentCalculation = '';
 let lastCalculation = '';
+let currentCalculation = '';
 
-// Basic buttons
 const basicButtons = [
-  '7', '8', '9', '/',
-  '4', '5', '6', '*',
-  '1', '2', '3', '-',
-  '0', '.', '=', '+'
+  'ANS', '±', '%', '÷',
+  '7', '8', '9', '×',
+  '4', '5', '6', '-',
+  '1', '2', '3', '+',
+  '0', '⌫', '.', '='
 ];
 
-// Pro buttons
-const proButtons = [
-  '(', ')', '%', '^',
-  '√', 'log', 'ln', '!',
-  'sin', 'cos', 'tan', 'π',
-  '', '', '', ''
-];
+function renderButtons() {
+  buttonsContainer.innerHTML = '';
+  basicButtons.forEach(btn => {
+    const button = document.createElement('button');
+    button.textContent = btn;
+    button.onclick = () => handleButtonClick(btn);
+    if (btn === '=') button.classList.add('equals');
+    buttonsContainer.appendChild(button);
+  });
+}
 
-// Handle button click
 function handleButtonClick(value) {
-  if (value === '=') {
-    try {
-      currentCalculation = currentCalculation
-        .replace(/π/g, Math.PI)
-        .replace(/√/g, 'Math.sqrt')
-        .replace(/log/g, 'Math.log10')
-        .replace(/ln/g, 'Math.log')
-        .replace(/sin/g, 'Math.sin')
-        .replace(/cos/g, 'Math.cos')
-        .replace(/tan/g, 'Math.tan')
-        .replace(/\^/g, '**')
-        .replace(/!/g, '.factorial');
+  switch (value) {
+    case '=':
+      try {
+        const expression = currentCalculation
+          .replace(/π/g, Math.PI)
+          .replace(/√/g, 'Math.sqrt')
+          .replace(/log/g, 'Math.log10')
+          .replace(/ln/g, 'Math.log')
+          .replace(/sin/g, 'Math.sin')
+          .replace(/cos/g, 'Math.cos')
+          .replace(/tan/g, 'Math.tan')
+          .replace(/\^/g, '**')
+          .replace(/ANS/g, lastCalculation)
+          .replace(/÷/g, '/')
+          .replace(/×/g, '*')
+          .replace(/%/g, '/100');
 
-      // Add factorial logic
-      Number.prototype.factorial = function() {
-        let n = Math.floor(this);
-        if (n < 0) return NaN;
-        let res = 1;
-        for (let i = 2; i <= n; i++) res *= i;
-        return res;
-      };
+        const evaluated = eval(expression);
+        lastCalculation = evaluated;
+        result.value = evaluated;
+        currentCalculation = '';
+      } catch {
+        result.value = 'Error';
+        currentCalculation = '';
+      }
+      break;
 
-      const evaluated = eval(currentCalculation);
-      lastCalculation = currentCalculation + ' = ' + evaluated;
-      result.value = evaluated;
-      currentCalculation = '';
-    } catch {
-      result.value = 'Error';
-      currentCalculation = '';
-    }
-  } else {
-    currentCalculation += value;
-    result.value = currentCalculation;
+    case '⌫':
+      currentCalculation = currentCalculation.slice(0, -1);
+      result.value = currentCalculation;
+      break;
+
+    case '±':
+      if (currentCalculation) {
+        if (currentCalculation.startsWith('-')) {
+          currentCalculation = currentCalculation.substring(1);
+        } else {
+          currentCalculation = '-' + currentCalculation;
+        }
+        result.value = currentCalculation;
+      }
+      break;
+
+    case 'ANS':
+      currentCalculation += lastCalculation;
+      result.value = currentCalculation;
+      break;
+
+    default:
+      currentCalculation += value;
+      result.value = currentCalculation;
   }
 }
 
-// Render buttons
-function renderButtons() {
-  buttonsContainer.innerHTML = '';
-  buttonsContainer.className = `calculator-buttons ${togglePro.checked ? 'pro' : 'basic'}`;
-
-  const buttons = togglePro.checked ? proButtons.concat(basicButtons) : basicButtons;
-  buttons.forEach(val => {
-    const btn = document.createElement('button');
-    btn.textContent = val;
-    if (val !== '') {
-      btn.addEventListener('click', () => handleButtonClick(val));
-    } else {
-      btn.disabled = true;
-    }
-    buttonsContainer.appendChild(btn);
-  });
-}
+// Listen for keyboard input
+document.addEventListener('keydown', (event) => {
+  const key = event.key;
+  if (/\d/.test(key) || ['+', '-', '*', '/', '.', '=', 'Backspace'].includes(key)) {
+    handleButtonClick(key);
+  }
+});
 
 // Toggle dark mode
 toggleDark.addEventListener('change', () => {
   document.body.classList.toggle('dark', toggleDark.checked);
 });
 
-// Toggle pro mode
-togglePro.addEventListener('change', renderButtons);
-
-// Show last calculation
-lastCalcBtn.addEventListener('click', () => {
-  if (lastCalculation) {
-    result.value = lastCalculation;
-  }
-});
-
-// Clear screen
-clearBtn.addEventListener('click', () => {
-  currentCalculation = '';
-  result.value = '';
-});
-
-// Initial render
 renderButtons();
