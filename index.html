@@ -3,40 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Right-Aligned Calculator</title>
+  <title>Modern Calculator</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="calculator">
     <input type="text" id="display" class="calculator-screen" disabled />
     <div class="calculator-buttons">
-      <button onclick="buttonClicked('7')">7</button>
-      <button onclick="buttonClicked('8')">8</button>
-      <button onclick="buttonClicked('9')">9</button>
-      <button onclick="buttonClicked('/')">/</button>
+      <!-- Clear and Backspace row moved to the top -->
+      <div class="top-row">
+        <button class="button clear" onclick="clearDisplay()">C</button>
+        <button class="button backspace" onclick="backspace()">⌫</button>
+      </div>
+      
+      <button class="button number" onclick="buttonClicked('7')">7</button>
+      <button class="button number" onclick="buttonClicked('8')">8</button>
+      <button class="button number" onclick="buttonClicked('9')">9</button>
+      <button class="button operator" onclick="buttonClicked('/')">/</button>
 
-      <button onclick="buttonClicked('4')">4</button>
-      <button onclick="buttonClicked('5')">5</button>
-      <button onclick="buttonClicked('6')">6</button>
-      <button onclick="buttonClicked('*')">*</button>
+      <button class="button number" onclick="buttonClicked('4')">4</button>
+      <button class="button number" onclick="buttonClicked('5')">5</button>
+      <button class="button number" onclick="buttonClicked('6')">6</button>
+      <button class="button operator" onclick="buttonClicked('*')">*</button>
 
-      <button onclick="buttonClicked('1')">1</button>
-      <button onclick="buttonClicked('2')">2</button>
-      <button onclick="buttonClicked('3')">3</button>
-      <button onclick="buttonClicked('-')">-</button>
+      <button class="button number" onclick="buttonClicked('1')">1</button>
+      <button class="button number" onclick="buttonClicked('2')">2</button>
+      <button class="button number" onclick="buttonClicked('3')">3</button>
+      <button class="button operator" onclick="buttonClicked('-')">-</button>
 
-      <button onclick="buttonClicked('0')">0</button>
-      <button onclick="buttonClicked('.')">.</button>
-      <button onclick="calculate()">=</button>
-      <button onclick="buttonClicked('+')">+</button>
+      <button class="button number" onclick="buttonClicked('0')">0</button>
+      <button class="button number" onclick="buttonClicked('.')">.</button>
+      <button class="button equals" onclick="calculate()">=</button>
+      <button class="button operator" onclick="buttonClicked('+')">+</button>
 
-      <button onclick="buttonClicked('(')">(</button>
-      <button onclick="buttonClicked(')')">)</button>
-      <button onclick="backspace()">⌫</button>
-      <button onclick="useAnswer()">ANS</button>
+      <button class="button toggle-sign" onclick="toggleSign()">±</button>
 
-      <button onclick="toggleSign()">±</button>
-      <button onclick="clearDisplay()">C</button>
+      <!-- "Change to Pro" toggle -->
+      <div class="pro-toggle">
+        <label class="switch">
+          <input type="checkbox" id="proToggle">
+          <span class="slider"></span>
+        </label>
+        <span>Change to Pro</span>
+      </div>
     </div>
   </div>
 
