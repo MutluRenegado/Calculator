@@ -1,9 +1,9 @@
 const buttonsContainer = document.getElementById('buttons');
 const result = document.getElementById('result');
 const toggleDark = document.getElementById('toggleDark');
-const togglePro = document.getElementById('togglePro');
 const lastCalcBtn = document.getElementById('lastCalcBtn');
 const clearBtn = document.getElementById('clearBtn');
+const openProfessionalCalcBtn = document.getElementById('openProfessionalCalcBtn'); // Button to open professional calculator
 
 let lastCalculation = '';
 
@@ -15,31 +15,15 @@ const basicButtons = [
   '0', '⌫', '.', '='
 ];
 
-const scientificButtons = [
-  'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'π', 'e',
-  '√', 'x²', 'x³', 'log', 'LN', '(', ')', 'M-', 'M+', 'MR',
-  '7', '8', '9', '÷',
-  '4', '5', '6', '×',
-  '1', '2', '3', '-',
-  '0', '⌫', '.', '+', '='
-];
-
-function renderButtons(isScientific = false) {
+function renderButtons() {
   buttonsContainer.innerHTML = '';
 
-  const buttons = isScientific ? scientificButtons : basicButtons;
-
-  buttons.forEach(btn => {
-    if (btn !== '') {
-      const button = document.createElement('button');
-      button.textContent = btn;
-      button.onclick = () => buttonClicked(btn);
-      if (btn === '=') button.classList.add('equals');
-      buttonsContainer.appendChild(button);
-    } else {
-      const empty = document.createElement('div');
-      buttonsContainer.appendChild(empty);
-    }
+  basicButtons.forEach(btn => {
+    const button = document.createElement('button');
+    button.textContent = btn;
+    button.onclick = () => buttonClicked(btn);
+    if (btn === '=') button.classList.add('equals');
+    buttonsContainer.appendChild(button);
   });
 }
 
@@ -58,22 +42,6 @@ function buttonClicked(value) {
       result.value += '/';
     } else if (value === '×') {
       result.value += '*';
-    } else if (value === 'π') {
-      result.value += Math.PI;
-    } else if (value === 'e') {
-      result.value += Math.E;
-    } else if (value === '√') {
-      result.value += 'Math.sqrt(';
-    } else if (value === 'x²') {
-      result.value += '**2';
-    } else if (value === 'x³') {
-      result.value += '**3';
-    } else if (value === 'log') {
-      result.value += 'Math.log10(';
-    } else if (value === 'LN') {
-      result.value += 'Math.log(';
-    } else if (['sin', 'cos', 'tan', 'asin', 'acos', 'atan'].includes(value)) {
-      result.value += `${value}(`;
     } else {
       result.value += value;
     }
@@ -84,24 +52,17 @@ function calculateResult() {
   try {
     let expression = result.value;
     expression = expression
-      .replace(/√/g, 'Math.sqrt')
-      .replace(/x²/g, '**2')
-      .replace(/x³/g, '**3')
-      .replace(/π/g, 'Math.PI')
-      .replace(/e/g, 'Math.E')
-      .replace(/log/g, 'Math.log10')
-      .replace(/LN/g, 'Math.log')
+      .replace(/√\(/g, 'Math.sqrt(')
+      .replace(/\^/g, '**')
       .replace(/sin/g, 'Math.sin')
       .replace(/cos/g, 'Math.cos')
       .replace(/tan/g, 'Math.tan')
-      .replace(/asin/g, 'Math.asin')
-      .replace(/acos/g, 'Math.acos')
-      .replace(/atan/g, 'Math.atan');
+      .replace(/log/g, 'Math.log10');
 
     let answer = eval(expression);
 
     if (typeof answer === 'number') {
-      answer = +answer.toFixed(8); // Optional: Round to 8 decimal places
+      answer = +answer.toFixed(8);
     }
 
     lastCalculation = result.value + ' = ' + answer;
@@ -119,14 +80,9 @@ function handleKeyboardInput(event) {
     buttonClicked(key);
   }
 
-  // Handle operators and functions
-  if (['+', '-', '*', '/', '=', 'Enter', '(', ')'].includes(key)) {
+  // Handle operators
+  if (['+', '-', '*', '/', '=', 'Enter'].includes(key)) {
     buttonClicked(key === 'Enter' ? '=' : key);
-  }
-
-  // Handle scientific functions (add more if needed)
-  if (['s', 'c', 't', 'a', 'l', 'n', 'r', 'p'].includes(key)) {
-    buttonClicked(key.toUpperCase());
   }
 
   // Handle backspace
@@ -165,10 +121,9 @@ toggleDark.addEventListener('change', () => {
   document.body.classList.toggle('dark', toggleDark.checked);
 });
 
-togglePro.addEventListener('change', () => {
-  renderButtons(togglePro.checked);
-  result.value = '';
-  lastCalculation = '';
+// Event listener for opening the professional calculator
+openProfessionalCalcBtn.addEventListener('click', () => {
+  window.location.href = 'professional_calculator.html'; // This will open a new page with professional calculator
 });
 
-renderButtons(false);  // Initially render basic buttons
+renderButtons();
