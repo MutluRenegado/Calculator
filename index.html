@@ -3,52 +3,170 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Modern Calculator</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Styled Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+      margin: 0;
+    }
+
+    .calculator {
+      background-color: #444;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      color: white;
+    }
+
+    .calculator-screen {
+      width: 100%;
+      height: 50px;
+      font-size: 1.5rem;
+      text-align: right;
+      margin-bottom: 15px;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #222;
+      color: white;
+    }
+
+    .calculator-buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 60px);
+      gap: 10px;
+    }
+
+    button {
+      height: 50px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    /* Numbers */
+    button:where(:nth-child(5), :nth-child(6), :nth-child(7),  /* 7,8,9 */
+                 :nth-child(9), :nth-child(10), :nth-child(11),/* 4,5,6 */
+                 :nth-child(13), :nth-child(14), :nth-child(15),/*1,2,3*/
+                 :nth-child(17)) { /* 0 */
+      background-color: #333;
+      color: white;
+    }
+
+    /* Functions: C, ±, %, ANS, . */
+    button:where(:nth-child(1), :nth-child(2), :nth-child(3), :nth-child(18), :nth-child(16)) {
+      background-color: #ddd;
+      color: #222;
+    }
+
+    /* Operators: ÷ × − + = */
+    button:where(:nth-child(4), :nth-child(8), :nth-child(12), :nth-child(16), :nth-child(20)) {
+      background-color: #d32f2f;
+      color: white;
+    }
+
+    #toggle-pro {
+      margin-top: 15px;
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      background-color: #888;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #toggle-pro:hover {
+      background-color: #666;
+    }
+  </style>
 </head>
 <body>
   <div class="calculator">
     <input type="text" id="display" class="calculator-screen" disabled />
+
     <div class="calculator-buttons">
-      <!-- Clear and Backspace row moved to the top -->
-      <div class="top-row">
-        <button class="button clear" onclick="clearDisplay()">C</button>
-        <button class="button backspace" onclick="backspace()">⌫</button>
-      </div>
-      
-      <button class="button number" onclick="buttonClicked('7')">7</button>
-      <button class="button number" onclick="buttonClicked('8')">8</button>
-      <button class="button number" onclick="buttonClicked('9')">9</button>
-      <button class="button operator" onclick="buttonClicked('/')">/</button>
+      <button onclick="clearDisplay()">C</button>
+      <button onclick="toggleSign()">±</button>
+      <button onclick="buttonClicked('%')">%</button>
+      <button onclick="buttonClicked('/')">÷</button>
 
-      <button class="button number" onclick="buttonClicked('4')">4</button>
-      <button class="button number" onclick="buttonClicked('5')">5</button>
-      <button class="button number" onclick="buttonClicked('6')">6</button>
-      <button class="button operator" onclick="buttonClicked('*')">*</button>
+      <button onclick="buttonClicked('7')">7</button>
+      <button onclick="buttonClicked('8')">8</button>
+      <button onclick="buttonClicked('9')">9</button>
+      <button onclick="buttonClicked('*')">×</button>
 
-      <button class="button number" onclick="buttonClicked('1')">1</button>
-      <button class="button number" onclick="buttonClicked('2')">2</button>
-      <button class="button number" onclick="buttonClicked('3')">3</button>
-      <button class="button operator" onclick="buttonClicked('-')">-</button>
+      <button onclick="buttonClicked('4')">4</button>
+      <button onclick="buttonClicked('5')">5</button>
+      <button onclick="buttonClicked('6')">6</button>
+      <button onclick="buttonClicked('-')">−</button>
 
-      <button class="button number" onclick="buttonClicked('0')">0</button>
-      <button class="button number" onclick="buttonClicked('.')">.</button>
-      <button class="button equals" onclick="calculate()">=</button>
-      <button class="button operator" onclick="buttonClicked('+')">+</button>
+      <button onclick="buttonClicked('1')">1</button>
+      <button onclick="buttonClicked('2')">2</button>
+      <button onclick="buttonClicked('3')">3</button>
+      <button onclick="buttonClicked('+')">+</button>
 
-      <button class="button toggle-sign" onclick="toggleSign()">±</button>
-
-      <!-- "Change to Pro" toggle -->
-      <div class="pro-toggle">
-        <label class="switch">
-          <input type="checkbox" id="proToggle">
-          <span class="slider"></span>
-        </label>
-        <span>Change to Pro</span>
-      </div>
+      <button onclick="buttonClicked('0')">0</button>
+      <button onclick="buttonClicked('.')">.</button>
+      <button onclick="useAnswer()">ANS</button>
+      <button onclick="calculate()">=</button>
     </div>
+
+    <button id="toggle-pro" onclick="togglePro()">Change to Pro</button>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    let display = document.getElementById('display');
+    let lastAnswer = '';
+    let isPro = false;
+
+    function buttonClicked(value) {
+      display.value += value;
+    }
+
+    function clearDisplay() {
+      display.value = '';
+    }
+
+    function backspace() {
+      display.value = display.value.slice(0, -1);
+    }
+
+    function calculate() {
+      try {
+        lastAnswer = eval(display.value);
+        display.value = lastAnswer;
+      } catch {
+        display.value = 'Error';
+      }
+    }
+
+    function useAnswer() {
+      display.value += lastAnswer;
+    }
+
+    function toggleSign() {
+      if (display.value) {
+        try {
+          display.value = String(eval(display.value + "* -1"));
+        } catch {
+          display.value = 'Error';
+        }
+      }
+    }
+
+    function togglePro() {
+      isPro = !isPro;
+      alert(isPro ? "Pro mode enabled!" : "Pro mode disabled!");
+    }
+  </script>
 </body>
 </html>
