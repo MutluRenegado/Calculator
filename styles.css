@@ -8,11 +8,14 @@ body {
 }
 
 .calculator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background: white;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 320px;
+  width: fit-content; /* Ensures calculator adjusts width based on content */
 }
 
 #display {
@@ -26,9 +29,13 @@ body {
   border-radius: 5px;
 }
 
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
 .buttons button {
-  width: 23%;
-  margin: 1%;
   padding: 20px;
   font-size: 1.5rem;
   cursor: pointer;
@@ -47,4 +54,22 @@ button:disabled {
 
 button:hover {
   background-color: #ddd;
+}
+
+#proModeButton {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+#proModeButton:hover {
+  background-color: #45a049;
 }
