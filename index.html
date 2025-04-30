@@ -4,90 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Styled Calculator</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #f0f0f0;
-      margin: 0;
-    }
-
-    .calculator {
-      background-color: #444;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      color: white;
-    }
-
-    .calculator-screen {
-      width: 100%;
-      height: 50px;
-      font-size: 1.5rem;
-      text-align: right;
-      margin-bottom: 15px;
-      padding: 5px 10px;
-      border: none;
-      border-radius: 5px;
-      background-color: #222;
-      color: white;
-    }
-
-    .calculator-buttons {
-      display: grid;
-      grid-template-columns: repeat(4, 60px);
-      gap: 10px;
-    }
-
-    button {
-      height: 50px;
-      font-size: 1.2rem;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-
-    /* Numbers */
-    button:where(:nth-child(5), :nth-child(6), :nth-child(7),  /* 7,8,9 */
-                 :nth-child(9), :nth-child(10), :nth-child(11),/* 4,5,6 */
-                 :nth-child(13), :nth-child(14), :nth-child(15),/*1,2,3*/
-                 :nth-child(17)) { /* 0 */
-      background-color: #333;
-      color: white;
-    }
-
-    /* Functions: C, ±, %, ANS, . */
-    button:where(:nth-child(1), :nth-child(2), :nth-child(3), :nth-child(18), :nth-child(16)) {
-      background-color: #ddd;
-      color: #222;
-    }
-
-    /* Operators: ÷ × − + = */
-    button:where(:nth-child(4), :nth-child(8), :nth-child(12), :nth-child(16), :nth-child(20)) {
-      background-color: #d32f2f;
-      color: white;
-    }
-
-    #toggle-pro {
-      margin-top: 15px;
-      width: 100%;
-      padding: 10px;
-      font-size: 1rem;
-      background-color: #888;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    #toggle-pro:hover {
-      background-color: #666;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="calculator">
@@ -123,50 +40,6 @@
     <button id="toggle-pro" onclick="togglePro()">Change to Pro</button>
   </div>
 
-  <script>
-    let display = document.getElementById('display');
-    let lastAnswer = '';
-    let isPro = false;
-
-    function buttonClicked(value) {
-      display.value += value;
-    }
-
-    function clearDisplay() {
-      display.value = '';
-    }
-
-    function backspace() {
-      display.value = display.value.slice(0, -1);
-    }
-
-    function calculate() {
-      try {
-        lastAnswer = eval(display.value);
-        display.value = lastAnswer;
-      } catch {
-        display.value = 'Error';
-      }
-    }
-
-    function useAnswer() {
-      display.value += lastAnswer;
-    }
-
-    function toggleSign() {
-      if (display.value) {
-        try {
-          display.value = String(eval(display.value + "* -1"));
-        } catch {
-          display.value = 'Error';
-        }
-      }
-    }
-
-    function togglePro() {
-      isPro = !isPro;
-      alert(isPro ? "Pro mode enabled!" : "Pro mode disabled!");
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
