@@ -2,42 +2,44 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Styled Calculator</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculator</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="calculator">
-    <input type="text" id="display" class="calculator-screen" disabled />
+  <div class="tabs">
+    <button class="tab-button active" onclick="switchTab('calculator')">Calculator</button>
+    <button class="tab-button" onclick="switchTab('converter')">Converter</button>
+  </div>
 
-    <div class="calculator-buttons">
-      <button onclick="clearDisplay()">C</button>
-      <button onclick="toggleSign()">±</button>
-      <button onclick="buttonClicked('%')">%</button>
-      <button onclick="buttonClicked('/')">÷</button>
-
-      <button onclick="buttonClicked('7')">7</button>
-      <button onclick="buttonClicked('8')">8</button>
-      <button onclick="buttonClicked('9')">9</button>
-      <button onclick="buttonClicked('*')">×</button>
-
-      <button onclick="buttonClicked('4')">4</button>
-      <button onclick="buttonClicked('5')">5</button>
-      <button onclick="buttonClicked('6')">6</button>
-      <button onclick="buttonClicked('-')">−</button>
-
-      <button onclick="buttonClicked('1')">1</button>
-      <button onclick="buttonClicked('2')">2</button>
-      <button onclick="buttonClicked('3')">3</button>
-      <button onclick="buttonClicked('+')">+</button>
-
-      <button onclick="buttonClicked('0')">0</button>
-      <button onclick="buttonClicked('.')">.</button>
-      <button onclick="useAnswer()">ANS</button>
+  <div id="calculator" class="tab-content active">
+    <div class="display" id="display">0</div>
+    <div class="buttons">
+      <button onclick="press('AC')">AC</button>
+      <button onclick="press('⌫')">⌫</button>
+      <button onclick="press('%')">%</button>
+      <button onclick="press('/')">÷</button>
+      <button onclick="press('7')">7</button>
+      <button onclick="press('8')">8</button>
+      <button onclick="press('9')">9</button>
+      <button onclick="press('*')">×</button>
+      <button onclick="press('4')">4</button>
+      <button onclick="press('5')">5</button>
+      <button onclick="press('6')">6</button>
+      <button onclick="press('-')">−</button>
+      <button onclick="press('1')">1</button>
+      <button onclick="press('2')">2</button>
+      <button onclick="press('3')">3</button>
+      <button onclick="press('+')">+</button>
+      <button onclick="press('()')">()</button>
+      <button onclick="press('0')">0</button>
+      <button onclick="press('.')">.</button>
       <button onclick="calculate()">=</button>
     </div>
+  </div>
 
-    <button id="toggle-pro" onclick="togglePro()">Change to Pro</button>
+  <div id="converter" class="tab-content">
+    <p style="text-align:center; margin-top: 2rem;">Converter coming soon...</p>
   </div>
 
   <script src="script.js"></script>
