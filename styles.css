@@ -68,9 +68,9 @@ button:where(:nth-child(4), :nth-child(8), :nth-child(12), :nth-child(16), :nth-
 
 #toggle-pro {
   margin-top: 15px;
-  width: 100%;
-  padding: 10px;
-  font-size: 1rem;
+  width: auto;
+  padding: 8px 15px;
+  font-size: 0.9rem;
   background-color: #888;
   color: white;
   border: none;
