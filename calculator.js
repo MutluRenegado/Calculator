@@ -1,9 +1,9 @@
 const buttonsContainer = document.getElementById('buttons');
 const result = document.getElementById('result');
 const toggleDark = document.getElementById('toggleDark');
+const toggleMode = document.getElementById('toggleMode');  // New toggle for mode
 const lastCalcBtn = document.getElementById('lastCalcBtn');
 const clearBtn = document.getElementById('clearBtn');
-const openProfessionalCalcBtn = document.getElementById('openProfessionalCalcBtn'); // Button to open professional calculator
 
 let lastCalculation = '';
 
@@ -15,10 +15,21 @@ const basicButtons = [
   '0', '⌫', '.', '='
 ];
 
-function renderButtons() {
+const advancedButtons = [
+  'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'π', 'e',
+  '√', 'x²', 'x³', 'log', 'LN', '(', ')',
+  '7', '8', '9', '÷',
+  '4', '5', '6', '×',
+  '1', '2', '3', '-',
+  '0', '⌫', '.', '+', '='
+];
+
+function renderButtons(isAdvanced = false) {
   buttonsContainer.innerHTML = '';
 
-  basicButtons.forEach(btn => {
+  const buttons = isAdvanced ? advancedButtons : basicButtons;
+
+  buttons.forEach(btn => {
     const button = document.createElement('button');
     button.textContent = btn;
     button.onclick = () => buttonClicked(btn);
@@ -42,6 +53,22 @@ function buttonClicked(value) {
       result.value += '/';
     } else if (value === '×') {
       result.value += '*';
+    } else if (value === 'π') {
+      result.value += Math.PI;
+    } else if (value === 'e') {
+      result.value += Math.E;
+    } else if (value === '√') {
+      result.value += 'Math.sqrt(';
+    } else if (value === 'x²') {
+      result.value += '**2';
+    } else if (value === 'x³') {
+      result.value += '**3';
+    } else if (value === 'log') {
+      result.value += 'Math.log10(';
+    } else if (value === 'LN') {
+      result.value += 'Math.log(';
+    } else if (['sin', 'cos', 'tan', 'asin', 'acos', 'atan'].includes(value)) {
+      result.value += `${value}(`;
     } else {
       result.value += value;
     }
@@ -57,12 +84,13 @@ function calculateResult() {
       .replace(/sin/g, 'Math.sin')
       .replace(/cos/g, 'Math.cos')
       .replace(/tan/g, 'Math.tan')
-      .replace(/log/g, 'Math.log10');
+      .replace(/log/g, 'Math.log10')
+      .replace(/LN/g, 'Math.log');
 
     let answer = eval(expression);
 
     if (typeof answer === 'number') {
-      answer = +answer.toFixed(8);
+      answer = +answer.toFixed(8); // Optional: Round to 8 decimal places
     }
 
     lastCalculation = result.value + ' = ' + answer;
@@ -121,9 +149,11 @@ toggleDark.addEventListener('change', () => {
   document.body.classList.toggle('dark', toggleDark.checked);
 });
 
-// Event listener for opening the professional calculator
-openProfessionalCalcBtn.addEventListener('click', () => {
-  window.location.href = 'professional_calculator.html'; // This will open a new page with professional calculator
+// Switch between basic and advanced calculator modes
+toggleMode.addEventListener('change', () => {
+  renderButtons(toggleMode.checked);
+  result.value = '';
+  lastCalculation = '';
 });
 
-renderButtons();
+renderButtons(false);  // Initially render basic calculator buttons
