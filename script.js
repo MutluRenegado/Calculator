@@ -27,8 +27,9 @@ const proButtons = [
 ];
 
 function renderButtons(isPro = false) {
-  buttonsContainer.innerHTML = '';
-  const buttons = isPro ? proButtons : basicButtons;
+  buttonsContainer.innerHTML = ''; // Clear the current buttons
+
+  const buttons = isPro ? proButtons : basicButtons; // Select the buttons based on the mode
 
   buttons.forEach(btn => {
     const button = document.createElement('button');
@@ -147,9 +148,10 @@ toggleDark.addEventListener('change', () => {
 });
 
 togglePro.addEventListener('change', () => {
+  // Toggle between basic and pro modes
   renderButtons(togglePro.checked);
   result.value = '';
   currentCalculation = '';
 });
 
-renderButtons(false);
+renderButtons(false); // Initially load basic buttons
