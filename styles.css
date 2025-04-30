@@ -5,6 +5,7 @@ body {
   align-items: center;
   height: 100vh;
   background-color: #f4f4f4;
+  margin: 0;
 }
 
 .calculator {
@@ -31,8 +32,9 @@ body {
 
 .buttons {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr); /* Four equal columns */
   gap: 10px;
+  width: 100%; /* Ensure buttons take the full width of the calculator */
 }
 
 .buttons button {
