@@ -35,6 +35,9 @@
     </div>
     <div class="display" id="advanced-display">0</div>
     <div class="keys" id="advanced-calculator-keys"></div>
+    <div class="toggle-back">
+      <label><input type="checkbox" id="toggleBasic" /> Basic Mode</label>
+    </div>
   </div>
 
   <script src="calculator.js"></script>
@@ -42,6 +45,7 @@
   <script src="advanced-calculator.js"></script>
   <script>
     const toggleAdvanced = document.getElementById('toggleAdvanced');
+    const toggleBasic = document.getElementById('toggleBasic');
     const basicCalculator = document.getElementById('basic-calculator');
     const advancedCalculator = document.getElementById('advanced-calculator');
 
@@ -52,6 +56,15 @@
       } else {
         basicCalculator.style.display = 'block';
         advancedCalculator.style.display = 'none';
+      }
+    });
+
+    toggleBasic.addEventListener('change', () => {
+      if (toggleBasic.checked) {
+        basicCalculator.style.display = 'block';
+        advancedCalculator.style.display = 'none';
+        toggleAdvanced.checked = false;
+        toggleBasic.checked = false;
       }
     });
   </script>
