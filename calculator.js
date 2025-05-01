@@ -52,9 +52,14 @@ function buttonClicked(value) {
   } else if (value === 'C') {
     result.value = '';
   } else if (value === 'ANS') {
+    console.log('ANS button clicked');
+    console.log('lastCalculations:', lastCalculations);
     if (lastCalculations.length > 0) {
       const lastAnswer = lastCalculations[lastCalculations.length - 1].split('=')[1].trim();
+      console.log('lastAnswer:', lastAnswer);
       result.value += lastAnswer;
+    } else {
+      console.log('No last calculations found');
     }
   } else if (value === '+-') {
     if (result.value) {
@@ -95,6 +100,7 @@ function calculateResult() {
 
     if (result.value !== '') {
       lastCalculations.push(result.value + ' = ' + answer);
+      console.log('Calculation added:', result.value + ' = ' + answer);
       if (lastCalculations.length > 10) {
         lastCalculations.shift();
       }
