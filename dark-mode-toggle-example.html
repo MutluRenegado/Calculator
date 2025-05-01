@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dark Mode Toggle Example</title>
+  <style>
+    body {
+      background: #FFFFFF;
+      color: #000000;
+      font-family: Arial, sans-serif;
+      transition: background 0.3s ease, color 0.3s ease;
+      padding: 20px;
+    }
+    body.dark {
+      background: #000000;
+      color: #FFFFFF;
+    }
+    label {
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <label>
+    <input type="checkbox" id="toggleDark" />
+    Dark Mode
+  </label>
+
+  <script>
+    const toggleDark = document.getElementById('toggleDark');
+    toggleDark.addEventListener('change', () => {
+      document.body.classList.toggle('dark', toggleDark.checked);
+      console.log('Dark mode toggled:', toggleDark.checked);
+      console.log('Body class list:', document.body.classList.value);
+    });
+  </script>
+</body>
+</html>
