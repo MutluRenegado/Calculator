@@ -131,7 +131,9 @@ clearBtn.addEventListener('click', () => {
 });
 
 toggleDark.addEventListener('change', () => {
+  console.log('Dark mode toggle changed:', toggleDark.checked);
   document.body.classList.toggle('dark', toggleDark.checked);
+  console.log('Body class list:', document.body.classList.value);
 });
 
 togglePro.addEventListener('change', () => {
