@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Consent Mode Example</title>
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){
+      w[l]=w[l]||[];
+      w[l].push({'gtm.start': new Date().getTime(), event:'gtm.js'});
+      var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),
+          dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-W2GFK3NL');
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <!-- Consent Mode Configuration -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+
+    var consentSettings = localStorage.getItem('consentMode');
+    gtag('consent', 'default', consentSettings ? JSON.parse(consentSettings) : {
+      'ad_storage': 'denied',
+      'analytics_storage': 'denied',
+      'personalization_storage': 'denied',
+      'functionality_storage': 'denied',
+      'security_storage': 'denied'
+    });
+  </script>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W2GFK3NL"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <h1>Consent Mode Example Page</h1>
+  <p>This page demonstrates Google Tag Manager with Consent Mode enabled.</p>
+
+  <div id="consent-banner" style="position: fixed; bottom: 10px; left: 10px; background: #f1f1f1; border: 1px solid #ccc; padding: 15px; max-width: 300px; font-family: Arial, sans-serif; font-size: 14px; z-index: 1000;">
+    <h3>We Value Your Privacy</h3>
+    <p>We use cookies and similar technologies to enhance your browsing experience, serve personalized content and ads, and analyze site traffic. You can choose to allow all cookies or customize your preferences. Your consent helps us improve our services.</p>
+    <button id="allow-all" style="margin-top: 10px; margin-right: 5px;">Allow All</button>
+    <button id="deny-all" style="margin-top: 10px;">Deny All</button>
+  </div>
+
+  <script>
+    function saveConsentSettings(settings) {
+      localStorage.setItem('consentMode', JSON.stringify(settings));
+      gtag('consent', 'update', settings);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      let consentSettings = localStorage.getItem('consentMode');
+      let settings = consentSettings ? JSON.parse(consentSettings) : {
+        'ad_storage': 'denied',
+        'analytics_storage': 'denied',
+        'personalization_storage': 'denied',
+        'functionality_storage': 'denied',
+        'security_storage': 'denied'
+      };
+
+      document.getElementById('allow-all').addEventListener('click', function() {
+        const allowSettings = {
+          'ad_storage': 'granted',
+          'analytics_storage': 'granted',
+          'personalization_storage': 'granted',
+          'functionality_storage': 'granted',
+          'security_storage': 'granted'
+        };
+        saveConsentSettings(allowSettings);
+      });
+
+      document.getElementById('deny-all').addEventListener('click', function() {
+        const denySettings = {
+          'ad_storage': 'denied',
+          'analytics_storage': 'denied',
+          'personalization_storage': 'denied',
+          'functionality_storage': 'denied',
+          'security_storage': 'denied'
+        };
+        saveConsentSettings(denySettings);
+      });
+    });
+  </script>
+</body>
+</html>
