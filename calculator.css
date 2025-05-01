@@ -1,5 +1,5 @@
 body {
-  background: #000000;
+  background: #FFFFFF;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,15 +7,15 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   transition: background 0.3s ease;
-  color: #FFFFFF;
+  color: #000000;
 }
 
 .calculator {
-  background: #1E1E1E;
+  background: #F0F0F0;
   border-radius: 20px;
   padding: 30px;
   width: 360px;
-  box-shadow: 0 0 25px #FFA500;
+  box-shadow: 0 0 25px #888888;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,20 +27,20 @@ body {
   justify-content: space-between;
   margin-bottom: 15px;
   font-weight: 600;
-  color: #FFA500;
+  color: #333333;
 }
 
 .calculator-screen {
   width: 100%;
   height: 60px;
   font-size: 2.5rem;
-  color: #FFFFFF;
-  background: #1E1E1E;
+  color: #000000;
+  background: #FFFFFF;
   border: none;
   border-radius: 15px;
   text-align: right;
   padding: 0 20px;
-  box-shadow: inset 0 0 15px #FFA500;
+  box-shadow: inset 0 0 15px #CCCCCC;
   margin-bottom: 20px;
   transition: background 0.3s ease, color 0.3s ease;
 }
@@ -58,17 +58,18 @@ button {
   font-size: 1.4rem;
   border: none;
   border-radius: 15px;
-  color: #FFFFFF;
-  background: #1E1E1E;
-  box-shadow: 0 0 5px #000000 inset;
+  color: #000000;
+  background: #E0E0E0;
+  box-shadow: 0 0 5px #CCCCCC inset;
   cursor: pointer;
   transition: all 0.2s ease;
   user-select: none;
 }
 
 button:hover {
-  background: #FFB84D;
-  box-shadow: 0 0 10px #FFB84D;
+  background: #FFA500;
+  box-shadow: 0 0 10px #FFA500;
+  color: #000000;
 }
 
 button.equals,
@@ -86,7 +87,7 @@ button.backspace {
 }
 
 button.equals {
-  background: #1E1E1E;
+  background: #E0E0E0;
   font-weight: bold;
   font-size: 1.6rem;
   box-shadow: 0 0 15px #FFA500;
@@ -103,7 +104,7 @@ button.equals:hover {
   padding: 14px 0;
   font-size: 1.2rem;
   border-radius: 15px;
-  background: #1E1E1E;
+  background: #E0E0E0;
   border: none;
   margin-bottom: 10px;
   cursor: pointer;
@@ -119,12 +120,93 @@ button.equals:hover {
 }
 
 .clear-btn {
-  background: #1E1E1E;
+  background: #E0E0E0;
   box-shadow: 0 0 12px #FFA500;
   color: #FFA500;
 }
 
 .clear-btn:hover {
+  background: #FFB84D;
+  box-shadow: 0 0 18px #FFB84D;
+  color: #000000;
+}
+
+/* Dark mode styles */
+body.dark {
+  background: #000000;
+  color: #FFFFFF;
+}
+
+body.dark .calculator {
+  background: #1E1E1E;
+  box-shadow: 0 0 25px #FFA500;
+}
+
+body.dark .toggles {
+  color: #FFA500;
+}
+
+body.dark .calculator-screen {
+  background: #1E1E1E;
+  color: #FFFFFF;
+  box-shadow: inset 0 0 15px #FFA500;
+}
+
+body.dark button {
+  background: #1E1E1E;
+  color: #FFFFFF;
+  box-shadow: 0 0 5px #000000 inset;
+}
+
+body.dark button:hover {
+  background: #FFB84D;
+  box-shadow: 0 0 10px #FFB84D;
+  color: #000000;
+}
+
+body.dark button.equals,
+body.dark button.special-btn,
+body.dark button.clear-btn,
+body.dark button.c,
+body.dark button.plusminus,
+body.dark button.percent,
+body.dark button.divide,
+body.dark button.multiply,
+body.dark button.add,
+body.dark button.minus,
+body.dark button.backspace {
+  color: #FFA500;
+}
+
+body.dark button.equals {
+  background: #1E1E1E;
+  box-shadow: 0 0 15px #FFA500;
+}
+
+body.dark button.equals:hover {
+  background: #FFB84D;
+  box-shadow: 0 0 20px #FFB84D;
+  color: #000000;
+}
+
+body.dark .special-btn {
+  background: #1E1E1E;
+  box-shadow: 0 0 12px #FFA500;
+}
+
+body.dark .special-btn:hover {
+  background: #FFB84D;
+  box-shadow: 0 0 18px #FFB84D;
+  color: #000000;
+}
+
+body.dark .clear-btn {
+  background: #1E1E1E;
+  box-shadow: 0 0 12px #FFA500;
+  color: #FFA500;
+}
+
+body.dark .clear-btn:hover {
   background: #FFB84D;
   box-shadow: 0 0 18px #FFB84D;
   color: #000000;
