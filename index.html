@@ -2,46 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Calculator</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="calculator.css" />
 </head>
 <body>
-  <div class="tabs">
-    <button class="tab-button active" onclick="switchTab('calculator')">Calculator</button>
-    <button class="tab-button" onclick="switchTab('converter')">Converter</button>
-  </div>
-
-  <div id="calculator" class="tab-content active">
-    <div class="display" id="display">0</div>
-    <div class="buttons">
-      <button onclick="press('AC')">AC</button>
-      <button onclick="press('⌫')">⌫</button>
-      <button onclick="press('%')">%</button>
-      <button onclick="press('/')">÷</button>
-      <button onclick="press('7')">7</button>
-      <button onclick="press('8')">8</button>
-      <button onclick="press('9')">9</button>
-      <button onclick="press('*')">×</button>
-      <button onclick="press('4')">4</button>
-      <button onclick="press('5')">5</button>
-      <button onclick="press('6')">6</button>
-      <button onclick="press('-')">−</button>
-      <button onclick="press('1')">1</button>
-      <button onclick="press('2')">2</button>
-      <button onclick="press('3')">3</button>
-      <button onclick="press('+')">+</button>
-      <button onclick="press('()')">()</button>
-      <button onclick="press('0')">0</button>
-      <button onclick="press('.')">.</button>
-      <button onclick="calculate()">=</button>
+  <div class="calculator">
+    <div class="toggles">
+      <label><input type="checkbox" id="toggleDark" /> Dark Mode</label>
+      <label><input type="checkbox" id="togglePro" /> Professional Mode</label>
     </div>
+
+    <input type="text" class="calculator-screen" id="result" disabled placeholder="0" />
+
+    <div class="calculator-buttons" id="buttons">
+      <!-- Buttons will be generated dynamically -->
+    </div>
+
+    <button class="special-btn" id="lastCalcBtn">Last Calculation</button>
+    <button class="special-btn clear-btn" id="clearBtn">C</button>
   </div>
 
-  <div id="converter" class="tab-content">
-    <p style="text-align:center; margin-top: 2rem;">Converter coming soon...</p>
-  </div>
-
-  <script src="script.js"></script>
+  <script src="calculator.js"></script>
 </body>
 </html>
