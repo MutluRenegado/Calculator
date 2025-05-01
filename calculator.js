@@ -1,7 +1,6 @@
 const buttonsContainer = document.getElementById('buttons');
 const result = document.getElementById('result');
 const toggleDark = document.getElementById('toggleDark');
-const togglePro = document.getElementById('togglePro');
 const lastCalcBtn = document.getElementById('lastCalcBtn');
 const clearBtn = document.getElementById('clearBtn');
 
@@ -134,12 +133,6 @@ toggleDark.addEventListener('change', () => {
   console.log('Dark mode toggle changed:', toggleDark.checked);
   document.body.classList.toggle('dark', toggleDark.checked);
   console.log('Body class list:', document.body.classList.value);
-});
-
-togglePro.addEventListener('change', () => {
-  togglePro.checked = false;
-  renderButtons();
-  result.value = '';
 });
 
 document.addEventListener('keydown', (event) => {
