@@ -1,53 +1,114 @@
-/* General Styles */
 body {
   background-color: #000000;
   color: #FFFFFF;
   font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
 }
 
-/* Button grid */
+.calculator {
+  width: 320px;
+  padding: 20px;
+  background-color: #1E1E1E;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255, 165, 0, 0.5);
+}
+
+#result {
+  width: 100%;
+  height: 60px;
+  font-size: 2rem;
+  margin-bottom: 10px;
+  text-align: right;
+  padding: 10px;
+  border: none;
+  background: #000;
+  color: #FFF;
+}
+
 #buttons {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.5rem;
-  padding: 1rem;
+  gap: 10px;
 }
 
-/* Common button styles */
 button {
-  background-color: #1E1E1E;
-  color: #FFFFFF;
   font-size: 1.5rem;
+  padding: 15px;
   border: none;
-  padding: 1rem;
-  border-radius: 0.75rem;
+  border-radius: 8px;
+  color: #FFF;
+  background-color: #333;
+  transition: background-color 0.2s;
   cursor: pointer;
-  transition: background-color 0.2s ease;
 }
 
-/* Hover effect */
 button:hover {
-  background-color: #FFB84D; /* Lighter orange hover */
-  color: #000000;
+  background-color: #FFB84D;
 }
 
-/* Special function buttons (AC, %, backspace, ANS, etc.) */
-.special-btn {
-  color: #FFA500;
+button.number {
+  background-color: #1E1E1E;
 }
 
-/* Operator buttons: + - × ÷ = */
-.main-func {
+button.main-func,
+button.equals,
+button.special-btn {
   background-color: #FFA500;
-  color: #000000;
 }
 
-.equals {
+.controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
   background-color: #FFA500;
-  color: #000000;
+  transition: 0.4s;
+  border-radius: 50%;
 }
 
-/* Toggle dark mode switch (if visible) */
-input[type="checkbox"]#toggleDark {
-  accent-color: #FFA500;
+.toggle input:checked + .slider {
+  background-color: #555;
+}
+
+.toggle input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+body.dark {
+  background-color: #000000;
+  color: #FFFFFF;
 }
