@@ -1,69 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Calculator</title>
-  <link rel="stylesheet" href="calculator.css" />
-  <link rel="stylesheet" href="advanced-calculator.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dark Calculator</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="calculator" id="basic-calculator">
-    <div class="toggles">
-      <label><input type="checkbox" id="toggleDark" /> Dark Mode</label>
-      <label><input type="checkbox" id="toggleAdvanced" /> Advanced Mode</label>
-    </div>
-
-    <input type="text" class="calculator-screen" id="result" disabled placeholder="0" />
-
-    <div class="calculator-buttons" id="buttons">
-      <!-- Buttons will be generated dynamically -->
-    </div>
-
-    <button class="special-btn" id="lastCalcBtn">Last Calculation</button>
-    <button class="special-btn clear-btn" id="clearBtn">C</button>
-  </div>
-
-  <div class="calculator advanced-calculator" id="advanced-calculator" style="display:none;">
-    <div class="top-bar">
-      <div class="time">0:42</div>
-      <div class="status-icons">⚪📶📶📶📶📶 WiFi 🔋23%</div>
-    </div>
-    <div class="tabs">
-      <span class="active">Calculator</span>
-      <span>Converter</span>
-    </div>
-    <div class="display" id="advanced-display">0</div>
-    <div class="keys" id="advanced-calculator-keys"></div>
-    <div class="toggle-back">
-      <button id="backToBasicBtn">Back to Basic</button>
+  <div class="calculator">
+    <input type="text" id="result" readonly />
+    <div id="buttons"></div>
+    <div class="controls">
+      <button id="clearBtn">Clear</button>
+      <label class="toggle">
+        <input type="checkbox" id="toggleDark" />
+        <span class="slider"></span>
+      </label>
     </div>
   </div>
 
-  <script src="calculator.js"></script>
-  <script src="advanced-config.js"></script>
-  <script src="advanced-calculator.js"></script>
-  <script>
-    const toggleAdvanced = document.getElementById('toggleAdvanced');
-    const backToBasicBtn = document.getElementById('backToBasicBtn');
-    const basicCalculator = document.getElementById('basic-calculator');
-    const advancedCalculator = document.getElementById('advanced-calculator');
-
-    toggleAdvanced.addEventListener('change', () => {
-      if (toggleAdvanced.checked) {
-        basicCalculator.style.display = 'none';
-        advancedCalculator.style.display = 'block';
-      } else {
-        basicCalculator.style.display = 'block';
-        advancedCalculator.style.display = 'none';
-      }
-    });
-
-    backToBasicBtn.addEventListener('click', () => {
-      basicCalculator.style.display = 'block';
-      advancedCalculator.style.display = 'none';
-      toggleAdvanced.checked = false;
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
