@@ -1,4 +1,13 @@
 body {
+  padding: 0 25px; /* Reduce screen width by 25px on each side */
+  box-sizing: border-box; /* Ensures padding is included in total width */
+}
+
+.calculator {
+  padding: 10px; /* 10px padding inside the calculator */
+  box-sizing: border-box; /* Ensures internal padding doesn't increase the width */
+}
+body {
   background: #FFFFFF;
   display: flex;
   justify-content: center;
