@@ -1,13 +1,14 @@
 const buttonsContainer = document.getElementById('buttons');
 const result = document.getElementById('result');
 const toggleDark = document.getElementById('toggleDark');
-const clearBtn = document.getElementById('clearBtn');
+const lastCalcBtn = document.getElementById('lastCalcBtn');
+const clearBtn = document.getElementById('clearBtn'); // C button removed from here
 
 let lastCalculations = [];
 let lastCalcIndex = -1;
 
 const buttonsLayout = [
-  ['ANS', '+-', '%', '÷'],
+  ['C', 'ANS', '+-', '%', '÷'],
   ['7', '8', '9', '×'],
   ['4', '5', '6', '-'],
   ['1', '2', '3', '+'],
@@ -16,20 +17,38 @@ const buttonsLayout = [
 
 function renderButtons() {
   buttonsContainer.innerHTML = '';
+  buttonsContainer.classList.add('basic');
   buttonsContainer.style.gridTemplateColumns = 'repeat(4, 1fr)';
 
-  buttonsLayout.forEach(row => {
-    row.forEach(btn => {
+  buttonsLayout.forEach((row, rowIndex) => {
+    row.forEach((btn, colIndex) => {
       const button = document.createElement('button');
       button.textContent = btn;
       button.onclick = () => buttonClicked(btn);
 
-      if (['ANS', '+-', '%', '<'].includes(btn)) {
+      if (btn === 'C') {
+        button.classList.add('clear-btn');
+        button.style.gridColumn = 'span 4'; // Make it full width if needed
+      }
+
+      if (btn === 'ANS' || btn === '+-' || btn === '%' || btn === '<') {
         button.classList.add('special-btn');
-      } else if (['÷', '×', '-', '+', '='].includes(btn)) {
-        button.classList.add(btn === '=' ? 'equals' : 'main-func');
+      } else if (btn === '÷' || btn === '×' || btn === '-' || btn === '+' || btn === '=') {
+        if (btn === '=') {
+          button.classList.add('equals');
+        } else {
+          button.classList.add('main-func');
+        }
       } else {
         button.classList.add('number');
+      }
+
+      // Add lightning effect to top row or right column in dark mode
+      if (
+        (rowIndex === 0 || colIndex === row.length - 1) &&
+        (btn !== 'C')
+      ) {
+        button.classList.add('lightning');
       }
 
       buttonsContainer.appendChild(button);
@@ -50,10 +69,16 @@ function buttonClicked(value) {
       result.value += lastAnswer;
     }
   } else if (value === '+-') {
-    result.value = result.value.startsWith('-') ? result.value.slice(1) : '-' + result.value;
+    if (result.value) {
+      result.value = result.value.startsWith('-')
+        ? result.value.slice(1)
+        : '-' + result.value;
+    }
   } else if (value === '%') {
     let val = parseFloat(result.value);
-    if (!isNaN(val)) result.value = (val / 100).toString();
+    if (!isNaN(val)) {
+      result.value = (val / 100).toString();
+    }
   } else {
     result.value += value === '÷' ? '/' : value === '×' ? '*' : value;
   }
@@ -63,12 +88,16 @@ function calculateResult() {
   try {
     let expression = result.value.replace(/÷/g, '/').replace(/×/g, '*');
     let answer = eval(expression);
-    answer = +answer.toFixed(8);
+    if (typeof answer === 'number') {
+      answer = +answer.toFixed(8);
+    }
+
     if (result.value !== '') {
       lastCalculations.push(result.value + ' = ' + answer);
       if (lastCalculations.length > 10) lastCalculations.shift();
       lastCalcIndex = lastCalculations.length;
     }
+
     result.value = answer;
   } catch {
     result.value = 'Error';
@@ -84,9 +113,7 @@ function showPreviousCalculation() {
   result.value = lastCalculations[lastCalcIndex];
 }
 
-clearBtn.addEventListener('click', () => {
-  result.value = '';
-});
+lastCalcBtn.style.display = 'none';
 
 toggleDark.addEventListener('change', () => {
   document.body.classList.toggle('dark', toggleDark.checked);
