@@ -1,37 +1,3 @@
-// Tabs for switching between Calculator and Converter
-document.getElementById('calculatorTab').addEventListener('click', () => {
-  document.getElementById('calculatorSection').style.display = 'block';
-  document.getElementById('converterSection').style.display = 'none';
-  document.getElementById('calculatorTab').classList.add('active');
-  document.getElementById('converterTab').classList.remove('active');
-});
-
-document.getElementById('converterTab').addEventListener('click', () => {
-  document.getElementById('calculatorSection').style.display = 'none';
-  document.getElementById('converterSection').style.display = 'block';
-  document.getElementById('converterTab').classList.add('active');
-  document.getElementById('calculatorTab').classList.remove('active');
-});
-
-// Conversion logic for the Converter
-document.getElementById('fromValue').addEventListener('input', () => {
-  const fromValue = parseFloat(document.getElementById('fromValue').value);
-  const fromUnit = document.getElementById('fromUnit').value;
-  const toUnit = document.getElementById('toUnit').value;
-
-  if (fromUnit === 'temperature' && toUnit === 'temperature') {
-    const result = convertTemperature(fromValue);
-    document.getElementById('toValue').value = result;
-  }
-  // You can add more conversions like currency here...
-});
-
-function convertTemperature(value) {
-  // Example: Convert from Celsius to Fahrenheit
-  return (value * 9 / 5) + 32;
-}
-
-// Calculator functionality
 const config = {
   keys: [
     ["2nd", "deg", "sin", "cos", "tan"],
@@ -42,100 +8,98 @@ const config = {
     ["1/X", "4", "5", "6", "-"],
     ["π", "1", "2", "3", "+"],
     ["C", "0", ".", "=", "<"]
-  ].map(row => row.map(label => {
-    let cls = "";
-    if (["AC", "⌫", "%", "÷", "ANS", "+-", "C", "="].includes(label)) {
-      cls = "orange";
-    }
-    return { label, class: cls };
-  }))
+  ].map(row =>
+    row.map(label => {
+      let cls = "";
+      if (["AC", "⌫", "%", "÷", "ANS", "+-", "C", "="].includes(label)) {
+        cls = "orange";
+      }
+      return { label, class: cls };
+    })
+  )
 };
 
-const advancedButtonsContainer = document.getElementById("advancedButtons");
+const display = document.getElementById("display");
+const buttonsContainer = document.getElementById("buttons");
 
+let memory = "";
+let ans = "";
+
+// Render buttons
 config.keys.forEach(row => {
-  row.forEach(button => {
+  const rowEl = document.createElement("div");
+  rowEl.classList.add("row");
+  row.forEach(({ label, class: cls }) => {
     const btn = document.createElement("button");
-    btn.innerText = button.label;
-    if (button.class) btn.classList.add(button.class);
-    btn.onclick = () => handleAdvancedButtonClick(button.label);
-    advancedButtonsContainer.appendChild(btn);
+    btn.innerText = label;
+    btn.className = `button ${cls}`;
+    btn.addEventListener("click", () => handleInput(label));
+    rowEl.appendChild(btn);
   });
+  buttonsContainer.appendChild(rowEl);
 });
 
-let lastAnswer = null; // Variable to store the last answer
-
-function handleAdvancedButtonClick(label) {
-  const display = document.getElementById('advancedDisplay');
-
-  switch (label) {
-    case "=":
-      try {
-        lastAnswer = eval(
-          display.value
-            .replace(/×/g, '*')
-            .replace(/÷/g, '/')
-            .replace(/π/g, Math.PI)
-        );
-        display.value = lastAnswer;
-      } catch {
-        display.value = "Error";
-      }
-      break;
-    case "AC":
-    case "C":
-      display.value = "";
-      break;
-    case "⌫":
-      display.value = display.value.slice(0, -1);
-      break;
-    case "+-":
-      display.value = display.value.startsWith("-") ? display.value.slice(1) : "-" + display.value;
-      break;
-    case "π":
-      display.value += Math.PI.toFixed(8);
-      break;
-    case "ANS":
-      if (lastAnswer !== null) {
-        display.value = lastAnswer;
-      }
-      break;
-    case "√x":
-      display.value += "Math.sqrt(";
-      break;
-    case "xY":
-      display.value += "**";
-      break;
-    case "lg":
-      display.value += "Math.log10(";
-      break;
-    case "ln":
-      display.value += "Math.log(";
-      break;
-    case "X!":
-      display.value = factorial(display.value);
-      break;
-    case "1/X":
-      display.value = display.value ? `1/(${display.value})` : display.value;
-      break;
-    case "sin":
-      display.value = `Math.sin(${display.value})`;
-      break;
-    case "cos":
-      display.value = `Math.cos(${display.value})`;
-      break;
-    case "tan":
-      display.value = `Math.tan(${display.value})`;
-      break;
-    default:
-      display.value += label;
+// Handle button inputs
+function handleInput(label) {
+  if (label === "AC") {
+    memory = "";
+  } else if (label === "⌫") {
+    memory = memory.slice(0, -1);
+  } else if (label === "=") {
+    try {
+      const evaluated = evaluateExpression(memory);
+      ans = evaluated;
+      memory = evaluated.toString();
+    } catch {
+      memory = "Error";
+    }
+  } else if (label === "ANS") {
+    memory += ans;
+  } else if (label === "+-") {
+    if (memory) memory = (-parseFloat(memory)).toString();
+  } else if (label === "π") {
+    memory += Math.PI;
+  } else if (label === "ln") {
+    memory += "ln(";
+  } else if (label === "lg") {
+    memory += "log10(";
+  } else if (label === "√x") {
+    memory += "sqrt(";
+  } else if (label === "xY") {
+    memory += "^";
+  } else if (label === "X!") {
+    memory += "fact(";
+  } else if (label === "1/X") {
+    memory += "1/(";
+  } else if (label === "sin" || label === "cos" || label === "tan") {
+    memory += `${label}(`;
+  } else {
+    memory += label;
   }
+
+  display.value = memory;
 }
 
-function factorial(n) {
-  n = parseFloat(n);
-  if (isNaN(n) || n < 0 || !Number.isInteger(n)) return "Error";
-  let result = 1;
-  for (let i = 2; i <= n; i++) result *= i;
-  return result;
+// Evaluate expression with math functions
+function evaluateExpression(expr) {
+  // Replace symbols with JS operators
+  expr = expr.replace(/×/g, "*").replace(/÷/g, "/").replace(/%/g, "/100");
+  expr = expr.replace(/π/g, Math.PI);
+  expr = expr.replace(/√x\(/g, "Math.sqrt(");
+  expr = expr.replace(/ln\(/g, "Math.log(");
+  expr = expr.replace(/log10\(/g, "Math.log10(");
+  expr = expr.replace(/sin\(/g, "Math.sin(");
+  expr = expr.replace(/cos\(/g, "Math.cos(");
+  expr = expr.replace(/tan\(/g, "Math.tan(");
+  expr = expr.replace(/fact\(/g, "factorial(");
+  expr = expr.replace(/\^/g, "**");
+
+  // Custom factorial function
+  function factorial(n) {
+    if (n < 0) return NaN;
+    return n === 0 ? 1 : n * factorial(n - 1);
+  }
+
+  // eslint-disable-next-line no-new-func
+  return Function("factorial", `return ${expr}`)(factorial);
 }
