@@ -10,43 +10,41 @@ const config = {
   ]
 };
 
-// Dynamically create the calculator buttons
-const buttonsContainer = document.getElementById('buttons');
+const buttonsContainer = document.getElementById("buttons");
 
 config.keys.forEach(row => {
-  const rowElement = document.createElement('div');
-  rowElement.classList.add('button-row');
-  
   row.forEach(key => {
-    const button = document.createElement('button');
+    const button = document.createElement("button");
     button.textContent = key;
-    button.classList.add('button');
-    rowElement.appendChild(button);
+    button.classList.add("button");
+    buttonsContainer.appendChild(button);
   });
-  
-  buttonsContainer.appendChild(rowElement);
 });
 
-// Button functionality logic
-document.querySelectorAll('.button').forEach(button => {
-  button.addEventListener('click', function () {
+document.querySelectorAll(".button").forEach(button => {
+  button.addEventListener("click", () => {
     const value = button.textContent;
-    const resultScreen = document.getElementById('result');
-    
-    if (value === "=") {
-      try {
-        resultScreen.value = eval(resultScreen.value);
-      } catch (error) {
-        resultScreen.value = "Error";
-      }
-    } else if (value === "AC") {
-      resultScreen.value = "";
-    } else if (value === "⌫") {
-      resultScreen.value = resultScreen.value.slice(0, -1);
-    } else if (value === "2nd") {
-      // Handle 2nd function (if needed)
-    } else {
-      resultScreen.value += value;
+    const resultScreen = document.getElementById("result");
+
+    switch (value) {
+      case "=":
+        try {
+          resultScreen.value = eval(resultScreen.value.replace(/×/g, '*').replace(/÷/g, '/'));
+        } catch {
+          resultScreen.value = "Error";
+        }
+        break;
+      case "AC":
+        resultScreen.value = "";
+        break;
+      case "⌫":
+        resultScreen.value = resultScreen.value.slice(0, -1);
+        break;
+      case "2nd":
+        // Handle secondary functions if needed
+        break;
+      default:
+        resultScreen.value += value;
     }
   });
 });
