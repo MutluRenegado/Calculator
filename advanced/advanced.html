@@ -2,40 +2,59 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Advanced Calculator</title>
   <link rel="stylesheet" href="advanced.css" />
 </head>
-<body class="light-mode">
-  <main class="calculator-container">
-    <h1>Advanced Calculator</h1>
+<body>
+  <div class="calculator-container">
+    <h2>Advanced Calculator</h2>
 
-    <!-- Theme Toggle -->
-    <div class="theme-toggle">
-      <label for="dark-mode-toggle">
-        <input type="checkbox" id="dark-mode-toggle" />
-        Dark Mode
-      </label>
+    <div class="toggles">
+      <label><input type="checkbox" id="toggleDark" /> Dark Mode</label>
     </div>
 
-    <!-- Display Screen -->
-    <input type="text" id="display" class="display" value="0" readonly aria-label="Calculator display" />
+    <input
+      type="text"
+      class="display"
+      id="result"
+      placeholder="0"
+      aria-label="Calculator Screen"
+      disabled
+    />
 
-    <!-- Dynamic Buttons Area -->
-    <div id="buttons-container" class="calculator-buttons"></div>
+    <div class="calculator-buttons" id="buttons">
+      <!-- Buttons will be dynamically generated here -->
+    </div>
 
-    <!-- Last Calculation Recall -->
-    <button id="last-calc-btn" class="special-btn">Last Calculation</button>
-  </main>
+    <button class="special-btn" id="lastCalcBtn" aria-label="Last Calculation">Last Calculation</button>
+    
+    <!-- Shortcut Toggle Button -->
+    <button class="toggle-shortcuts-btn" id="toggleShortcutsBtn">Show Keyboard Shortcuts</button>
 
-  <!-- Navigation Footer -->
+    <!-- Shortcuts List -->
+    <div id="keyboardShortcuts" class="keyboard-map">
+      <h3>Keyboard Shortcuts</h3>
+      <ul>
+        <li><strong>Numbers:</strong> 0-9</li>
+        <li><strong>Operations:</strong> +, -, *, /</li>
+        <li><strong>Clear:</strong> C or AC</li>
+        <li><strong>Equals:</strong> Enter or =</li>
+        <li><strong>Decimal:</strong> .</li>
+        <li><strong>Delete:</strong> Backspace or ⌫</li>
+        <li><strong>Toggle Dark Mode:</strong> Ctrl + D</li>
+      </ul>
+    </div>
+  </div>
+
   <footer>
-    <nav class="calculator-toggle">
-      <button onclick="location.href='../index.html'">Simple Calculator</button>
-      <button onclick="location.href='index.html'">Advanced Calculator</button>
-    </nav>
+    <div class="calculator-toggle">
+      <button onclick="window.location.href='/index.html'">Simple Calculator</button>
+      <button onclick="window.location.href='/advanced/advanced.html'">Advanced Calculator</button>
+    </div>
   </footer>
 
+  <script src="footer/footerscript.js"></script>
   <script src="advanced.js"></script>
 </body>
 </html>
