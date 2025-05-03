@@ -5,7 +5,7 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
-  background-color: #2c3e50; /* Dark background for the whole page */
+  background-color: #2c3e50;
   color: white;
 }
 
@@ -14,7 +14,7 @@ body {
   max-width: 450px;
   width: 100%;
   padding: 20px;
-  background-color: #34495e; /* Darker background for the calculator */
+  background-color: #34495e;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
@@ -34,7 +34,7 @@ body {
 
 .calculator-buttons {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* Adjusted for 5 columns */
+  grid-template-columns: repeat(5, 1fr);
   gap: 10px;
 }
 
