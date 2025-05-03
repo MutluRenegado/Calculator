@@ -8,7 +8,7 @@ body {
 }
 
 .calculator-container {
-  width: 90vw; /* shrink view to 90% of viewport width */
+  width: 90vw;
   max-width: 500px;
   margin: 50px auto;
   padding: 20px;
@@ -16,10 +16,10 @@ body {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   text-align: center;
-  transform: scale(0.9); /* optional for further shrink */
+  transform: scale(0.9); 
 }
 
-/* Display with 20px less width on the right */
+/* Display */
 .display {
   width: calc(100% - 20px);
   height: 60px;
@@ -36,9 +36,9 @@ body {
 /* Buttons Grid */
 .calculator-buttons {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* Adjust grid to 4 columns for standard calculator layout */
+  grid-template-columns: repeat(4, 1fr); 
   gap: 10px;
-  margin-bottom: 20px; /* Add margin below buttons */
+  margin-bottom: 20px; 
 }
 
 .calculator-buttons button {
@@ -53,11 +53,11 @@ body {
 }
 
 .calculator-buttons button:hover {
-  background-color: #95a5a6; /* Lighter button color on hover */
+  background-color: #95a5a6; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Special Button (e.g., Last Calculation) */
+/* Special Button */
 .special-btn {
   margin-top: 20px;
   padding: 10px 20px;
@@ -94,6 +94,47 @@ footer {
   background-color: #d35400;
 }
 
+/* Keyboard Shortcuts List */
+.keyboard-map {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out, padding 0.3s;
+  margin-top: 20px;
+  padding: 0;
+  background-color: #ecf0f1;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.keyboard-map.show {
+  max-height: 300px;
+  padding: 10px;
+}
+
+#keyboardShortcuts ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+#keyboardShortcuts li {
+  padding: 5px 0;
+  font-size: 1em;
+}
+
+.toggle-shortcuts-btn {
+  background-color: #16a085;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.toggle-shortcuts-btn:hover {
+  background-color: #1abc9c;
+}
+
 /* DARK MODE OVERRIDES */
 body.dark-mode {
   background-color: #2c3e50;
@@ -106,12 +147,12 @@ body.dark-mode .display {
 }
 
 body.dark-mode .calculator-buttons button {
-  background-color: #3498db; /* Blue buttons in dark mode */
+  background-color: #3498db; 
   color: white;
 }
 
 body.dark-mode .calculator-buttons button:hover {
-  background-color: #5dade2; /* Lighter blue on hover */
+  background-color: #5dade2;
 }
 
 body.dark-mode .special-btn {
@@ -124,15 +165,4 @@ body.dark-mode .calculator-toggle button {
 
 body.dark-mode .calculator-toggle button:hover {
   background-color: #d35400;
-}
-
-.keyboard-map {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease-in-out, padding 0.3s;
-}
-
-.keyboard-map.show {
-  max-height: 500px; /* enough to fit full content */
-  padding: 15px;
 }
