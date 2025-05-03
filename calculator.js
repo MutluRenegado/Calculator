@@ -1,5 +1,3 @@
-import mathLib from './mathLib.js'; // Importing mathLib
-
 const buttonsContainer = document.getElementById('buttons');
 const result = document.getElementById('result');
 const toggleDark = document.getElementById('toggleDark');
@@ -83,7 +81,7 @@ function buttonClicked(value) {
         result.value = '';
       } else {
         // Calculate percentage based on second number entered
-        result.value = ((firstValue * val) / 100).toFixed(2); // Calculate percentage to 2 decimals
+        result.value = (firstValue * val / 100).toString(); // Calculate percentage
         firstValue = null; // Reset after calculation
       }
     } else {
@@ -99,30 +97,9 @@ function calculateResult() {
     let expression = result.value.replace(/÷/g, '/').replace(/×/g, '*');
     expression = expression.replace(/(\d+)%/g, (match, p1) => (parseFloat(p1) / 100));
 
-    let answer;
-
-    // Handling different operations
-    if (expression.includes('+')) {
-      let operands = expression.split('+');
-      answer = mathLib.add(parseFloat(operands[0]), parseFloat(operands[1]));
-    } else if (expression.includes('-')) {
-      let operands = expression.split('-');
-      answer = mathLib.subtract(parseFloat(operands[0]), parseFloat(operands[1]));
-    } else if (expression.includes('*') || expression.includes('×')) {
-      let operands = expression.split('*').length > 1 ? expression.split('*') : expression.split('×');
-      answer = mathLib.multiply(parseFloat(operands[0]), parseFloat(operands[1]));
-    } else if (expression.includes('/')) {
-      let operands = expression.split('/');
-      answer = mathLib.divide(parseFloat(operands[0]), parseFloat(operands[1]));
-    } else {
-      // If no operators, just a number or function call
-      if (expression.match(/\d+/)) {
-        answer = parseFloat(expression);
-      }
-    }
-
+    let answer = eval(expression);
     if (typeof answer === 'number') {
-      answer = +answer.toFixed(2); // Limit to 2 decimal places
+      answer = +answer.toFixed(8);
     }
 
     if (result.value !== '') {
