@@ -102,7 +102,8 @@ Built with HTML, CSS, and JavaScript — designed for ease of use, accessibility
 
 ## 📜 License
 
-This project is licensed under the [MIT License](meta/LICENSE).
+This project is licensed under the [![License: CC BY-NC 4.0](https://licensebuttons.net/l/by-nc/4.0/88x31.png)](https://creativecommons.org/licenses/by-nc/4.0/)
+
 
 ---
 
