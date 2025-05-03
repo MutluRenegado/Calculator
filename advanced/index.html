@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Advanced Calculator</title>
-  <link rel="stylesheet" href="advanced.css">
+  <link rel="stylesheet" href="../calculator.css" />
+  <link rel="stylesheet" href="advanced.css" />
 </head>
 <body>
-  <div id="calculatorTabContainer">
-    <div class="tabs">
-      <span id="calculatorTab" class="active">Calculator</span>
-      <span id="converterTab">Converter</span>
-    </div>
+  <div class="tabs">
+    <span id="calculatorTab" class="active">Calculator</span>
+    <span id="converterTab">Converter</span>
   </div>
 
   <!-- Calculator Section -->
@@ -39,6 +38,11 @@
     </div>
   </div>
 
+  <div class="toggle-back">
+    <button id="backToBasicBtn">Back to Basic</button>
+  </div>
+
   <script src="advanced.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
