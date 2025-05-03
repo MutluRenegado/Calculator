@@ -1,0 +1,17 @@
+/calculator-project
+│
+├── index.html              # Basic calculator
+├── calculator.css          # Shared or basic CSS
+├── calculator.js           # Shared or basic JS
+│
+├── advanced/               # Advanced calculator
+│   ├── index.html          # Advanced calculator HTML (renamed)
+│   ├── advanced.css        # Advanced-specific CSS (rename from calculator.css)
+│   └── advanced.js         # Advanced-specific JS (rename from calculator.js)
+│
+├── app/
+│   └── consent.html        # App-related files
+│
+├── meta/                   # Documentation and licensing
+│   ├── README.md
+│   └── LICENSE             # Correct spelling and capitalization
