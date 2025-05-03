@@ -109,3 +109,15 @@ body.dark-mode .calculator-toggle button {
 body.dark-mode .calculator-toggle button:hover {
   background-color: #d35400;
 }
+
+.keyboard-map {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out, padding 0.3s;
+}
+
+.keyboard-map.show {
+  max-height: 500px; /* enough to fit full content */
+  padding: 15px;
+}
+
