@@ -2,6 +2,8 @@ const display = document.getElementById("display");
 const buttonsContainer = document.getElementById("buttons-container");
 const darkModeToggle = document.getElementById("dark-mode-toggle");
 const lastCalcBtn = document.getElementById("last-calc-btn");
+const toggleMapBtn = document.getElementById("toggle-map-btn");
+const keyboardMap = document.getElementById("keyboard-map");
 
 let lastCalculation = "";
 
@@ -38,7 +40,7 @@ function evaluateExpression(expression) {
       .replace(/cos/g, "Math.cos")
       .replace(/tan/g, "Math.tan")
       .replace(/xY/g, "**")
-      .replace(/1\/X/g, "1/")
+      .replace(/1\/X/g, "1/") 
       .replace(/X!/g, "factorial")
       .replace(/ANS/g, lastCalculation);
 
@@ -93,8 +95,17 @@ lastCalcBtn.onclick = () => {
   }
 };
 
+// Toggle keyboard shortcuts visibility
+toggleMapBtn.onclick = () => {
+  const isVisible = keyboardMap.classList.contains("show");
+  keyboardMap.classList.toggle("show", !isVisible);
+  toggleMapBtn.textContent = isVisible
+    ? "🛈 Show Keyboard Shortcuts"
+    : "🛈 Hide Keyboard Shortcuts";
+};
+
 // Keyboard input support
-const keyboardShortcuts = {
+const keyboardMapConfig = {
   "/": "÷",
   "*": "×",
   "^": "xY",
@@ -128,19 +139,7 @@ document.addEventListener("keydown", function (e) {
       : "0";
   } else if (key === "escape") {
     display.value = "0";
-  } else if (keyboardShortcuts[key]) {
-    handleInput(keyboardShortcuts[key]);
+  } else if (keyboardMapConfig[key]) {
+    handleInput(keyboardMapConfig[key]);
   }
 });
-
-// Toggle keyboard shortcut panel visibility
-const toggleMapBtn = document.getElementById("toggle-map-btn");
-const keyboardMap = document.getElementById("keyboard-map");
-
-toggleMapBtn.onclick = () => {
-  const isVisible = keyboardMap.style.display === "block";
-  keyboardMap.style.display = isVisible ? "none" : "block";
-  toggleMapBtn.textContent = isVisible
-    ? "🛈 Show Keyboard Shortcuts"
-    : "🛈 Hide Keyboard Shortcuts";
-};
