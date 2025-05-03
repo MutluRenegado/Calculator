@@ -94,7 +94,7 @@ lastCalcBtn.onclick = () => {
 };
 
 // Keyboard input support
-const keyboardMap = {
+const keyboardShortcuts = {
   "/": "÷",
   "*": "×",
   "^": "xY",
@@ -128,16 +128,19 @@ document.addEventListener("keydown", function (e) {
       : "0";
   } else if (key === "escape") {
     display.value = "0";
-  } else if (keyboardMap[key]) {
-    handleInput(keyboardMap[key]);
+  } else if (keyboardShortcuts[key]) {
+    handleInput(keyboardShortcuts[key]);
   }
 });
 
+// Toggle keyboard shortcut panel visibility
+const toggleMapBtn = document.getElementById("toggle-map-btn");
+const keyboardMap = document.getElementById("keyboard-map");
+
 toggleMapBtn.onclick = () => {
-  const isVisible = keyboardMap.classList.contains("show");
-  keyboardMap.classList.toggle("show", !isVisible);
+  const isVisible = keyboardMap.style.display === "block";
+  keyboardMap.style.display = isVisible ? "none" : "block";
   toggleMapBtn.textContent = isVisible
     ? "🛈 Show Keyboard Shortcuts"
     : "🛈 Hide Keyboard Shortcuts";
 };
-
