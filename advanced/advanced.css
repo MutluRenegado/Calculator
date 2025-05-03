@@ -106,12 +106,12 @@ body.dark-mode .display {
 }
 
 body.dark-mode .calculator-buttons button {
-  background-color: #34495e;
+  background-color: #3498db; /* Blue buttons in dark mode */
   color: white;
 }
 
 body.dark-mode .calculator-buttons button:hover {
-  background-color: #5d6d7e;
+  background-color: #5dade2; /* Lighter blue on hover */
 }
 
 body.dark-mode .special-btn {
