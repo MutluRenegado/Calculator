@@ -26,6 +26,33 @@
 
     <!-- Last Calculation Recall -->
     <button id="last-calc-btn" class="special-btn">Last Calculation</button>
+
+    <!-- ✅ Toggle Keyboard Shortcuts -->
+    <button id="toggle-map-btn" class="special-btn">🛈 Show Keyboard Shortcuts</button>
+
+    <!-- ✅ Keyboard Shortcuts Panel -->
+    <div id="keyboard-map" class="keyboard-map" style="display: none;">
+      <h3>🔤 Keyboard Shortcuts</h3>
+      <ul>
+        <li><b>S</b> → sin</li>
+        <li><b>C</b> → cos</li>
+        <li><b>T</b> → tan</li>
+        <li><b>L</b> → ln</li>
+        <li><b>G</b> → lg</li>
+        <li><b>R</b> → √x (square root)</li>
+        <li><b>!</b> → X! (factorial)</li>
+        <li><b>P</b> → π</li>
+        <li><b>E</b> → e</li>
+        <li><b>A</b> → ANS (last result)</li>
+        <li><b>F</b> → 1/X</li>
+        <li><b>^</b> → x<sup>y</sup> (power)</li>
+        <li><b>*</b> → ×</li>
+        <li><b>/</b> → ÷</li>
+        <li><b>Enter</b> or <b>=</b> → Evaluate</li>
+        <li><b>Backspace</b> → Delete last character</li>
+        <li><b>Esc</b> → Clear (AC)</li>
+      </ul>
+    </div>
   </main>
 
   <!-- Navigation Footer -->
@@ -36,6 +63,20 @@
     </nav>
   </footer>
 
+  <!-- JS Script -->
   <script src="advanced.js"></script>
+  <script>
+    // Toggle keyboard shortcut panel
+    const toggleMapBtn = document.getElementById("toggle-map-btn");
+    const keyboardMap = document.getElementById("keyboard-map");
+
+    toggleMapBtn.onclick = () => {
+      const isVisible = keyboardMap.style.display === "block";
+      keyboardMap.style.display = isVisible ? "none" : "block";
+      toggleMapBtn.textContent = isVisible 
+        ? "🛈 Show Keyboard Shortcuts" 
+        : "🛈 Hide Keyboard Shortcuts";
+    };
+  </script>
 </body>
 </html>
