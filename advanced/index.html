@@ -1,18 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Advanced Calculator</title>
-  <link rel="stylesheet" href="calculator.css" />
-</head>
-<body>
-  <div class="calculator advanced">
-    <input type="text" id="advancedDisplay" readonly />
-    <div id="advancedButtons" class="buttons"></div>
+<div class="tabs">
+  <span id="calculatorTab" class="active">Calculator</span>
+  <span id="converterTab">Converter</span>
+</div>
+
+<!-- Calculator Section -->
+<div id="calculatorSection">
+  <!-- Existing calculator UI here -->
+</div>
+
+<!-- Converter Section -->
+<div id="converterSection" style="display:none;">
+  <h3>Converter</h3>
+  <div class="converter">
+    <label for="fromValue">From:</label>
+    <input type="number" id="fromValue" placeholder="Enter value" />
+    <select id="fromUnit">
+      <!-- Add conversion options -->
+      <option value="currency">Currency</option>
+      <option value="temperature">Temperature</option>
+    </select>
+    <span>To:</span>
+    <input type="number" id="toValue" disabled />
+    <select id="toUnit">
+      <!-- Add corresponding conversion options -->
+      <option value="currency">Currency</option>
+      <option value="temperature">Temperature</option>
+    </select>
   </div>
-
-  <script src="calculator.js"></script>
-</body>
-</html>
-
+</div>
