@@ -1,4 +1,8 @@
 /* Basic Calculator Styles */
+body {
+  font-family: 'Arial', sans-serif;
+}
+
 .calculator {
   padding: 10px !important;
   width: 100% !important;
@@ -114,4 +118,14 @@ body.dark .clear-btn {
 body.dark button:active {
   background-color: #555 !important;
   transform: scale(0.95);
+}
+
+/* Adding focus styles for better accessibility */
+button:focus {
+  outline: 2px solid #ff9800; /* Highlight buttons with an orange outline */
+}
+
+/* Smooth transition for dark mode */
+body.dark {
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
