@@ -16,7 +16,7 @@ body {
   padding: 20px;
   background-color: #1c2833;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
 .calculator-screen {
@@ -34,24 +34,18 @@ body {
 
 .calculator-buttons {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
 }
 
 .calculator-buttons button {
-  font-size: 1em;
+  font-size: 1.2em;
   height: 60px;
   background-color: #34495e;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  word-wrap: break-word;
-  white-space: normal;
-}
-
-.calculator-buttons button:hover {
-  background-color: #3c5a72;
 }
 
 button.orange {
@@ -83,15 +77,18 @@ footer {
   bottom: 10px;
   width: 100%;
   text-align: center;
-  color: #ccc;
-  font-size: 0.9em;
+  font-size: 1em;
 }
 
-.calculator-toggle button {
+footer .calculator-toggle button {
   background-color: #e67e22;
   color: white;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+footer .calculator-toggle button:hover {
+  background-color: #d35400;
 }
