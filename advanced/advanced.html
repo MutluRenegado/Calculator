@@ -1,37 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculator</title>
-  <link rel="stylesheet" href="calculator.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Advanced Calculator</title>
+  <link rel="stylesheet" href="advanced.css" />
 </head>
 <body>
-  <div class="calculator-container">
-    <input type="text" id="display" class="display" disabled value="0">
-    <div id="buttons-container" class="calculator-buttons"></div>
-    <button id="last-calc-btn" class="special-btn">Last Calculation</button>
-    <label>
-      Dark Mode:
-      <input type="checkbox" id="dark-mode-toggle">
-    </label>
-    <button id="toggle-map-btn">🛈 Show Keyboard Shortcuts</button>
-    <div id="keyboard-map" class="keyboard-map">
-      <ul>
-        <li><b>+/-</b>: Toggle negative/positive</li>
-        <li><b>AC</b>: Clear display</li>
-        <li><b>⌫</b>: Backspace</li>
-        <li><b>=</b>: Evaluate expression</li>
-        <li><b>π</b>: Pi</li>
-        <li><b>e</b>: Euler's number</li>
-        <li><b>sin, cos, tan</b>: Trigonometric functions</li>
-        <li><b>lg, ln</b>: Logarithmic functions</li>
-        <li><b>√x</b>: Square root</li>
-        <li><b>X!</b>: Factorial</li>
-      </ul>
+  <div class="calculator" id="advanced-calculator">
+    <h2>Advanced Calculator</h2>
+
+    <div class="toggles">
+      <label><input type="checkbox" id="toggleDark" /> Dark Mode</label>
     </div>
+
+    <input
+      type="text"
+      class="calculator-screen"
+      id="result"
+      placeholder="0"
+      aria-label="Calculator Screen"
+    />
+
+    <div class="calculator-buttons" id="buttons">
+      <!-- Buttons will be generated dynamically -->
+    </div>
+
+    <button class="special-btn" id="lastCalcBtn" aria-label="Last Calculation">Last Calculation</button>
   </div>
 
-  <script src="calculator.js"></script>
+  <footer>
+    <div class="calculator-toggle">
+      <button onclick="window.location.href='/index.html'">Simple Calculator</button>
+      <button onclick="window.location.href='/advanced/advanced.html'">Advanced Calculator</button>
+    </div>
+  </footer>
+
+  <script src="footer/footerscript.js"></script>
+  <script src="advanced.js"></script>
 </body>
 </html>
