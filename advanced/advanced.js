@@ -1,50 +1,84 @@
-const config = {
-  keys: [
-    ["2nd", "deg", "sin", "cos", "tan"],
-    ["xY", "lg", "ln", "(", ")"],
-    ["√x", "AC", "⌫", "%", "÷"],
-    ["X!", "7", "8", "9", "×"],
-    ["1/X", "4", "5", "6", "-"],
-    ["π", "1", "2", "3", "+"],
-    ["C", "0", ".", "=", "<"]
-  ]
-};
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
 
-const buttonsContainer = document.getElementById("buttons");
+.calculator-container {
+  background-color: #34495e;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 40px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
 
-config.keys.forEach(row => {
-  row.forEach(key => {
-    const button = document.createElement("button");
-    button.textContent = key;
-    button.classList.add("button");
-    buttonsContainer.appendChild(button);
-  });
-});
+h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
 
-document.querySelectorAll(".button").forEach(button => {
-  button.addEventListener("click", () => {
-    const value = button.textContent;
-    const resultScreen = document.getElementById("result");
+.display {
+  width: 100%;
+  height: 50px;
+  font-size: 24px;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: none;
+  background: #1c2a35;
+  color: #ecf0f1;
+  border-radius: 5px;
+  text-align: right;
+}
 
-    switch (value) {
-      case "=":
-        try {
-          resultScreen.value = eval(resultScreen.value.replace(/×/g, '*').replace(/÷/g, '/'));
-        } catch {
-          resultScreen.value = "Error";
-        }
-        break;
-      case "AC":
-        resultScreen.value = "";
-        break;
-      case "⌫":
-        resultScreen.value = resultScreen.value.slice(0, -1);
-        break;
-      case "2nd":
-        // Handle secondary functions if needed
-        break;
-      default:
-        resultScreen.value += value;
-    }
-  });
-});
+.calculator-buttons {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+button {
+  padding: 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #3498db;
+  color: white;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+#last-calc-btn {
+  width: 100%;
+  background-color: #2980b9;
+}
+
+.theme-switch {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+footer {
+  margin-top: auto;
+  padding: 15px;
+  background-color: #1a252f;
+  width: 100%;
+  text-align: center;
+}
+
+footer button {
+  margin: 5px;
+}
