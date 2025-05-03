@@ -1,19 +1,10 @@
+/* Base styles (light mode by default) */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-/* Light Mode (default) */
-body.light-mode {
   background-color: #ecf0f1;
   color: #2c3e50;
-}
-
-/* Dark Mode */
-body.dark-mode {
-  background-color: #2c3e50;
-  color: white;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .calculator-container {
@@ -26,8 +17,9 @@ body.dark-mode {
   text-align: center;
 }
 
+/* Display with 20px less width on the right */
 .display {
-  width: 100%;
+  width: calc(100% - 20px);
   height: 60px;
   font-size: 2em;
   padding: 10px;
@@ -39,12 +31,7 @@ body.dark-mode {
   color: #2c3e50;
 }
 
-/* Dark mode display override */
-body.dark-mode .display {
-  background-color: #1c2833;
-  color: white;
-}
-
+/* Buttons Grid */
 .calculator-buttons {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -61,15 +48,7 @@ body.dark-mode .display {
   cursor: pointer;
 }
 
-body.dark-mode .calculator-buttons button {
-  background-color: #34495e;
-  color: white;
-}
-
-button:active {
-  background-color: #e74c3c;
-}
-
+/* Special Button (e.g., Last Calculation) */
 .special-btn {
   margin-top: 20px;
   padding: 10px 20px;
@@ -81,6 +60,7 @@ button:active {
   cursor: pointer;
 }
 
+/* Footer */
 footer {
   text-align: center;
   margin-top: 30px;
@@ -97,5 +77,33 @@ footer {
 }
 
 .calculator-toggle button:hover {
+  background-color: #d35400;
+}
+
+/* DARK MODE OVERRIDES */
+body.dark-mode {
+  background-color: #2c3e50;
+  color: white;
+}
+
+body.dark-mode .display {
+  background-color: #1c2833;
+  color: white;
+}
+
+body.dark-mode .calculator-buttons button {
+  background-color: #34495e;
+  color: white;
+}
+
+body.dark-mode .special-btn {
+  background-color: #3498db;
+}
+
+body.dark-mode .calculator-toggle button {
+  background-color: #e67e22;
+}
+
+body.dark-mode .calculator-toggle button:hover {
   background-color: #d35400;
 }
