@@ -47,7 +47,7 @@ h2 {
 /* Buttons Grid */
 .calculator-buttons {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, minmax(60px, 1fr)); /* Ensure buttons stay consistent in size */
   gap: 0.5rem;
   margin-bottom: 1.5rem;
 }
@@ -61,6 +61,7 @@ h2 {
   color: white;
   cursor: pointer;
   transition: background 0.2s ease;
+  min-height: 60px; /* Ensure buttons have consistent height */
 }
 
 .calculator-buttons button:hover {
@@ -94,6 +95,14 @@ h2 {
   border-radius: 0.5rem;
   margin-top: 1rem;
   font-size: 0.9rem;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.keyboard-map.show {
+  display: block;
+  opacity: 1;
 }
 
 .keyboard-map h3 {
