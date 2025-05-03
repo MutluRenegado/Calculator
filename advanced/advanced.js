@@ -4,6 +4,7 @@ const darkModeToggle = document.getElementById("dark-mode-toggle");
 const lastCalcBtn = document.getElementById("last-calc-btn");
 
 let lastCalculation = "";
+let isSecondMode = false;
 
 const config = {
   keys: [
@@ -72,6 +73,9 @@ function handleInput(value) {
     } else {
       display.value = "-" + display.value;
     }
+  } else if (value === "2nd") {
+    isSecondMode = !isSecondMode;
+    updateButtonLabels();
   } else {
     if (display.value === "0" || display.value === "Error") {
       display.value = value;
@@ -79,6 +83,47 @@ function handleInput(value) {
       display.value += value;
     }
   }
+}
+
+// Update the labels for second functions
+function updateButtonLabels() {
+  const buttons = buttonsContainer.querySelectorAll("button");
+  buttons.forEach(button => {
+    if (isSecondMode && button.textContent !== "2nd" && button.textContent !== "AC" && button.textContent !== "⌫" && button.textContent !== "=") {
+      button.textContent = getSecondModeLabel(button.textContent);
+    } else if (!isSecondMode && button.textContent !== "2nd") {
+      button.textContent = getOriginalLabel(button.textContent);
+    }
+  });
+}
+
+// Mapping for second mode functions
+function getSecondModeLabel(label) {
+  const secondModeMap = {
+    "sin": "asin",
+    "cos": "acos",
+    "tan": "atan",
+    "lg": "log10",
+    "ln": "log",
+    "√x": "x^2",
+    "π": "π/2",
+    "X!": "nCr"
+  };
+  return secondModeMap[label] || label;
+}
+
+function getOriginalLabel(label) {
+  const originalModeMap = {
+    "asin": "sin",
+    "acos": "cos",
+    "atan": "tan",
+    "log10": "lg",
+    "log": "ln",
+    "x^2": "√x",
+    "π/2": "π",
+    "nCr": "X!"
+  };
+  return originalModeMap[label] || label;
 }
 
 // Generate buttons
@@ -101,10 +146,10 @@ lastCalcBtn.onclick = () => {
   }
 };
 
+// Keyboard support
 document.addEventListener("keydown", function (e) {
   const key = e.key;
   const validKeys = "0123456789+-*/().%";
-  const display = document.getElementById("display");
 
   if (validKeys.includes(key)) {
     if (display.value === "0" || display.value === "Error") {
