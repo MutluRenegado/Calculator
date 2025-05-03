@@ -6,6 +6,7 @@ const clearBtn = document.getElementById('clearBtn');
 
 let lastCalculations = [];
 let lastCalcIndex = -1;
+let firstValue = null; // To store the first value for percentage calculation
 
 const buttonsLayout = [
   ['C', 'ANS', '+-', '%', '÷'],
@@ -59,6 +60,7 @@ function buttonClicked(value) {
     showPreviousCalculation();
   } else if (value === 'C') {
     result.value = '';
+    firstValue = null; // Reset first value when cleared
   } else if (value === 'ANS') {
     if (lastCalculations.length > 0) {
       const lastAnswer = lastCalculations[lastCalculations.length - 1].split('=')[1].trim();
@@ -71,13 +73,19 @@ function buttonClicked(value) {
         : '-' + result.value;
     }
   } else if (value === '%') {
-    if (result.value && !result.value.includes('%')) {
-      let val = parseFloat(result.value);
-      if (!isNaN(val)) {
-        result.value = (val / 100).toString(); // Convert to percentage (e.g., 50 -> 0.5)
+    let val = parseFloat(result.value);
+    if (!isNaN(val) && result.value !== '') {
+      if (firstValue === null) {
+        // First number entered, so store it as first value
+        firstValue = val;
+        result.value = '';
       } else {
-        result.value = 'Error';  // Handle error if the value is invalid
+        // Calculate percentage based on second number entered
+        result.value = (firstValue * val / 100).toString(); // Calculate percentage
+        firstValue = null; // Reset after calculation
       }
+    } else {
+      result.value = 'Error';
     }
   } else {
     result.value += value === '÷' ? '/' : value === '×' ? '*' : value;
@@ -86,16 +94,12 @@ function buttonClicked(value) {
 
 function calculateResult() {
   try {
-    // Preprocess expression to handle percentages
     let expression = result.value.replace(/÷/g, '/').replace(/×/g, '*');
-
-    // Convert percentage operator (e.g., 50% -> 0.5)
     expression = expression.replace(/(\d+)%/g, (match, p1) => (parseFloat(p1) / 100));
 
     let answer = eval(expression);
-
     if (typeof answer === 'number') {
-      answer = +answer.toFixed(8); // Limit to 8 decimal places
+      answer = +answer.toFixed(8);
     }
 
     if (result.value !== '') {
@@ -135,6 +139,7 @@ document.addEventListener('keydown', (event) => {
     result.value = result.value.slice(0, -1);
   } else if (key === 'Escape' || key.toLowerCase() === 'c') {
     result.value = '';
+    firstValue = null; // Reset first value
   } else if (['+', '-', '*', '/'].includes(key)) {
     let symbol = key === '*' ? '×' : key === '/' ? '÷' : key;
     result.value += symbol;
