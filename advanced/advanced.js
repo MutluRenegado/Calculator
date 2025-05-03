@@ -1,99 +1,52 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const config = {
-    keys: [
-      ["2nd", "deg", "sin", "cos", "tan"],
-      ["xY", "lg", "ln", "(", ")"],
-      ["√x", "AC", "⌫", "%", "÷"],
-      ["X!", "7", "8", "9", "×"],
-      ["1/X", "4", "5", "6", "-"],
-      ["π", "1", "2", "3", "+"],
-      ["C", "0", ".", "=", "<"]
-    ].map(row =>
-      row.map(label => {
-        let cls = "";
-        if (["AC", "⌫", "%", "÷", "ANS", "+-", "C", "="].includes(label)) {
-          cls = "orange";
-        }
-        return { label, class: cls };
-      })
-    )
-  };
+const config = {
+  keys: [
+    ["2nd", "deg", "sin", "cos", "tan"],
+    ["xY", "lg", "ln", "(", ")"],
+    ["√x", "AC", "⌫", "%", "÷"],
+    ["X!", "7", "8", "9", "×"],
+    ["1/X", "4", "5", "6", "-"],
+    ["π", "1", "2", "3", "+"],
+    ["C", "0", ".", "=", "<"]
+  ]
+};
 
-  const display = document.getElementById("display");
-  const buttonsContainer = document.getElementById("buttons");
+// Dynamically create the calculator buttons
+const buttonsContainer = document.getElementById('buttons');
 
-  let memory = "";
-  let ans = "";
-
-  config.keys.forEach(row => {
-    const rowEl = document.createElement("div");
-    row.forEach(({ label, class: cls }) => {
-      const btn = document.createElement("button");
-      btn.innerText = label;
-      btn.className = cls ? `orange` : "";
-      btn.addEventListener("click", () => handleInput(label));
-      rowEl.appendChild(btn);
-    });
-    buttonsContainer.appendChild(rowEl);
+config.keys.forEach(row => {
+  const rowElement = document.createElement('div');
+  rowElement.classList.add('button-row');
+  
+  row.forEach(key => {
+    const button = document.createElement('button');
+    button.textContent = key;
+    button.classList.add('button');
+    rowElement.appendChild(button);
   });
+  
+  buttonsContainer.appendChild(rowElement);
+});
 
-  function handleInput(label) {
-    if (label === "AC") {
-      memory = "";
-    } else if (label === "⌫") {
-      memory = memory.slice(0, -1);
-    } else if (label === "=") {
+// Button functionality logic
+document.querySelectorAll('.button').forEach(button => {
+  button.addEventListener('click', function () {
+    const value = button.textContent;
+    const resultScreen = document.getElementById('result');
+    
+    if (value === "=") {
       try {
-        const evaluated = evaluateExpression(memory);
-        ans = evaluated;
-        memory = evaluated.toString();
-      } catch {
-        memory = "Error";
+        resultScreen.value = eval(resultScreen.value);
+      } catch (error) {
+        resultScreen.value = "Error";
       }
-    } else if (label === "ANS") {
-      memory += ans;
-    } else if (label === "+-") {
-      if (memory) memory = (-parseFloat(memory)).toString();
-    } else if (label === "π") {
-      memory += Math.PI;
-    } else if (label === "ln") {
-      memory += "ln(";
-    } else if (label === "lg") {
-      memory += "log10(";
-    } else if (label === "√x") {
-      memory += "sqrt(";
-    } else if (label === "xY") {
-      memory += "^";
-    } else if (label === "X!") {
-      memory += "fact(";
-    } else if (label === "1/X") {
-      memory += "1/(";
-    } else if (label === "sin" || label === "cos" || label === "tan") {
-      memory += `${label}(`;
+    } else if (value === "AC") {
+      resultScreen.value = "";
+    } else if (value === "⌫") {
+      resultScreen.value = resultScreen.value.slice(0, -1);
+    } else if (value === "2nd") {
+      // Handle 2nd function (if needed)
     } else {
-      memory += label;
+      resultScreen.value += value;
     }
-
-    display.value = memory;
-  }
-
-  function evaluateExpression(expr) {
-    expr = expr.replace(/×/g, "*").replace(/÷/g, "/").replace(/%/g, "/100");
-    expr = expr.replace(/π/g, Math.PI);
-    expr = expr.replace(/sqrt\(/g, "Math.sqrt(");
-    expr = expr.replace(/ln\(/g, "Math.log(");
-    expr = expr.replace(/log10\(/g, "Math.log10(");
-    expr = expr.replace(/sin\(/g, "Math.sin(");
-    expr = expr.replace(/cos\(/g, "Math.cos(");
-    expr = expr.replace(/tan\(/g, "Math.tan(");
-    expr = expr.replace(/fact\(/g, "factorial(");
-    expr = expr.replace(/\^/g, "**");
-
-    function factorial(n) {
-      if (n < 0) return NaN;
-      return n === 0 ? 1 : n * factorial(n - 1);
-    }
-
-    return Function("factorial", `return ${expr}`)(factorial);
-  }
+  });
 });
