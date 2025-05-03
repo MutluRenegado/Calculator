@@ -1,12 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Advanced Calculator</title>
+  <link rel="stylesheet" href="advanced.css" />
+  <link rel="stylesheet" href="footer/footer.css" />
+</head>
 <body>
   <div class="advanced-calculator" id="advanced-calculator">
     <h2>Advanced Calculator</h2>
 
     <input type="text" class="display" id="display" readonly />
 
-    <div class="buttons" id="buttons">
-      <!-- Buttons will be dynamically created -->
-    </div>
+    <div class="buttons" id="buttons"></div>
 
     <button class="special-btn" id="lastCalcBtn">Last Calculation</button>
   </div>
@@ -17,6 +24,7 @@
     </div>
   </footer>
 
-  <!-- Load script AFTER elements -->
+  <!-- Load JS after DOM -->
   <script src="advanced.js"></script>
 </body>
+</html>
