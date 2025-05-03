@@ -1,129 +1,78 @@
-# Calculator Project
+Calculator Project
+A responsive, web-based calculator offering Basic and Advanced modes, designed for ease of use, accessibility, and modularity.
 
-A responsive web-based calculator with two modes: **Basic** and **Advanced**.  
-Built with HTML, CSS, and JavaScript — designed for ease of use, accessibility, and modularity.
+Built with HTML, CSS, and JavaScript.
 
----
+🧮 Features
+🔹 Basic Calculator (index.html)
+Standard arithmetic operations: +, -, ×, ÷
 
-## 🧮 Features
+Clear (C), backspace (⌫), and equals (=)
 
-### 🔹 Basic Calculator (`index.html`)
-- Standard arithmetic operations: `+`, `-`, `×`, `÷`
-- Clear (`C`), backspace (`⌫`), and equals (`=`)
-- Clean and mobile-friendly UI
+Clean, mobile-friendly UI
 
-### 🔸 Advanced Calculator (`/advanced/index.html`)
-- Scientific functions: `sin`, `cos`, `tan`, `ln`, `log`, `π`, `√`, `!`, etc.
-- Second function toggle (`2nd`)
-- Dynamic button rendering via config object
-- Organized layout using a grid-based system
+🔸 Advanced Calculator (/advanced/index.html)
+Scientific functions: sin, cos, tan, ln, log, π, √, !, and more
 
----
+Second function toggle (2nd)
 
-## 📁 Folder Structure
+Dynamic button rendering via config object
 
-# Calculator Project
+Grid-based layout for organized design
 
-A responsive web-based calculator with two modes: **Basic** and **Advanced**.  
-Built with HTML, CSS, and JavaScript — designed for ease of use, accessibility, and modularity.
-
----
-
-## 🧮 Features
-
-### 🔹 Basic Calculator (`index.html`)
-- Standard arithmetic operations: `+`, `-`, `×`, `÷`
-- Clear (`C`), backspace (`⌫`), and equals (`=`)
-- Clean and mobile-friendly UI
-
-### 🔸 Advanced Calculator (`/advanced/index.html`)
-- Scientific functions: `sin`, `cos`, `tan`, `ln`, `log`, `π`, `√`, `!`, etc.
-- Second function toggle (`2nd`)
-- Dynamic button rendering via config object
-- Organized layout using a grid-based system
-
----
-
-## 📁 Folder Structure
-
-# Calculator Project
-
-A responsive web-based calculator with two modes: **Basic** and **Advanced**.  
-Built with HTML, CSS, and JavaScript — designed for ease of use, accessibility, and modularity.
-
----
-
-## 🧮 Features
-
-### 🔹 Basic Calculator (`index.html`)
-- Standard arithmetic operations: `+`, `-`, `×`, `÷`
-- Clear (`C`), backspace (`⌫`), and equals (`=`)
-- Clean and mobile-friendly UI
-
-### 🔸 Advanced Calculator (`/advanced/index.html`)
-- Scientific functions: `sin`, `cos`, `tan`, `ln`, `log`, `π`, `√`, `!`, etc.
-- Second function toggle (`2nd`)
-- Dynamic button rendering via config object
-- Organized layout using a grid-based system
-
----
-
-## 📁 Folder Structure
-
+📁 Folder Structure
+bash
+Copy
+Edit
 /calculator-project
 │
-├── index.html # Basic calculator
-├── calculator.css # Basic or shared styles
-├── calculator.js # Basic or shared JS logic
+├── index.html        # Basic calculator
+├── calculator.css    # Basic or shared styles
+├── calculator.js     # Basic or shared JS logic
 │
 ├── advanced/
-│ ├── index.html # Advanced calculator
-│ ├── advanced.css # Advanced-specific styles
-│ └── advanced.js # Advanced-specific JS
+│   ├── index.html    # Advanced calculator
+│   ├── advanced.css  # Advanced-specific styles
+│   └── advanced.js   # Advanced-specific JS
 │
 ├── app/
-│ └── consent.html # Optional page (e.g., GDPR/consent)
+│   └── consent.html  # Optional page (e.g., GDPR/consent)
 │
 ├── meta/
-│ ├── README.md # This file
-│ └── LICENSE # Project license
+│   ├── README.md     # This file
+│   └── LICENSE       # Project license
+🚀 Getting Started
+Clone or download the repository.
+
+Open index.html for the basic calculator.
+
+Open advanced/index.html for the scientific calculator.
+
+(Optional) Customize styles or expand functionality by modifying the JS/CSS files.
+
+📜 License & Usage Terms
 
 
----
-
-## 🚀 Getting Started
-
-1. Clone or download the repository.
-2. Open `index.html` for the basic calculator.
-3. Open `advanced/index.html` for the scientific calculator.
-4. (Optional) Customize styles or expand functionality in JS/CSS files.
-
----
-
-## 📜 License & Usage Terms
-
-[![License: CC BY-NC 4.0](https://licensebuttons.net/l/by-nc/4.0/88x31.png)](https://creativecommons.org/licenses/by-nc/4.0/)
-
-This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0)**.
+This project is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0).
 
 You are free to:
-- **Share** — copy and redistribute the material in any medium or format
-- **Adapt** — remix, transform, and build upon the material
 
-**Under the following terms**:
-- **Attribution** — You must give appropriate credit.
-- **NonCommercial** — You may not use the material for commercial purposes.
+Share — Copy and redistribute the material in any medium or format.
 
-➡️ Full license text: [https://creativecommons.org/licenses/by-nc/4.0/](https://creativecommons.org/licenses/by-nc/4.0/)
+Adapt — Remix, transform, and build upon the material.
 
-## 👨‍💻 Author
+Under the following terms:
 
-Created by Mutlu Akgün  
+Attribution — You must give appropriate credit.
+
+NonCommercial — You may not use the material for commercial purposes.
+
+For the full license details, please visit: Creative Commons License
+
+👨‍💻 Author
+Created by Mutlu Akgün
 For educational and non-commercial use only.
 
----
-
-## 🙌 Contributions
-
-Pull requests and feedback are welcome!  
+🙌 Contributions
+Pull requests and feedback are welcome!
 If you find bugs or have suggestions, feel free to open an issue or contribute directly.
