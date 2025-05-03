@@ -5,7 +5,6 @@ const lastCalcBtn = document.getElementById("last-calc-btn");
 
 let lastCalculation = "";
 
-// Key layout
 const config = {
   keys: [
     "2nd", "deg", "sin", "cos", "tan",
@@ -18,16 +17,21 @@ const config = {
   ]
 };
 
-// Factorial function
+// Utilities
 function factorial(n) {
   if (n < 0) return NaN;
   return n === 0 ? 1 : n * factorial(n - 1);
 }
 
-// Expression evaluator
+let expression = display.value
+  .replace(/×/g, "*")
+  .replace(/÷/g, "/")
+  .replace(/π/g, Math.PI)
+  .replace(/e/g, Math.E);
+
 function evaluateExpression(expression) {
   try {
-    let expr = expression
+    let replaced = expression
       .replace(/π/g, Math.PI)
       .replace(/e/g, Math.E)
       .replace(/÷/g, "/")
@@ -40,51 +44,44 @@ function evaluateExpression(expression) {
       .replace(/tan/g, "Math.tan")
       .replace(/xY/g, "**")
       .replace(/1\/X/g, "1/")
-      .replace(/X!/g, "factorial")
+      .replace(/X!/g, "fact(")
       .replace(/ANS/g, lastCalculation);
 
-    // Handle factorials explicitly
-    expr = expr.replace(/factorial\((\d+)\)/g, (_, n) => factorial(Number(n)));
+    // Evaluate factorials manually
+    replaced = replaced.replace(/fact\((\d+)\)/g, (_, n) => factorial(Number(n)));
 
-    return eval(expr);
-  } catch {
+    const result = eval(replaced);
+    return result;
+  } catch (err) {
     return "Error";
   }
 }
 
-// Handle input logic
 function handleInput(value) {
-  switch (value) {
-    case "AC":
-      display.value = "0";
-      lastCalculation = "";
-      break;
-    case "⌫":
-      display.value = display.value.slice(0, -1) || "0";
-      break;
-    case "=":
-      const result = evaluateExpression(display.value);
-      lastCalculation = result;
-      display.value = result;
-      break;
-    case "+-":
-      display.value = display.value.startsWith("-")
-        ? display.value.slice(1)
-        : "-" + display.value;
-      break;
-    case ".":
-      if (!display.value.includes(".")) {
-        display.value += ".";
-      }
-      break;
-    default:
-      display.value = display.value === "0" || display.value === "Error"
-        ? value
-        : display.value + value;
+  if (value === "AC") {
+    display.value = "0";
+  } else if (value === "⌫") {
+    display.value = display.value.slice(0, -1) || "0";
+  } else if (value === "=") {
+    const result = evaluateExpression(display.value);
+    lastCalculation = result;
+    display.value = result;
+  } else if (value === "+-") {
+    if (display.value.startsWith("-")) {
+      display.value = display.value.slice(1);
+    } else {
+      display.value = "-" + display.value;
+    }
+  } else {
+    if (display.value === "0" || display.value === "Error") {
+      display.value = value;
+    } else {
+      display.value += value;
+    }
   }
 }
 
-// Generate calculator buttons
+// Generate buttons
 config.keys.forEach(key => {
   const button = document.createElement("button");
   button.textContent = key;
@@ -97,28 +94,37 @@ darkModeToggle.onchange = () => {
   document.body.classList.toggle("dark-mode");
 };
 
-// Recall last calculation
+// Last calculation recall
 lastCalcBtn.onclick = () => {
   if (lastCalculation) {
     display.value = lastCalculation;
   }
 };
 
-// Keyboard input mapping
-document.addEventListener("keydown", e => {
+document.addEventListener("keydown", function (e) {
   const key = e.key;
-  if ("0123456789+-*/().%".includes(key)) {
-    display.value = display.value === "0" || display.value === "Error"
-      ? key
-      : display.value + key;
+  const validKeys = "0123456789+-*/().%";
+  const display = document.getElementById("display");
+
+  if (validKeys.includes(key)) {
+    if (display.value === "0" || display.value === "Error") {
+      display.value = key;
+    } else {
+      display.value += key;
+    }
   } else if (key === "Enter") {
-    const result = evaluateExpression(display.value);
-    lastCalculation = result;
-    display.value = result;
+    try {
+      lastCalculation = display.value;
+      display.value = eval(display.value.replace("π", Math.PI).replace("e", Math.E));
+    } catch {
+      display.value = "Error";
+    }
   } else if (key === "Backspace") {
-    display.value = display.value.length > 1
-      ? display.value.slice(0, -1)
-      : "0";
+    if (display.value.length > 1) {
+      display.value = display.value.slice(0, -1);
+    } else {
+      display.value = "0";
+    }
   } else if (key === "Escape") {
     display.value = "0";
   }
