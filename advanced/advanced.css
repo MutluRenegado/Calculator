@@ -32,7 +32,8 @@ h2 {
 }
 
 .display {
-  width: 100%;
+  width: calc(100% - 15px); /* reduce overall width */
+  margin-left: 15px;         /* shift the entire element right */
   font-size: 1.8rem;
   padding: 0.75rem;
   border: none;
@@ -41,6 +42,7 @@ h2 {
   background: #eaeaea;
   color: #000;
   text-align: right;
+  box-sizing: border-box; /* ensures padding/margin don't break layout */
 }
 
 /* Buttons Grid */
