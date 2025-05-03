@@ -2,7 +2,7 @@ const buttonsContainer = document.getElementById('buttons');
 const result = document.getElementById('result');
 const toggleDark = document.getElementById('toggleDark');
 const lastCalcBtn = document.getElementById('lastCalcBtn');
-const clearBtn = document.getElementById('clearBtn'); // C button removed from here
+const clearBtn = document.getElementById('clearBtn');
 
 let lastCalculations = [];
 let lastCalcIndex = -1;
@@ -28,7 +28,7 @@ function renderButtons() {
 
       if (btn === 'C') {
         button.classList.add('clear-btn');
-        button.style.gridColumn = 'span 4'; // Make it full width if needed
+        button.style.gridColumn = 'span 4';
       }
 
       if (btn === 'ANS' || btn === '+-' || btn === '%' || btn === '<') {
@@ -43,11 +43,7 @@ function renderButtons() {
         button.classList.add('number');
       }
 
-      // Add lightning effect to top row or right column in dark mode
-      if (
-        (rowIndex === 0 || colIndex === row.length - 1) &&
-        (btn !== 'C')
-      ) {
+      if ((rowIndex === 0 || colIndex === row.length - 1) && (btn !== 'C')) {
         button.classList.add('lightning');
       }
 
@@ -75,12 +71,13 @@ function buttonClicked(value) {
         : '-' + result.value;
     }
   } else if (value === '%') {
-    let val = parseFloat(result.value);
-    if (!isNaN(val) && result.value !== '') {
-      // Calculate the percentage value
-      result.value = (val / 100).toString(); // Convert to percentage (e.g., 50 -> 0.5)
-    } else {
-      result.value = 'Error';  // Handle error if the value is invalid
+    if (result.value && !result.value.includes('%')) {
+      let val = parseFloat(result.value);
+      if (!isNaN(val)) {
+        result.value = (val / 100).toString(); // Convert to percentage (e.g., 50 -> 0.5)
+      } else {
+        result.value = 'Error';  // Handle error if the value is invalid
+      }
     }
   } else {
     result.value += value === '÷' ? '/' : value === '×' ? '*' : value;
@@ -89,13 +86,14 @@ function buttonClicked(value) {
 
 function calculateResult() {
   try {
-    // Preprocess expression to handle percentages by converting them to decimals
+    // Preprocess expression to handle percentages
     let expression = result.value.replace(/÷/g, '/').replace(/×/g, '*');
-    
-    // Handle percentage by looking for occurrences of '%' and converting them
+
+    // Convert percentage operator (e.g., 50% -> 0.5)
     expression = expression.replace(/(\d+)%/g, (match, p1) => (parseFloat(p1) / 100));
 
     let answer = eval(expression);
+
     if (typeof answer === 'number') {
       answer = +answer.toFixed(8); // Limit to 8 decimal places
     }
