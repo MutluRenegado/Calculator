@@ -2,47 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Advanced Calculator</title>
-  <link rel="stylesheet" href="../calculator.css" />
-  <link rel="stylesheet" href="advanced.css" />
+  <link rel="stylesheet" href="calculator.css" />
 </head>
 <body>
-  <div class="tabs">
-    <span id="calculatorTab" class="active">Calculator</span>
-    <span id="converterTab">Converter</span>
+  <div class="calculator dark-mode">
+    <input type="text" class="display" id="display" readonly />
+    <div class="buttons" id="buttons"></div>
   </div>
 
-  <!-- Calculator Section -->
-  <div id="calculatorSection">
-    <input type="text" id="advancedDisplay" class="display" disabled />
-    <div id="advancedButtons"></div>
-  </div>
-
-  <!-- Converter Section -->
-  <div id="converterSection" style="display:none;">
-    <h3>Converter</h3>
-    <div class="converter">
-      <label for="fromValue">From:</label>
-      <input type="number" id="fromValue" placeholder="Enter value" />
-      <select id="fromUnit">
-        <option value="temperature">Temperature</option>
-        <option value="currency">Currency</option>
-      </select>
-      <span>To:</span>
-      <input type="number" id="toValue" disabled />
-      <select id="toUnit">
-        <option value="temperature">Temperature</option>
-        <option value="currency">Currency</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="toggle-back">
-    <button id="backToBasicBtn">Back to Basic</button>
-  </div>
-
-  <script src="advanced.js"></script>
-  <script src="script.js"></script>
+  <script src="advanced-calculator.js"></script>
 </body>
 </html>
