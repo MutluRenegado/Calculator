@@ -15,3 +15,6 @@
 ├── meta/                   # Documentation and licensing
 │   ├── README.md
 │   └── LICENSE             # Correct spelling and capitalization
+├── footer/                   # Documentation and licensing
+│   ├── footerscript.js
+│   └── footer.css
