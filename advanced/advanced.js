@@ -41,7 +41,7 @@ function evaluateExpression(expression) {
       .replace(/cos/g, "Math.cos")
       .replace(/tan/g, "Math.tan")
       .replace(/xY/g, "**")
-      .replace(/1\/X/g, "1/")
+      .replace(/1\/X/g, "1/") 
       .replace(/X!/g, "fact(")
       .replace(/ANS/g, lastCalculation);
 
@@ -106,24 +106,15 @@ document.addEventListener("keydown", function (e) {
   }
 
   if (validKeys.includes(key)) {
-    display.value = display.value === "0" || display.value === "Error"
-      ? key
-      : display.value + key;
-  } else if (key === "Enter") {
-    const result = evaluateExpression(display.value);
-    lastCalculation = result;
-    display.value = result;
+    handleInput(key);
+  } else if (key === "Enter" || key === "=") {
+    handleInput("=");
   } else if (key === "Backspace") {
-    display.value = display.value.length > 1
-      ? display.value.slice(0, -1)
-      : "0";
-  } else if (key === "Escape") {
-    display.value = "0";
+    handleInput("⌫");
   }
 });
 
-// Toggle shortcuts display
+// Keyboard shortcut display
 shortcutToggleBtn.onclick = () => {
-  keyboardShortcuts.style.display =
-    keyboardShortcuts.style.display === "none" ? "block" : "none";
+  keyboardShortcuts.classList.toggle("show");
 };
