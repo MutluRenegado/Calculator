@@ -20,5 +20,4 @@ jobs:
         git config --global user.email "github-actions@github.com"
         git add README.md
         git commit -m "Update root README.md from meta/README.md"
-        git push
-
+        git push origin main  # Push to the main branch
