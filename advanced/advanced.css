@@ -1,42 +1,122 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Advanced Calculator</title>
-  <link rel="stylesheet" href="advanced.css" />
-</head>
-<body>
-  <div class="calculator" id="advanced-calculator">
-    <h2>Advanced Calculator</h2>
+/* Base styles (light mode by default) */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #ecf0f1;
+  color: #2c3e50;
+  transition: background-color 0.3s, color 0.3s;
+}
 
-    <div class="toggles">
-      <label><input type="checkbox" id="toggleDark" /> Dark Mode</label>
-    </div>
+.calculator-container {
+  width: 90vw; /* shrink view to 90% of viewport width */
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: inherit;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transform: scale(0.9); /* optional for further shrink */
+}
 
-    <input
-      type="text"
-      class="calculator-screen"
-      id="result"
-      placeholder="0"
-      aria-label="Calculator Screen"
-    />
+/* Display with 20px less width on the right */
+.display {
+  width: calc(100% - 20px);
+  height: 60px;
+  font-size: 2em;
+  padding: 10px;
+  margin: 20px 0;
+  text-align: right;
+  border: none;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: #2c3e50;
+}
 
-    <div class="calculator-buttons" id="buttons">
-      <!-- Buttons will be generated dynamically -->
-    </div>
+/* Buttons Grid */
+.calculator-buttons {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
 
-    <button class="special-btn" id="lastCalcBtn" aria-label="Last Calculation">Last Calculation</button>
-  </div>
+.calculator-buttons button {
+  font-size: 1.2em;
+  height: 60px;
+  background-color: #bdc3c7;
+  color: #2c3e50;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-  <footer>
-    <div class="calculator-toggle">
-      <button onclick="window.location.href='/index.html'">Simple Calculator</button>
-      <button onclick="window.location.href='/advanced/advanced.html'">Advanced Calculator</button>
-    </div>
-  </footer>
+/* Special Button (e.g., Last Calculation) */
+.special-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #2980b9;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-  <script src="footer/footerscript.js"></script>
-  <script src="advanced.js"></script>
-</body>
-</html>
+/* Footer */
+footer {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.calculator-toggle button {
+  margin: 5px;
+  padding: 10px 20px;
+  background-color: #e67e22;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.calculator-toggle button:hover {
+  background-color: #d35400;
+}
+
+/* DARK MODE OVERRIDES */
+body.dark-mode {
+  background-color: #2c3e50;
+  color: white;
+}
+
+body.dark-mode .display {
+  background-color: #1c2833;
+  color: white;
+}
+
+body.dark-mode .calculator-buttons button {
+  background-color: #34495e;
+  color: white;
+}
+
+body.dark-mode .special-btn {
+  background-color: #3498db;
+}
+
+body.dark-mode .calculator-toggle button {
+  background-color: #e67e22;
+}
+
+body.dark-mode .calculator-toggle button:hover {
+  background-color: #d35400;
+}
+
+.keyboard-map {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out, padding 0.3s;
+}
+
+.keyboard-map.show {
+  max-height: 500px; /* enough to fit full content */
+  padding: 15px;
+}
