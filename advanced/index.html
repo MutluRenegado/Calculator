@@ -2,16 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Advanced Calculator</title>
-  <link rel="stylesheet" href="calculator.css" />
+  <link rel="stylesheet" href="advanced.css" />
+  <link rel="stylesheet" href="footer/footer.css" />
 </head>
 <body>
-  <div class="calculator dark-mode">
-    <input type="text" class="display" id="display" readonly />
-    <div class="buttons" id="buttons"></div>
+  <div class="Advanced Calculator" id="advanced-calculator">
+    <h2>Advanced Calculator</h2>
+    <div class="toggles">
+      <label><input type="checkbox" id="toggleDark" /> Dark Mode</label>
+    </div>
+
+    <input type="text" class="calculator-screen" id="result" placeholder="0" aria-label="Calculator Screen" />
+
+    <div class="calculator-buttons" id="buttons">
+      <!-- Example hardcoded row to show structure -->
+      <button class="clear-btn c" id="clearBtn">C</button>
+      <!-- Other buttons will be dynamically generated or added here -->
+    </div>
+
+    <button class="special-btn" id="lastCalcBtn" aria-label="Last Calculation">Last Calculation</button>
   </div>
 
-  <script src="advanced-calculator.js"></script>
+  <footer>
+    <div class="calculator-toggle">
+      <button id="advancedModeBtn">Advanced Calculator</button>
+    </div>
+  </footer>
+
+  <!-- External JavaScript files -->
+  <script src="advanced.js"></script>
+  <script src="advanced.js"></script>
 </body>
 </html>
