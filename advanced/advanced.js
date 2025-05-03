@@ -132,3 +132,12 @@ document.addEventListener("keydown", function (e) {
     handleInput(keyboardMap[key]);
   }
 });
+
+toggleMapBtn.onclick = () => {
+  const isVisible = keyboardMap.classList.contains("show");
+  keyboardMap.classList.toggle("show", !isVisible);
+  toggleMapBtn.textContent = isVisible
+    ? "🛈 Show Keyboard Shortcuts"
+    : "🛈 Hide Keyboard Shortcuts";
+};
+
