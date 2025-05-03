@@ -8,6 +8,7 @@ body {
 }
 
 .calculator-container {
+  width: 90vw; /* shrink view to 90% of viewport width */
   max-width: 500px;
   margin: 50px auto;
   padding: 20px;
@@ -15,6 +16,7 @@ body {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   text-align: center;
+  transform: scale(0.9); /* optional for further shrink */
 }
 
 /* Display with 20px less width on the right */
