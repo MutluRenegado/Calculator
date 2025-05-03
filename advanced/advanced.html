@@ -2,36 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Advanced Calculator</title>
   <link rel="stylesheet" href="advanced.css" />
 </head>
-<body>
-  <div class="calculator-container">
-    <h2>Advanced Calculator</h2>
+<body class="light-mode">
+  <main class="calculator-container">
+    <h1>Advanced Calculator</h1>
 
-    <!-- Dark Mode Toggle -->
-    <label class="theme-switch">
-      <input type="checkbox" id="dark-mode-toggle" />
-      <span>Dark Mode</span>
-    </label>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+      <label for="dark-mode-toggle">
+        <input type="checkbox" id="dark-mode-toggle" />
+        Dark Mode
+      </label>
+    </div>
 
-    <!-- Display -->
-    <input type="text" id="display" class="display" value="0" readonly />
+    <!-- Display Screen -->
+    <input type="text" id="display" class="display" value="0" readonly aria-label="Calculator display" />
 
-    <!-- Buttons Container -->
-    <div class="calculator-buttons" id="buttons-container"></div>
+    <!-- Dynamic Buttons Area -->
+    <div id="buttons-container" class="calculator-buttons"></div>
 
-    <!-- Last Calculation Button -->
-    <button id="last-calc-btn">Last Calculation</button>
-  </div>
+    <!-- Last Calculation Recall -->
+    <button id="last-calc-btn" class="special-btn">Last Calculation</button>
+  </main>
 
-  <!-- Footer with navigation -->
+  <!-- Navigation Footer -->
   <footer>
-    <div class="calculator-toggle">
+    <nav class="calculator-toggle">
       <button onclick="location.href='../index.html'">Simple Calculator</button>
       <button onclick="location.href='index.html'">Advanced Calculator</button>
-    </div>
+    </nav>
   </footer>
 
   <script src="advanced.js"></script>
