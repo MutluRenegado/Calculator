@@ -29,9 +29,11 @@
 
     <button class="special-btn" id="last-calc-btn" aria-label="Last Calculation">Last Calculation</button>
     
+    <!-- Button to toggle keyboard shortcuts visibility -->
     <button class="toggle-shortcuts-btn" id="toggleShortcutsBtn">Show Keyboard Shortcuts</button>
 
-    <div id="keyboardShortcuts" class="keyboard-map">
+    <!-- Keyboard shortcuts section -->
+    <div id="keyboardShortcuts" class="keyboard-map" style="display: none;">
       <h3>Keyboard Shortcuts</h3>
       <ul>
         <li><strong>Numbers:</strong> 0-9</li>
@@ -52,6 +54,22 @@
     </div>
   </footer>
 
+  <!-- JavaScript file -->
   <script src="advanced.js"></script>
+  <script>
+    // JavaScript to toggle the visibility of the keyboard shortcuts section
+    const toggleShortcutsBtn = document.getElementById('toggleShortcutsBtn');
+    const keyboardShortcuts = document.getElementById('keyboardShortcuts');
+
+    toggleShortcutsBtn.addEventListener('click', () => {
+      if (keyboardShortcuts.style.display === 'none' || keyboardShortcuts.style.display === '') {
+        keyboardShortcuts.style.display = 'block';
+        toggleShortcutsBtn.textContent = 'Hide Keyboard Shortcuts';
+      } else {
+        keyboardShortcuts.style.display = 'none';
+        toggleShortcutsBtn.textContent = 'Show Keyboard Shortcuts';
+      }
+    });
+  </script>
 </body>
 </html>
