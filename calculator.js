@@ -76,8 +76,11 @@ function buttonClicked(value) {
     }
   } else if (value === '%') {
     let val = parseFloat(result.value);
-    if (!isNaN(val)) {
-      result.value = (val / 100).toString();
+    if (!isNaN(val) && result.value !== '') {
+      // Calculate the percentage value
+      result.value = (val / 100).toString(); // Convert to percentage (e.g., 50 -> 0.5)
+    } else {
+      result.value = 'Error';  // Handle error if the value is invalid
     }
   } else {
     result.value += value === '÷' ? '/' : value === '×' ? '*' : value;
@@ -86,10 +89,15 @@ function buttonClicked(value) {
 
 function calculateResult() {
   try {
+    // Preprocess expression to handle percentages by converting them to decimals
     let expression = result.value.replace(/÷/g, '/').replace(/×/g, '*');
+    
+    // Handle percentage by looking for occurrences of '%' and converting them
+    expression = expression.replace(/(\d+)%/g, (match, p1) => (parseFloat(p1) / 100));
+
     let answer = eval(expression);
     if (typeof answer === 'number') {
-      answer = +answer.toFixed(8);
+      answer = +answer.toFixed(8); // Limit to 8 decimal places
     }
 
     if (result.value !== '') {
