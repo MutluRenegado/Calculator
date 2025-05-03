@@ -19,22 +19,22 @@ document.addEventListener("DOMContentLoaded", () => {
     )
   };
 
-  const display = document.getElementById("result"); // Fixed here
+  const display = document.getElementById("display");
   const buttonsContainer = document.getElementById("buttons");
 
   let memory = "";
   let ans = "";
 
-  // Clear pre-existing content (if hardcoded button exists)
-  buttonsContainer.innerHTML = "";
-
-  // Render buttons in flat layout
-  config.keys.flat().forEach(({ label, class: cls }) => {
-    const btn = document.createElement("button");
-    btn.innerText = label;
-    btn.className = cls ? `orange` : "";
-    btn.addEventListener("click", () => handleInput(label));
-    buttonsContainer.appendChild(btn);
+  config.keys.forEach(row => {
+    const rowEl = document.createElement("div");
+    row.forEach(({ label, class: cls }) => {
+      const btn = document.createElement("button");
+      btn.innerText = label;
+      btn.className = cls ? `orange` : "";
+      btn.addEventListener("click", () => handleInput(label));
+      rowEl.appendChild(btn);
+    });
+    buttonsContainer.appendChild(rowEl);
   });
 
   function handleInput(label) {
