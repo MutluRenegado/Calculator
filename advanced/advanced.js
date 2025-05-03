@@ -2,9 +2,12 @@ const display = document.getElementById("display");
 const buttonsContainer = document.getElementById("buttons-container");
 const darkModeToggle = document.getElementById("dark-mode-toggle");
 const lastCalcBtn = document.getElementById("last-calc-btn");
+const shortcutToggleBtn = document.getElementById("toggleShortcutsBtn");
+const keyboardShortcuts = document.getElementById("keyboardShortcuts");
 
 let lastCalculation = "";
 
+// Button configuration
 const config = {
   keys: [
     "2nd", "deg", "sin", "cos", "tan",
@@ -17,18 +20,13 @@ const config = {
   ]
 };
 
-// Utilities
+// Factorial helper
 function factorial(n) {
   if (n < 0) return NaN;
   return n === 0 ? 1 : n * factorial(n - 1);
 }
 
-let expression = display.value
-  .replace(/×/g, "*")
-  .replace(/÷/g, "/")
-  .replace(/π/g, Math.PI)
-  .replace(/e/g, Math.E);
-
+// Evaluate expression
 function evaluateExpression(expression) {
   try {
     let replaced = expression
@@ -47,16 +45,16 @@ function evaluateExpression(expression) {
       .replace(/X!/g, "fact(")
       .replace(/ANS/g, lastCalculation);
 
-    // Evaluate factorials manually
+    // Handle factorials
     replaced = replaced.replace(/fact\((\d+)\)/g, (_, n) => factorial(Number(n)));
 
-    const result = eval(replaced);
-    return result;
-  } catch (err) {
+    return eval(replaced);
+  } catch {
     return "Error";
   }
 }
 
+// Handle input
 function handleInput(value) {
   if (value === "AC") {
     display.value = "0";
@@ -67,17 +65,13 @@ function handleInput(value) {
     lastCalculation = result;
     display.value = result;
   } else if (value === "+-") {
-    if (display.value.startsWith("-")) {
-      display.value = display.value.slice(1);
-    } else {
-      display.value = "-" + display.value;
-    }
+    display.value = display.value.startsWith("-")
+      ? display.value.slice(1)
+      : "-" + display.value;
   } else {
-    if (display.value === "0" || display.value === "Error") {
-      display.value = value;
-    } else {
-      display.value += value;
-    }
+    display.value = display.value === "0" || display.value === "Error"
+      ? value
+      : display.value + value;
   }
 }
 
@@ -89,43 +83,47 @@ config.keys.forEach(key => {
   buttonsContainer.appendChild(button);
 });
 
-// Dark mode toggle
+// Dark mode
 darkModeToggle.onchange = () => {
   document.body.classList.toggle("dark-mode");
 };
 
-// Last calculation recall
+// Recall last calc
 lastCalcBtn.onclick = () => {
-  if (lastCalculation) {
-    display.value = lastCalculation;
-  }
+  if (lastCalculation) display.value = lastCalculation;
 };
 
+// Keyboard support
 document.addEventListener("keydown", function (e) {
   const key = e.key;
   const validKeys = "0123456789+-*/().%";
-  const display = document.getElementById("display");
+
+  if (e.ctrlKey && key === "d") {
+    e.preventDefault();
+    darkModeToggle.checked = !darkModeToggle.checked;
+    document.body.classList.toggle("dark-mode");
+    return;
+  }
 
   if (validKeys.includes(key)) {
-    if (display.value === "0" || display.value === "Error") {
-      display.value = key;
-    } else {
-      display.value += key;
-    }
+    display.value = display.value === "0" || display.value === "Error"
+      ? key
+      : display.value + key;
   } else if (key === "Enter") {
-    try {
-      lastCalculation = display.value;
-      display.value = eval(display.value.replace("π", Math.PI).replace("e", Math.E));
-    } catch {
-      display.value = "Error";
-    }
+    const result = evaluateExpression(display.value);
+    lastCalculation = result;
+    display.value = result;
   } else if (key === "Backspace") {
-    if (display.value.length > 1) {
-      display.value = display.value.slice(0, -1);
-    } else {
-      display.value = "0";
-    }
+    display.value = display.value.length > 1
+      ? display.value.slice(0, -1)
+      : "0";
   } else if (key === "Escape") {
     display.value = "0";
   }
 });
+
+// Toggle shortcuts display
+shortcutToggleBtn.onclick = () => {
+  keyboardShortcuts.style.display =
+    keyboardShortcuts.style.display === "none" ? "block" : "none";
+};
