@@ -4,9 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Calculator</title>
+  <!-- Link to CSS files for the calculator functionality -->
   <link rel="stylesheet" href="calculator.css" />
+  <!-- Link to CSS file for the footer functionality -->
+  <link rel="stylesheet" href="footer/footer.css" />
 </head>
 <body>
+  <!-- Simple Calculator -->
   <div class="calculator" id="basic-calculator">
     <h2>Simple Calculator</h2>
     <div class="toggles">
@@ -16,7 +20,9 @@
     <div class="calculator-buttons" id="buttons"></div>
   </div>
 
-      <div class="tabs">
+  <!-- Advanced Calculator (hidden by default) -->
+  <div class="calculator advanced-calculator" id="advanced-calculator" style="display:none;">
+    <div class="tabs">
       <span class="active">Calculator</span>
       <span>Converter</span>
     </div>
@@ -33,7 +39,9 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <!-- Link to JavaScript files for the calculator functionality -->
   <script src="calculator.js"></script>
+  <!-- Link to JavaScript file for the footer functionality -->
+  <script src="footer/footer.js"></script>
 </body>
 </html>
