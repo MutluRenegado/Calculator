@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Keyboard Shortcuts</title>
+  <style>
+    /* Button style */
+    #toggleButton {
+      padding: 10px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    #toggleButton:hover {
+      background-color: #0056b3;
+    }
+
+    /* Table styles */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    /* Container for shortcuts */
+    #shortcutsContainer {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toggle button -->
+  <button id="toggleButton">Show Keyboard Shortcuts</button>
+
+  <!-- Table of keyboard shortcuts -->
+  <div id="shortcutsContainer">
+    <table>
+      <thead>
+        <tr>
+          <th>Action</th>
+          <th>Shortcut</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Numbers</td>
+          <td>0-9</td>
+        </tr>
+        <tr>
+          <td>Operations</td>
+          <td>+, -, *, /</td>
+        </tr>
+        <tr>
+          <td>Clear</td>
+          <td>C or AC</td>
+        </tr>
+        <tr>
+          <td>Equals</td>
+          <td>Enter or =</td>
+        </tr>
+        <tr>
+          <td>Decimal</td>
+          <td>.</td>
+        </tr>
+        <tr>
+          <td>Delete</td>
+          <td>Backspace or ⌫</td>
+        </tr>
+        <tr>
+          <td>Toggle Dark Mode</td>
+          <td>Ctrl + D</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    const toggleButton = document.getElementById('toggleButton');
+    const shortcutsContainer = document.getElementById('shortcutsContainer');
+
+    // Toggle visibility of keyboard shortcuts
+    toggleButton.addEventListener('click', () => {
+      if (shortcutsContainer.style.display === 'none') {
+        shortcutsContainer.style.display = 'block';
+        toggleButton.textContent = 'Hide Keyboard Shortcuts';
+      } else {
+        shortcutsContainer.style.display = 'none';
+        toggleButton.textContent = 'Show Keyboard Shortcuts';
+      }
+    });
+  </script>
+
+</body>
+</html>
