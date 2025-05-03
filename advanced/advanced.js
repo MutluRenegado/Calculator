@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
       ["2nd", "deg", "sin", "cos", "tan"],
       ["xY", "lg", "ln", "(", ")"],
       ["√x", "AC", "⌫", "%", "÷"],
-      ["C", "ANS", "+-", "%", "÷"],
       ["X!", "7", "8", "9", "×"],
       ["1/X", "4", "5", "6", "-"],
       ["π", "1", "2", "3", "+"],
@@ -20,24 +19,22 @@ document.addEventListener("DOMContentLoaded", () => {
     )
   };
 
-  const display = document.getElementById("display");
+  const display = document.getElementById("result"); // Fixed here
   const buttonsContainer = document.getElementById("buttons");
 
   let memory = "";
   let ans = "";
 
-  // Render buttons
-  config.keys.forEach(row => {
-    const rowEl = document.createElement("div");
-    rowEl.classList.add("row");
-    row.forEach(({ label, class: cls }) => {
-      const btn = document.createElement("button");
-      btn.innerText = label;
-      btn.className = `button ${cls}`;
-      btn.addEventListener("click", () => handleInput(label));
-      rowEl.appendChild(btn);
-    });
-    buttonsContainer.appendChild(rowEl);
+  // Clear pre-existing content (if hardcoded button exists)
+  buttonsContainer.innerHTML = "";
+
+  // Render buttons in flat layout
+  config.keys.flat().forEach(({ label, class: cls }) => {
+    const btn = document.createElement("button");
+    btn.innerText = label;
+    btn.className = cls ? `orange` : "";
+    btn.addEventListener("click", () => handleInput(label));
+    buttonsContainer.appendChild(btn);
   });
 
   function handleInput(label) {
@@ -83,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function evaluateExpression(expr) {
     expr = expr.replace(/×/g, "*").replace(/÷/g, "/").replace(/%/g, "/100");
     expr = expr.replace(/π/g, Math.PI);
-    expr = expr.replace(/√x\(/g, "Math.sqrt(");
+    expr = expr.replace(/sqrt\(/g, "Math.sqrt(");
     expr = expr.replace(/ln\(/g, "Math.log(");
     expr = expr.replace(/log10\(/g, "Math.log10(");
     expr = expr.replace(/sin\(/g, "Math.sin(");
