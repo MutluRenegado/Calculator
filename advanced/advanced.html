@@ -2,41 +2,53 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Advanced Calculator</title>
   <link rel="stylesheet" href="advanced.css" />
 </head>
-<body>
-  <div class="calculator" id="advanced-calculator">
-    <h2>Advanced Calculator</h2>
+<body class="light-mode">
+  <main class="calculator-container">
+    <h1>Advanced Calculator</h1>
 
-    <div class="toggles">
-      <label><input type="checkbox" id="toggleDark" /> Dark Mode</label>
+    <!-- Theme Toggle Button -->
+    <div class="theme-toggle">
+      <button id="dark-mode-toggle" aria-label="Toggle dark mode">
+        🌙 Dark Mode
+      </button>
     </div>
 
+    <!-- Display Screen -->
     <input
       type="text"
-      class="calculator-screen"
-      id="result"
-      placeholder="0"
-      aria-label="Calculator Screen"
+      id="display"
+      class="display"
+      value="0"
+      readonly
+      aria-label="Calculator display"
     />
 
-    <div class="calculator-buttons" id="buttons">
-      <!-- Buttons will be generated dynamically -->
-    </div>
+    <!-- Buttons Container -->
+    <div id="buttons-container" class="calculator-buttons"></div>
 
-    <button class="special-btn" id="lastCalcBtn" aria-label="Last Calculation">Last Calculation</button>
-  </div>
+    <!-- Last Calculation Button -->
+    <button id="last-calc-btn" class="special-btn" aria-label="Recall last calculation">
+      Last Calculation
+    </button>
+  </main>
 
+  <!-- Footer Navigation -->
   <footer>
-    <div class="calculator-toggle">
-      <button onclick="window.location.href='/index.html'">Simple Calculator</button>
-      <button onclick="window.location.href='/advanced/advanced.html'">Advanced Calculator</button>
-    </div>
+    <nav class="calculator-toggle">
+      <button onclick="location.href='../index.html'" aria-label="Switch to simple calculator">
+        Simple Calculator
+      </button>
+      <button onclick="location.href='index.html'" aria-label="Reload advanced calculator">
+        Advanced Calculator
+      </button>
+    </nav>
   </footer>
 
-  <script src="footer/footerscript.js"></script>
+  <!-- JavaScript File -->
   <script src="advanced.js"></script>
 </body>
 </html>
