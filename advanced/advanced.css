@@ -195,3 +195,52 @@ body.dark-mode .calculator-toggle button {
 body.dark-mode .calculator-toggle button:hover {
   background-color: #777;
 }
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .calculator-container {
+    padding: 1.5rem;
+  }
+
+  .calculator-buttons {
+    grid-template-columns: repeat(4, 1fr); /* Adjust button grid for smaller screens */
+  }
+
+  .calculator-buttons button {
+    font-size: 0.9rem;
+    padding: 0.75rem;
+  }
+
+  .display {
+    font-size: 1.6rem;
+    padding: 0.5rem;
+  }
+
+  .special-btn,
+  .toggle-shortcuts-btn {
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .calculator-buttons {
+    grid-template-columns: repeat(3, 1fr); /* Fewer buttons per row on very small screens */
+  }
+
+  .calculator-buttons button {
+    font-size: 0.85rem;
+    padding: 0.5rem;
+  }
+
+  .display {
+    font-size: 1.4rem;
+    padding: 0.5rem;
+  }
+
+  .special-btn,
+  .toggle-shortcuts-btn {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+}
