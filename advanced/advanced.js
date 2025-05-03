@@ -5,7 +5,7 @@ const lastCalcBtn = document.getElementById("last-calc-btn");
 
 let lastCalculation = "";
 
-// Config for calculator keys
+// Key layout
 const config = {
   keys: [
     "2nd", "deg", "sin", "cos", "tan",
@@ -18,15 +18,16 @@ const config = {
   ]
 };
 
-// Utilities
+// Factorial function
 function factorial(n) {
   if (n < 0) return NaN;
   return n === 0 ? 1 : n * factorial(n - 1);
 }
 
+// Expression evaluator
 function evaluateExpression(expression) {
   try {
-    let replaced = expression
+    let expr = expression
       .replace(/π/g, Math.PI)
       .replace(/e/g, Math.E)
       .replace(/÷/g, "/")
@@ -42,40 +43,48 @@ function evaluateExpression(expression) {
       .replace(/X!/g, "factorial")
       .replace(/ANS/g, lastCalculation);
 
-    // Evaluate factorials manually if needed
-    replaced = replaced.replace(/factorial\((\d+)\)/g, (_, n) => factorial(Number(n)));
+    // Handle factorials explicitly
+    expr = expr.replace(/factorial\((\d+)\)/g, (_, n) => factorial(Number(n)));
 
-    return eval(replaced);
-  } catch (err) {
+    return eval(expr);
+  } catch {
     return "Error";
   }
 }
 
-// Handle input and actions
+// Handle input logic
 function handleInput(value) {
-  if (value === "AC") {
-    display.value = "0";
-    lastCalculation = "";  // Clear last calculation
-  } else if (value === "⌫") {
-    display.value = display.value.slice(0, -1) || "0";
-  } else if (value === "=") {
-    const result = evaluateExpression(display.value);
-    lastCalculation = result;
-    display.value = result;
-  } else if (value === "+-") {
-    display.value = display.value.startsWith("-") 
-      ? display.value.slice(1) 
-      : "-" + display.value;
-  } else if (value === "." && display.value.includes(".")) {
-    return; // Prevent multiple decimal points in a number
-  } else {
-    display.value = display.value === "0" || display.value === "Error" 
-      ? value 
-      : display.value + value;
+  switch (value) {
+    case "AC":
+      display.value = "0";
+      lastCalculation = "";
+      break;
+    case "⌫":
+      display.value = display.value.slice(0, -1) || "0";
+      break;
+    case "=":
+      const result = evaluateExpression(display.value);
+      lastCalculation = result;
+      display.value = result;
+      break;
+    case "+-":
+      display.value = display.value.startsWith("-")
+        ? display.value.slice(1)
+        : "-" + display.value;
+      break;
+    case ".":
+      if (!display.value.includes(".")) {
+        display.value += ".";
+      }
+      break;
+    default:
+      display.value = display.value === "0" || display.value === "Error"
+        ? value
+        : display.value + value;
   }
 }
 
-// Generate buttons dynamically
+// Generate calculator buttons
 config.keys.forEach(key => {
   const button = document.createElement("button");
   button.textContent = key;
@@ -83,7 +92,7 @@ config.keys.forEach(key => {
   buttonsContainer.appendChild(button);
 });
 
-// Toggle dark mode
+// Dark mode toggle
 darkModeToggle.onchange = () => {
   document.body.classList.toggle("dark-mode");
 };
@@ -95,22 +104,20 @@ lastCalcBtn.onclick = () => {
   }
 };
 
-// Keyboard support
-document.addEventListener("keydown", function (e) {
+// Keyboard input mapping
+document.addEventListener("keydown", e => {
   const key = e.key;
-  const validKeys = "0123456789+-*/().%";
-  
-  if (validKeys.includes(key)) {
-    display.value = display.value === "0" || display.value === "Error" 
-      ? key 
+  if ("0123456789+-*/().%".includes(key)) {
+    display.value = display.value === "0" || display.value === "Error"
+      ? key
       : display.value + key;
   } else if (key === "Enter") {
     const result = evaluateExpression(display.value);
     lastCalculation = result;
     display.value = result;
   } else if (key === "Backspace") {
-    display.value = display.value.length > 1 
-      ? display.value.slice(0, -1) 
+    display.value = display.value.length > 1
+      ? display.value.slice(0, -1)
       : "0";
   } else if (key === "Escape") {
     display.value = "0";
