@@ -42,7 +42,6 @@ function evaluateExpression(expression) {
       .replace(/X!/g, "factorial")
       .replace(/ANS/g, lastCalculation);
 
-    // Evaluate factorials manually if needed
     replaced = replaced.replace(/factorial\((\d+)\)/g, (_, n) => factorial(Number(n)));
 
     return eval(replaced);
@@ -51,11 +50,10 @@ function evaluateExpression(expression) {
   }
 }
 
-// Handle input and actions
 function handleInput(value) {
   if (value === "AC") {
     display.value = "0";
-    lastCalculation = "";  // Clear last calculation
+    lastCalculation = "";
   } else if (value === "⌫") {
     display.value = display.value.slice(0, -1) || "0";
   } else if (value === "=") {
@@ -63,14 +61,14 @@ function handleInput(value) {
     lastCalculation = result;
     display.value = result;
   } else if (value === "+-") {
-    display.value = display.value.startsWith("-") 
-      ? display.value.slice(1) 
+    display.value = display.value.startsWith("-")
+      ? display.value.slice(1)
       : "-" + display.value;
   } else if (value === "." && display.value.includes(".")) {
-    return; // Prevent multiple decimal points in a number
+    return;
   } else {
-    display.value = display.value === "0" || display.value === "Error" 
-      ? value 
+    display.value = display.value === "0" || display.value === "Error"
+      ? value
       : display.value + value;
   }
 }
@@ -95,24 +93,42 @@ lastCalcBtn.onclick = () => {
   }
 };
 
-// Keyboard support
+// Keyboard input support
+const keyboardMap = {
+  "/": "÷",
+  "*": "×",
+  "^": "xY",
+  "s": "sin",
+  "c": "cos",
+  "t": "tan",
+  "l": "ln",
+  "g": "lg",
+  "r": "√x",
+  "!": "X!",
+  "p": "π",
+  "e": "e",
+  "a": "ANS",
+  "f": "1/X"
+};
+
 document.addEventListener("keydown", function (e) {
-  const key = e.key;
-  const validKeys = "0123456789+-*/().%";
-  
-  if (validKeys.includes(key)) {
-    display.value = display.value === "0" || display.value === "Error" 
-      ? key 
+  const key = e.key.toLowerCase();
+
+  if (!isNaN(key) || "+-().%".includes(key)) {
+    display.value = display.value === "0" || display.value === "Error"
+      ? key
       : display.value + key;
-  } else if (key === "Enter") {
+  } else if (key === "enter" || key === "=") {
     const result = evaluateExpression(display.value);
     lastCalculation = result;
     display.value = result;
-  } else if (key === "Backspace") {
-    display.value = display.value.length > 1 
-      ? display.value.slice(0, -1) 
+  } else if (key === "backspace") {
+    display.value = display.value.length > 1
+      ? display.value.slice(0, -1)
       : "0";
-  } else if (key === "Escape") {
+  } else if (key === "escape") {
     display.value = "0";
+  } else if (keyboardMap[key]) {
+    handleInput(keyboardMap[key]);
   }
 });
