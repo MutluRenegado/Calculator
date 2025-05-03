@@ -81,7 +81,7 @@ function buttonClicked(value) {
         result.value = '';
       } else {
         // Calculate percentage based on second number entered
-        result.value = (firstValue * val / 100).toString(); // Calculate percentage
+        result.value = ((firstValue * val) / 100).toFixed(2); // Calculate percentage to 2 decimals
         firstValue = null; // Reset after calculation
       }
     } else {
@@ -99,7 +99,7 @@ function calculateResult() {
 
     let answer = eval(expression);
     if (typeof answer === 'number') {
-      answer = +answer.toFixed(8);
+      answer = +answer.toFixed(2); // Limit to 2 decimal places
     }
 
     if (result.value !== '') {
