@@ -5,6 +5,7 @@ const lastCalcBtn = document.getElementById("last-calc-btn");
 
 let lastCalculation = "";
 
+// Config for calculator keys
 const config = {
   keys: [
     "2nd", "deg", "sin", "cos", "tan",
@@ -38,22 +39,23 @@ function evaluateExpression(expression) {
       .replace(/tan/g, "Math.tan")
       .replace(/xY/g, "**")
       .replace(/1\/X/g, "1/")
-      .replace(/X!/g, "fact(")
+      .replace(/X!/g, "factorial")
       .replace(/ANS/g, lastCalculation);
 
-    // Evaluate factorials manually
-    replaced = replaced.replace(/fact\((\d+)\)/g, (_, n) => factorial(Number(n)));
+    // Evaluate factorials manually if needed
+    replaced = replaced.replace(/factorial\((\d+)\)/g, (_, n) => factorial(Number(n)));
 
-    const result = eval(replaced);
-    return result;
+    return eval(replaced);
   } catch (err) {
     return "Error";
   }
 }
 
+// Handle input and actions
 function handleInput(value) {
   if (value === "AC") {
     display.value = "0";
+    lastCalculation = "";  // Clear last calculation
   } else if (value === "⌫") {
     display.value = display.value.slice(0, -1) || "0";
   } else if (value === "=") {
@@ -61,21 +63,19 @@ function handleInput(value) {
     lastCalculation = result;
     display.value = result;
   } else if (value === "+-") {
-    if (display.value.startsWith("-")) {
-      display.value = display.value.slice(1);
-    } else {
-      display.value = "-" + display.value;
-    }
+    display.value = display.value.startsWith("-") 
+      ? display.value.slice(1) 
+      : "-" + display.value;
+  } else if (value === "." && display.value.includes(".")) {
+    return; // Prevent multiple decimal points in a number
   } else {
-    if (display.value === "0" || display.value === "Error") {
-      display.value = value;
-    } else {
-      display.value += value;
-    }
+    display.value = display.value === "0" || display.value === "Error" 
+      ? value 
+      : display.value + value;
   }
 }
 
-// Generate buttons
+// Generate buttons dynamically
 config.keys.forEach(key => {
   const button = document.createElement("button");
   button.textContent = key;
@@ -83,42 +83,35 @@ config.keys.forEach(key => {
   buttonsContainer.appendChild(button);
 });
 
-// Dark mode toggle
+// Toggle dark mode
 darkModeToggle.onchange = () => {
   document.body.classList.toggle("dark-mode");
 };
 
-// Last calculation recall
+// Recall last calculation
 lastCalcBtn.onclick = () => {
   if (lastCalculation) {
     display.value = lastCalculation;
   }
 };
 
+// Keyboard support
 document.addEventListener("keydown", function (e) {
   const key = e.key;
   const validKeys = "0123456789+-*/().%";
-  const display = document.getElementById("display");
-
+  
   if (validKeys.includes(key)) {
-    if (display.value === "0" || display.value === "Error") {
-      display.value = key;
-    } else {
-      display.value += key;
-    }
+    display.value = display.value === "0" || display.value === "Error" 
+      ? key 
+      : display.value + key;
   } else if (key === "Enter") {
-    try {
-      lastCalculation = display.value;
-      display.value = eval(display.value.replace("π", Math.PI).replace("e", Math.E));
-    } catch {
-      display.value = "Error";
-    }
+    const result = evaluateExpression(display.value);
+    lastCalculation = result;
+    display.value = result;
   } else if (key === "Backspace") {
-    if (display.value.length > 1) {
-      display.value = display.value.slice(0, -1);
-    } else {
-      display.value = "0";
-    }
+    display.value = display.value.length > 1 
+      ? display.value.slice(0, -1) 
+      : "0";
   } else if (key === "Escape") {
     display.value = "0";
   }
