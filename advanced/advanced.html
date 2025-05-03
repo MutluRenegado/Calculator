@@ -9,18 +9,29 @@
 <body>
   <div class="calculator-container">
     <h2>Advanced Calculator</h2>
+
+    <!-- Dark Mode Toggle -->
     <label class="theme-switch">
       <input type="checkbox" id="dark-mode-toggle" />
       <span>Dark Mode</span>
     </label>
+
+    <!-- Display -->
     <input type="text" id="display" class="display" value="0" readonly />
+
+    <!-- Buttons Container -->
     <div class="calculator-buttons" id="buttons-container"></div>
+
+    <!-- Last Calculation Button -->
     <button id="last-calc-btn">Last Calculation</button>
   </div>
 
+  <!-- Footer with navigation -->
   <footer>
-    <button onclick="location.href='../index.html'">Simple Calculator</button>
-    <button onclick="location.href='advanced.html'">Advanced Calculator</button>
+    <div class="calculator-toggle">
+      <button onclick="location.href='../index.html'">Simple Calculator</button>
+      <button onclick="location.href='index.html'">Advanced Calculator</button>
+    </div>
   </footer>
 
   <script src="advanced.js"></script>
