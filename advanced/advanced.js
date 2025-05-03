@@ -94,3 +94,32 @@ lastCalcBtn.onclick = () => {
     display.value = lastCalculation;
   }
 };
+
+document.addEventListener("keydown", function (e) {
+  const key = e.key;
+  const validKeys = "0123456789+-*/().%";
+  const display = document.getElementById("display");
+
+  if (validKeys.includes(key)) {
+    if (display.value === "0" || display.value === "Error") {
+      display.value = key;
+    } else {
+      display.value += key;
+    }
+  } else if (key === "Enter") {
+    try {
+      lastCalculation = display.value;
+      display.value = eval(display.value.replace("π", Math.PI).replace("e", Math.E));
+    } catch {
+      display.value = "Error";
+    }
+  } else if (key === "Backspace") {
+    if (display.value.length > 1) {
+      display.value = display.value.slice(0, -1);
+    } else {
+      display.value = "0";
+    }
+  } else if (key === "Escape") {
+    display.value = "0";
+  }
+});
