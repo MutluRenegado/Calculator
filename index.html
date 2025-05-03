@@ -4,20 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Calculator</title>
-  <!-- Link to CSS files for the calculator functionality -->
   <link rel="stylesheet" href="calculator.css" />
-  <!-- Link to CSS file for the footer functionality -->
-  <link rel="stylesheet" href="footer/footer.css" />
+  <link rel="stylesheet" href="advanced-calculator.css" />
 </head>
 <body>
-  <!-- Simple Calculator -->
+  <!-- Basic Calculator -->
   <div class="calculator" id="basic-calculator">
     <h2>Simple Calculator</h2>
     <div class="toggles">
       <label><input type="checkbox" id="toggleDark" /> Dark Mode</label>
     </div>
+    
     <input type="text" class="calculator-screen" id="result" placeholder="0" aria-label="Calculator Screen" />
-    <div class="calculator-buttons" id="buttons"></div>
+
+    <div class="calculator-buttons" id="buttons">
+      <!-- Buttons should be dynamically generated or added here -->
+      <button class="clear-btn c" id="clearBtn">C</button>
+      <!-- More buttons can go here -->
+    </div>
+
+    <button class="special-btn" id="lastCalcBtn" aria-label="Last Calculation">Last Calculation</button>
   </div>
 
   <!-- Advanced Calculator (hidden by default) -->
@@ -28,6 +34,9 @@
     </div>
     <div class="display" id="advanced-display">0</div>
     <div class="keys" id="advanced-calculator-keys"></div>
+    <div class="toggle-back">
+      <button id="backToBasicBtn">Back to Basic</button>
+    </div>
   </div>
 
   <!-- Footer for toggling calculators -->
@@ -39,9 +48,30 @@
     </div>
   </footer>
 
-  <!-- Link to JavaScript files for the calculator functionality -->
+  <script src="advanced-config.js"></script>
+  <script src="script.js"></script>
   <script src="calculator.js"></script>
-  <!-- Link to JavaScript file for the footer functionality -->
-  <script src="footer/footer.js"></script>
+  <script>
+    // Dark Mode Toggle
+    document.getElementById('toggleDark').addEventListener('change', (e) => {
+      document.body.classList.toggle('dark', e.target.checked);
+    });
+
+    // Footer Calculator Toggle Buttons
+    document.getElementById('simpleModeBtn').addEventListener('click', () => {
+      document.getElementById('basic-calculator').style.display = 'block';
+      document.getElementById('advanced-calculator').style.display = 'none';
+    });
+
+    document.getElementById('advancedModeBtn').addEventListener('click', () => {
+      document.getElementById('basic-calculator').style.display = 'none';
+      document.getElementById('advanced-calculator').style.display = 'block';
+    });
+
+    document.getElementById('financialModeBtn').addEventListener('click', () => {
+      // Implement logic for Financial Calculator (if any)
+      console.log("Financial calculator mode activated.");
+    });
+  </script>
 </body>
 </html>
