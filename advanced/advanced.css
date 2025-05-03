@@ -1,4 +1,3 @@
-/* Base styles (light mode by default) */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -10,57 +9,55 @@ body {
 .calculator-container {
   width: 90vw;
   max-width: 500px;
-  margin: 50px auto;
+  margin: 40px auto;
   padding: 20px;
-  background-color: inherit;
+  background-color: white;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
   text-align: center;
-  transform: scale(0.9); 
 }
 
-/* Display */
 .display {
-  width: calc(100% - 20px);
+  width: 100%;
   height: 60px;
   font-size: 2em;
   padding: 10px;
   margin: 20px 0;
   text-align: right;
-  border: none;
+  border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #ffffff;
   color: #2c3e50;
 }
 
-/* Buttons Grid */
 .calculator-buttons {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); 
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 .calculator-buttons button {
   font-size: 1.5em;
-  height: 60px;
+  padding: 15px 0;
   background-color: #bdc3c7;
   color: #2c3e50;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s, box-shadow 0.3s ease;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .calculator-buttons button:hover {
-  background-color: #95a5a6; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #95a5a6;
+  transform: scale(1.05);
 }
 
-/* Special Button */
-.special-btn {
-  margin-top: 20px;
-  padding: 10px 20px;
+.special-btn, .toggle-shortcuts-btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
   font-size: 1em;
   background-color: #2980b9;
   color: white;
@@ -69,14 +66,39 @@ body {
   cursor: pointer;
 }
 
-.special-btn:hover {
+.special-btn:hover,
+.toggle-shortcuts-btn:hover {
   background-color: #1f6f97;
 }
 
-/* Footer */
+.keyboard-map {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out, padding 0.3s;
+  margin-top: 20px;
+  padding: 0;
+  background-color: #ecf0f1;
+  border-radius: 5px;
+}
+
+.keyboard-map.show {
+  max-height: 300px;
+  padding: 10px;
+}
+
+#keyboardShortcuts ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+#keyboardShortcuts li {
+  padding: 5px 0;
+  font-size: 1em;
+}
+
 footer {
   text-align: center;
-  margin-top: 30px;
+  margin: 30px 0;
 }
 
 .calculator-toggle button {
@@ -94,51 +116,14 @@ footer {
   background-color: #d35400;
 }
 
-/* Keyboard Shortcuts List */
-.keyboard-map {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease-in-out, padding 0.3s;
-  margin-top: 20px;
-  padding: 0;
-  background-color: #ecf0f1;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.keyboard-map.show {
-  max-height: 300px;
-  padding: 10px;
-}
-
-#keyboardShortcuts ul {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-#keyboardShortcuts li {
-  padding: 5px 0;
-  font-size: 1em;
-}
-
-.toggle-shortcuts-btn {
-  background-color: #16a085;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 20px;
-}
-
-.toggle-shortcuts-btn:hover {
-  background-color: #1abc9c;
-}
-
-/* DARK MODE OVERRIDES */
+/* Dark Mode */
 body.dark-mode {
   background-color: #2c3e50;
   color: white;
+}
+
+body.dark-mode .calculator-container {
+  background-color: #34495e;
 }
 
 body.dark-mode .display {
@@ -147,7 +132,7 @@ body.dark-mode .display {
 }
 
 body.dark-mode .calculator-buttons button {
-  background-color: #3498db; 
+  background-color: #3498db;
   color: white;
 }
 
@@ -155,14 +140,12 @@ body.dark-mode .calculator-buttons button:hover {
   background-color: #5dade2;
 }
 
-body.dark-mode .special-btn {
-  background-color: #3498db;
+body.dark-mode .special-btn,
+body.dark-mode .toggle-shortcuts-btn {
+  background-color: #2980b9;
 }
 
-body.dark-mode .calculator-toggle button {
-  background-color: #e67e22;
-}
-
-body.dark-mode .calculator-toggle button:hover {
-  background-color: #d35400;
+body.dark-mode .special-btn:hover,
+body.dark-mode .toggle-shortcuts-btn:hover {
+  background-color: #1f6f97;
 }
