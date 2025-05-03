@@ -2,53 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Advanced Calculator</title>
   <link rel="stylesheet" href="advanced.css" />
 </head>
-<body class="light-mode">
-  <main class="calculator-container">
+<body>
+  <div class="calculator-container">
     <h1>Advanced Calculator</h1>
 
-    <!-- Theme Toggle Button -->
-    <div class="theme-toggle">
-      <button id="dark-mode-toggle" aria-label="Toggle dark mode">
-        🌙 Dark Mode
-      </button>
+    <input type="text" id="display" value="0" readonly />
+
+    <div class="controls">
+      <label>
+        <input type="checkbox" id="dark-mode-toggle" />
+        Dark Mode
+      </label>
+      <button id="last-calc-btn">Recall ANS</button>
     </div>
 
-    <!-- Display Screen -->
-    <input
-      type="text"
-      id="display"
-      class="display"
-      value="0"
-      readonly
-      aria-label="Calculator display"
-    />
+    <div id="buttons-container" class="buttons-container"></div>
+  </div>
 
-    <!-- Buttons Container -->
-    <div id="buttons-container" class="calculator-buttons"></div>
-
-    <!-- Last Calculation Button -->
-    <button id="last-calc-btn" class="special-btn" aria-label="Recall last calculation">
-      Last Calculation
-    </button>
-  </main>
-
-  <!-- Footer Navigation -->
   <footer>
-    <nav class="calculator-toggle">
-      <button onclick="location.href='../index.html'" aria-label="Switch to simple calculator">
-        Simple Calculator
-      </button>
-      <button onclick="location.href='index.html'" aria-label="Reload advanced calculator">
-        Advanced Calculator
-      </button>
-    </nav>
+    <div class="calculator-toggle">
+      <button onclick="window.location.href='/index.html'">Simple Calculator</button>
+      <button onclick="window.location.href='/advanced/advanced.html'">Advanced Calculator</button>
+    </div>
+    <p>&copy; 2025 Advanced Calculator App. Built by Mutlu Akgün.</p>
   </footer>
 
-  <!-- JavaScript File -->
+  <script src="footer/footerscript.js"></script>
   <script src="advanced.js"></script>
 </body>
 </html>
