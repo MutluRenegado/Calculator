@@ -1,1 +1,24 @@
+name: Sync README
+
+on:
+  push:
+    paths:
+      - 'meta/README.md'  # Trigger the workflow when the `meta/README.md` file changes
+
+jobs:
+  sync-readme:
+    runs-on: ubuntu-latest  # You can also use `windows-latest` or `macos-latest` if needed
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v2
+
+    - name: Copy `meta/README.md` to root `README.md`
+      run: |
+        cp meta/README.md README.md
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@github.com"
+        git add README.md
+        git commit -m "Update root README.md from meta/README.md"
+        git push
 
