@@ -20,10 +20,33 @@
       background-color: #0056b3;
     }
 
+    /* Buttons container */
+    div {
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      margin-right: 10px;
+      border: none;
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
     /* Table styles */
     table {
       width: 100%;
       border-collapse: collapse;
+      table-layout: fixed;
+      word-wrap: break-word;
     }
 
     th, td {
@@ -44,9 +67,57 @@
     #shortcutsContainer {
       display: none;
     }
+
+    /* Responsive styles */
+    @media (max-width: 600px) {
+      button {
+        width: 100%;
+        margin-bottom: 10px;
+        font-size: 18px;
+      }
+
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      thead tr {
+        display: none;
+      }
+
+      tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 10px;
+      }
+
+      td {
+        border: none;
+        padding-left: 50%;
+        position: relative;
+        text-align: left;
+      }
+
+      td::before {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 45%;
+        white-space: nowrap;
+        font-weight: bold;
+      }
+
+      td:nth-of-type(1)::before { content: "Action"; }
+      td:nth-of-type(2)::before { content: "Shortcut"; }
+    }
   </style>
 </head>
 <body>
+
+  <div>
+    <button id="simpleCalcBtn">Simple Calculator</button>
+    <button id="advancedCalcBtn">Advanced Calculator</button>
+  </div>
 
   <!-- Toggle button -->
   <button id="toggleButton">Show Keyboard Shortcuts</button>
@@ -96,6 +167,8 @@
   <script>
     const toggleButton = document.getElementById('toggleButton');
     const shortcutsContainer = document.getElementById('shortcutsContainer');
+    const simpleCalcBtn = document.getElementById('simpleCalcBtn');
+    const advancedCalcBtn = document.getElementById('advancedCalcBtn');
 
     // Toggle visibility of keyboard shortcuts
     toggleButton.addEventListener('click', () => {
@@ -106,6 +179,18 @@
         shortcutsContainer.style.display = 'none';
         toggleButton.textContent = 'Show Keyboard Shortcuts';
       }
+    });
+
+    // Show simple calculator shortcuts
+    simpleCalcBtn.addEventListener('click', () => {
+      shortcutsContainer.style.display = 'block';
+      toggleButton.style.display = 'inline-block';
+      toggleButton.textContent = 'Hide Keyboard Shortcuts';
+    });
+
+    // Open advanced calculator shortcuts in new tab
+    advancedCalcBtn.addEventListener('click', () => {
+      window.open('keyboard-shortcuts-advanced.html', '_blank');
     });
   </script>
 
