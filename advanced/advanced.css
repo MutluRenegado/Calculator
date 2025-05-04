@@ -202,13 +202,14 @@ body.dark-mode .calculator-toggle button:hover {
     padding: 1.5rem;
   }
 
+  /* Keep 5 columns on smaller screens but allow buttons to shrink */
   .calculator-buttons {
-    grid-template-columns: repeat(4, 1fr); /* Adjust button grid for smaller screens */
+    grid-template-columns: repeat(5, minmax(40px, 1fr)); /* Reduced min width to 40px */
   }
 
   .calculator-buttons button {
-    font-size: 0.9rem;
-    padding: 0.75rem;
+    font-size: 0.75rem;
+    padding: 0.5rem;
   }
 
   .display {
@@ -224,13 +225,14 @@ body.dark-mode .calculator-toggle button:hover {
 }
 
 @media (max-width: 400px) {
+  /* Keep 5 columns on very small screens but allow buttons to shrink more */
   .calculator-buttons {
-    grid-template-columns: repeat(3, 1fr); /* Fewer buttons per row on very small screens */
+    grid-template-columns: repeat(5, minmax(30px, 1fr)); /* Further reduced min width */
   }
 
   .calculator-buttons button {
-    font-size: 0.85rem;
-    padding: 0.5rem;
+    font-size: 0.65rem;
+    padding: 0.4rem;
   }
 
   .display {
