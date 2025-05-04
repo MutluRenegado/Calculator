@@ -1,75 +1,127 @@
-# Usage of mathLib Functions in Advanced Calculator
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Advanced Calculator Keyboard Shortcuts</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      line-height: 1.6;
+    }
+    h1, h2, h3 {
+      color: #007bff;
+    }
+    code {
+      background-color: #f4f4f4;
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-family: monospace;
+    }
+    pre {
+      background-color: #f4f4f4;
+      padding: 10px;
+      border-radius: 3px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <button onclick="window.location.href='index.html'">Go Back</button>
+  <h1>Usage of mathLib Functions in Advanced Calculator</h1>
 
-This document explains the functions available in the `mathLib` library and how to use them in expressions within the advanced calculator.
+  <p>This document explains the functions available in the <code>mathLib</code> library and how to use them in expressions within the advanced calculator.</p>
 
-## Available Functions
+  <h2>Available Functions</h2>
 
-The `mathLib` object provides the following functions:
+  <h3>Trigonometric Functions</h3>
+  <ul>
+    <li><code>sin(x, deg = false)</code>: Sine of <code>x</code>. If <code>deg</code> is true, <code>x</code> is in degrees; otherwise, radians.</li>
+    <li><code>cos(x, deg = false)</code>: Cosine of <code>x</code>.</li>
+    <li><code>tan(x, deg = false)</code>: Tangent of <code>x</code>.</li>
+  </ul>
 
-### Trigonometric Functions
-- `sin(x, deg = false)`: Sine of `x`. If `deg` is true, `x` is in degrees; otherwise, radians.
-- `cos(x, deg = false)`: Cosine of `x`.
-- `tan(x, deg = false)`: Tangent of `x`.
+  <h3>Inverse Trigonometric Functions</h3>
+  <ul>
+    <li><code>asin(x, deg = false)</code>: Inverse sine of <code>x</code>.</li>
+    <li><code>acos(x, deg = false)</code>: Inverse cosine of <code>x</code>.</li>
+    <li><code>atan(x, deg = false)</code>: Inverse tangent of <code>x</code>.</li>
+  </ul>
 
-### Inverse Trigonometric Functions
-- `asin(x, deg = false)`: Inverse sine of `x`.
-- `acos(x, deg = false)`: Inverse cosine of `x`.
-- `atan(x, deg = false)`: Inverse tangent of `x`.
+  <h3>Hyperbolic Functions</h3>
+  <ul>
+    <li><code>sinh(x)</code>: Hyperbolic sine of <code>x</code>.</li>
+    <li><code>cosh(x)</code>: Hyperbolic cosine of <code>x</code>.</li>
+    <li><code>tanh(x)</code>: Hyperbolic tangent of <code>x</code>.</li>
+  </ul>
 
-### Hyperbolic Functions
-- `sinh(x)`: Hyperbolic sine of `x`.
-- `cosh(x)`: Hyperbolic cosine of `x`.
-- `tanh(x)`: Hyperbolic tangent of `x`.
+  <h3>Power and Root Functions</h3>
+  <ul>
+    <li><code>power(base, exponent)</code>: <code>base</code> raised to the power of <code>exponent</code>.</li>
+    <li><code>sqrt(x)</code>: Square root of <code>x</code>.</li>
+    <li><code>inverse(x)</code>: Reciprocal of <code>x</code> (1/x).</li>
+  </ul>
 
-### Power and Root Functions
-- `power(base, exponent)`: `base` raised to the power of `exponent`.
-- `sqrt(x)`: Square root of `x`.
-- `inverse(x)`: Reciprocal of `x` (1/x).
+  <h3>Logarithmic Functions</h3>
+  <ul>
+    <li><code>log10(x)</code>: Base-10 logarithm of <code>x</code>.</li>
+    <li><code>ln(x)</code>: Natural logarithm (base e) of <code>x</code>.</li>
+    <li><code>logBase(x, base)</code>: Logarithm of <code>x</code> with specified <code>base</code>.</li>
+  </ul>
 
-### Logarithmic Functions
-- `log10(x)`: Base-10 logarithm of `x`.
-- `ln(x)`: Natural logarithm (base e) of `x`.
-- `logBase(x, base)`: Logarithm of `x` with specified `base`.
+  <h3>Factorial</h3>
+  <ul>
+    <li><code>factorial(n)</code>: Factorial of <code>n</code> (n!).</li>
+  </ul>
 
-### Factorial
-- `factorial(n)`: Factorial of `n` (n!).
+  <h3>Constants</h3>
+  <ul>
+    <li><code>pi()</code>: Returns the value of π.</li>
+    <li><code>e()</code>: Returns the value of Euler's number e.</li>
+  </ul>
 
-### Constants
-- `pi()`: Returns the value of π.
-- `e()`: Returns the value of Euler's number e.
+  <h2>How to Use in Expressions</h2>
 
-## How to Use in Expressions
+  <p>In the calculator input, you can use the following syntax for functions and constants:</p>
 
-In the calculator input, you can use the following syntax for functions and constants:
+  <ul>
+    <li>Use <code>sin(x)</code>, <code>cos(x)</code>, <code>tan(x)</code> for trigonometric calculations.</li>
+    <li>Use <code>asin(x)</code>, <code>acos(x)</code>, <code>atan(x)</code> for inverse trig functions.</li>
+    <li>Use <code>sinh(x)</code>, <code>cosh(x)</code>, <code>tanh(x)</code> for hyperbolic functions.</li>
+    <li>Use <code>xY(base, exponent)</code> to calculate power (e.g., <code>xY(2,3)</code> = 2^3 = 8).</li>
+    <li>Use <code>√x(x)</code> for square root.</li>
+    <li>Use <code>1/X(x)</code> for reciprocal.</li>
+    <li>Use <code>lg(x)</code> for log base 10.</li>
+    <li>Use <code>ln(x)</code> for natural log.</li>
+    <li>Use <code>X!(n)</code> for factorial.</li>
+    <li>Use <code>π</code> and <code>e</code> for constants.</li>
+    <li>Use <code>ANS</code> to refer to the last calculated result.</li>
+  </ul>
 
-- Use `sin(x)`, `cos(x)`, `tan(x)` for trigonometric calculations.
-- Use `asin(x)`, `acos(x)`, `atan(x)` for inverse trig functions.
-- Use `sinh(x)`, `cosh(x)`, `tanh(x)` for hyperbolic functions.
-- Use `xY(base, exponent)` to calculate power (e.g., `xY(2,3)` = 2^3 = 8).
-- Use `√x(x)` for square root.
-- Use `1/X(x)` for reciprocal.
-- Use `lg(x)` for log base 10.
-- Use `ln(x)` for natural log.
-- Use `X!(n)` for factorial.
-- Use `π` and `e` for constants.
-- Use `ANS` to refer to the last calculated result.
+  <h2>Examples</h2>
 
-## Examples
+  <ul>
+    <li><code>sin(30)</code> - sine of 30 radians.</li>
+    <li><code>sin(30 deg)</code> - sine of 30 degrees (if degree mode is enabled).</li>
+    <li><code>xY(2, 8)</code> - 2 raised to the power 8.</li>
+    <li><code>√x(16)</code> - square root of 16.</li>
+    <li><code>X!(5)</code> - factorial of 5 (120).</li>
+    <li><code>lg(100)</code> - log base 10 of 100 (2).</li>
+    <li><code>ln(e)</code> - natural log of e (1).</li>
+    <li><code>1/X(4)</code> - reciprocal of 4 (0.25).</li>
+  </ul>
 
-- `sin(30)` - sine of 30 radians.
-- `sin(30 deg)` - sine of 30 degrees (if degree mode is enabled).
-- `xY(2, 8)` - 2 raised to the power 8.
-- `√x(16)` - square root of 16.
-- `X!(5)` - factorial of 5 (120).
-- `lg(100)` - log base 10 of 100 (2).
-- `ln(e)` - natural log of e (1).
-- `1/X(4)` - reciprocal of 4 (0.25).
+  <h2>Notes</h2>
 
-## Notes
-
-- The calculator replaces these function calls internally with calls to the `mathLib` functions.
-- Use parentheses `()` to enclose function arguments.
-- Use operators `+`, `-`, `*`, `/` for arithmetic operations.
-- Use `ANS` to reuse the last result in new calculations.
-
-This should help you understand and use the functions defined in the calculator effectively.
+  <ul>
+    <li>The calculator replaces these function calls internally with calls to the <code>mathLib</code> functions.</li>
+    <li>Use parentheses <code>()</code> to enclose function arguments.</li>
+    <li>Use operators <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code> for arithmetic operations.</li>
+    <li>Use <code>ANS</code> to reuse the last result in new calculations.</li>
+    <li>Use the <code>%</code> button to calculate percentages (e.g., 50 % calculates 50 percent).</li>
+    <li>Use the <code>ANS</code> button to recall the last calculated result.</li>
+    <li>Use the <code>+/-</code> button to toggle the sign of the current input.</li>
+  </ul>
+</body>
+</html>
