@@ -1,4 +1,4 @@
-import mathLib from './mathLib.js';
+// calculator.js
 
 const buttonsContainer = document.getElementById('buttons');
 const result = document.getElementById('result');
@@ -16,7 +16,6 @@ const buttonsLayout = [
   '1', '2', '3', '+',
   '0', '<', '=', 'C'
 ];
-
 
 function renderButtons() {
   buttonsContainer.innerHTML = '';
@@ -112,10 +111,16 @@ function showPreviousCalculation() {
   lastCalcIndex = (lastCalcIndex - 1 + lastCalculations.length) % lastCalculations.length;
   result.value = lastCalculations[lastCalcIndex];
 }
+/* Add this to highlight operation buttons */
+.calculator-buttons button.orange {
+  background-color: orange !important;
+  color: white !important;
+}
 
 // Init
 renderButtons();
-lastCalcBtn.style.display = 'none';
+lastCalcBtn.style.display = 'block'; // Show lastCalcBtn
+lastCalcBtn.addEventListener('click', showPreviousCalculation);
 
 toggleDark.addEventListener('change', () => {
   document.body.classList.toggle('dark', toggleDark.checked);
