@@ -1,44 +1,4 @@
-.bottom-row {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
-  margin-top: -1rem;
-}
-
-.bottom-row button {
-  padding: 1rem;
-  font-size: 1rem;
-  border: none;
-  border-radius: 0.5rem;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  transition: background 0.2s ease;
-  min-width: 60px;
-  min-height: 60px;
-}
-
-.bottom-row button.orange {
-  background-color: #ff9f00;
-}
-
-.bottom-row button.orange:hover {
-  background-color: #cc7a00;
-}
-
-@media (max-width: 600px) {
-  .bottom-row {
-    justify-content: space-between;
-  }
-
-  .bottom-row button {
-    flex: 1;
-    font-size: 1rem;
-    padding: 0.75rem;
-    min-width: auto;
-  }
-}
-
+/* Bottom Row (C and + aligned right) */
 .bottom-row {
   margin-top: 0.5rem;
   display: flex;
@@ -67,3 +27,11 @@
   background-color: #cc7a00;
 }
 
+/* Dark Mode override for bottom row */
+body.dark-mode .right-align button {
+  background-color: #ff9800;
+}
+
+body.dark-mode .right-align button:hover {
+  background-color: #e68900;
+}
