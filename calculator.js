@@ -10,13 +10,14 @@ let lastCalculations = [];
 let lastCalcIndex = -1;
 let firstValue = null; // To store the first value for percentage calculation
 
-const buttonsLayout = [
+const buttonsLayout = {
+  
   ['ANS', '+-', '%', '÷'],
   ['7', '8', '9', '×'],
   ['4', '5', '6', '-'],
   ['1', '2', '3', '+'],
   ['0', '.', '=', '<']
-];
+};
 
 function renderButtons() {
   buttonsContainer.innerHTML = '';
