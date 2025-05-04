@@ -129,6 +129,11 @@ toggleDark.addEventListener('change', () => {
   document.body.classList.toggle('dark', toggleDark.checked);
 });
 
+const keyboardShortcutsBtn = document.getElementById('keyboardShortcutsBtn');
+keyboardShortcutsBtn.addEventListener('click', () => {
+  window.open('public/keyboard-shortcuts.html', '_blank');
+});
+
 document.addEventListener('keydown', (event) => {
   const key = event.key;
   if ((key >= '0' && key <= '9') || key === '.') {
