@@ -21,25 +21,44 @@
       id="result"
       placeholder="0"
       aria-label="Calculator Screen"
-      readonly
     />
 
     <div class="calculator-buttons" id="buttons">
-      <!-- Buttons will be rendered dynamically -->
+      <!-- Example buttons (extend as needed) -->
+      <button class="clear-btn orange" id="clearBtn">C</button>
+      <button>7</button>
+      <button>8</button>
+      <button>9</button>
+      <button class="orange">÷</button>
+
+      <button>4</button>
+      <button>5</button>
+      <button>6</button>
+      <button class="orange">×</button>
+
+      <button>1</button>
+      <button>2</button>
+      <button>3</button>
+      <button class="orange">-</button>
+
+      <button>0</button>
+      <button>.</button>
+      <button class="orange" id="equalsBtn">=</button>
+      <button class="orange">+</button>
     </div>
 
     <button class="special-btn" id="lastCalcBtn" aria-label="Last Calculation">Last Calculation</button>
   </div>
 
-  <footer>
-    <div class="calculator-toggle">
-      <button onclick="window.location.href='index.html'">Simple Calculator</button>
-      <button onclick="window.location.href='advanced/advanced.html'">Advanced Calculator</button>
-    </div>
-  </footer>
+ <footer>
+  <div class="calculator-toggle">
+    <button onclick="window.location.href='index.html'">Simple Calculator</button>
+    <button onclick="window.location.href='advanced/advanced.html'">Advanced Calculator</button>
+  </div>
+</footer>
 
   <!-- Scripts -->
   <script src="footer/footerscript.js"></script>
-  <script type="module" src="calculator.js"></script>
+  <script src="calculator.js"></script>
 </body>
 </html>
