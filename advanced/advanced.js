@@ -1,7 +1,7 @@
-  // Import mathLib
-  import * as mathLib from './mathLib.js';
+// Import mathLib
+import mathLib from './mathLib.js';
 
-  document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
   const display = document.getElementById("display");
   const buttonsContainer = document.getElementById("buttons-container");
   const darkModeToggle = document.getElementById("dark-mode-toggle");
@@ -27,21 +27,24 @@
   // Evaluate expression using mathLib
   function evaluateExpression(expression) {
     try {
+      // Replace constants and operators
       let replaced = expression
         .replace(/π/g, "mathLib.pi()")
         .replace(/\be\b/g, "mathLib.e()")
         .replace(/÷/g, "/")
         .replace(/×/g, "*")
-        .replace(/√x/g, "mathLib.sqrt")
-        .replace(/\blg\b/g, "mathLib.log10")
-        .replace(/\bln\b/g, "mathLib.ln")
-        .replace(/\bsin\b/g, "mathLib.sin")
-        .replace(/\bcos\b/g, "mathLib.cos")
-        .replace(/\btan\b/g, "mathLib.tan")
-        .replace(/\b1\/X\b/g, "mathLib.inverse")
-        .replace(/\bX!\b/g, "mathLib.factorial")
-        .replace(/\bANS\b/g, lastCalculation)
-        .replace(/\bxY\b/g, "mathLib.power"); // Use mathLib.power for exponentiation
+        .replace(/ANS/g, lastCalculation);
+
+      // Replace functions with mathLib calls
+      replaced = replaced.replace(/√x\(([^)]+)\)/g, "mathLib.sqrt($1)");
+      replaced = replaced.replace(/lg\(([^)]+)\)/g, "mathLib.log10($1)");
+      replaced = replaced.replace(/ln\(([^)]+)\)/g, "mathLib.ln($1)");
+      replaced = replaced.replace(/sin\(([^)]+)\)/g, "mathLib.sin($1)");
+      replaced = replaced.replace(/cos\(([^)]+)\)/g, "mathLib.cos($1)");
+      replaced = replaced.replace(/tan\(([^)]+)\)/g, "mathLib.tan($1)");
+      replaced = replaced.replace(/1\/X\(([^)]+)\)/g, "mathLib.inverse($1)");
+      replaced = replaced.replace(/X!\(([^)]+)\)/g, "mathLib.factorial($1)");
+      replaced = replaced.replace(/xY\(([^)]+),([^)]+)\)/g, "mathLib.power($1,$2)");
 
       return eval(replaced);
     } catch {
