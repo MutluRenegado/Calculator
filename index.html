@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Calculator</title>
   <link rel="stylesheet" href="calculator.css" />
-  <link rel="stylesheet" href="footer/footer.css" />
 </head>
 <body>
   <div class="calculator" id="basic-calculator">
@@ -24,6 +23,7 @@
     />
 
     <div class="calculator-buttons" id="buttons">
+      <button id="clearBtn" class="orange">C</button>
       <button>7</button>
       <button>8</button>
       <button>9</button>
@@ -41,15 +41,8 @@
 
       <button>0</button>
       <button>.</button>
-      <button class="orange" id="equalsBtn">=</button>
-    </div>
-
-    <!-- Bottom row for C and + -->
-    <div class="bottom-row">
-      <div class="right-align">
-        <button class="orange" id="clearBtn">C</button>
-        <button class="orange">+</button>
-      </div>
+      <button id="equalsBtn" class="orange">=</button>
+      <button class="orange">+</button>
     </div>
 
     <button class="special-btn" id="lastCalcBtn" aria-label="Last Calculation">Last Calculation</button>
@@ -62,7 +55,6 @@
     </div>
   </footer>
 
-  <script src="footer/footerscript.js"></script>
   <script src="calculator.js"></script>
 </body>
 </html>
