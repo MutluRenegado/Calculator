@@ -35,22 +35,9 @@ const mathLib = {
     return result;
   },
 
-  // Rounding
-  round: (x, decimals = 0) => Number(Math.round(x + "e" + decimals) + "e-" + decimals),
-  floor: (x) => Math.floor(x),
-  ceil: (x) => Math.ceil(x),
-
   // Constants
   pi: () => Math.PI,
   e: () => Math.E,
-
-  // Percentage and sign
-  percent: (x) => x / 100,
-  negate: (x) => -x,
-
-  // Random
-  random: (min = 0, max = 1) => Math.random() * (max - min) + min,
 };
 
 export default mathLib;
-
