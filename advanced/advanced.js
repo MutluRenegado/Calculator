@@ -13,9 +13,9 @@ let lastCalculation = "";
 // Button configuration
 const config = {
   keys: [
-    "2nd", "deg", "sin", "cos", "tan",
+    "AC", "2nd", "deg", "sin", "cos", "tan",
     "xY", "lg", "ln", "(", ")",
-    "√x", "AC", "⌫", "%", "÷",
+    "√x", "⌫", "%", "÷",
     "X!", "7", "8", "9", "×",
     "1/X", "4", "5", "6", "-",
     "π", "1", "2", "3", "+",
@@ -23,6 +23,7 @@ const config = {
   ]
 };
 
+// Evaluate expression using mathLib
 function evaluateExpression(expression) {
   try {
     let replaced = expression
@@ -50,9 +51,9 @@ function evaluateExpression(expression) {
 // Handle input
 function handleInput(value) {
   if (value === "AC") {
-    display.value = "0";
+    display.value = "0";  // Clear display
   } else if (value === "⌫") {
-    display.value = display.value.slice(0, -1) || "0";
+    display.value = display.value.slice(0, -1) || "0"; // Delete last character
   } else if (value === "=") {
     const result = evaluateExpression(display.value);
     lastCalculation = result;
@@ -101,7 +102,7 @@ document.addEventListener("keydown", function (e) {
   if (validKeys.includes(key)) {
     handleInput(key);
   } else if (key === "Enter" || key === "=") {
-    handleInput("=");
+    handleInput("="); 
   } else if (key === "Backspace") {
     handleInput("⌫");
   }
