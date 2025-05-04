@@ -10,7 +10,6 @@ let lastCalcIndex = -1;
 let firstValue = null;
 
 const buttonsLayout = [
- const buttonsLayout = [
   'ANS', '%', '+-', '÷',
   '7', '8', '9', '×',
   '4', '5', '6', '-',
