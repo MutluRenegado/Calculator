@@ -1,3 +1,6 @@
+// Import mathLib
+import * as mathLib from './mathLib.js';
+
 const display = document.getElementById("display");
 const buttonsContainer = document.getElementById("buttons-container");
 const darkModeToggle = document.getElementById("dark-mode-toggle");
@@ -20,13 +23,7 @@ const config = {
   ]
 };
 
-// Factorial helper
-function factorial(n) {
-  if (n < 0) return NaN;
-  return n === 0 ? 1 : n * factorial(n - 1);
-}
-
-// Evaluate expression
+// Evaluate expression using mathLib
 function evaluateExpression(expression) {
   try {
     let replaced = expression
@@ -34,19 +31,16 @@ function evaluateExpression(expression) {
       .replace(/e/g, Math.E)
       .replace(/÷/g, "/")
       .replace(/×/g, "*")
-      .replace(/√x/g, "Math.sqrt")
-      .replace(/lg/g, "Math.log10")
-      .replace(/ln/g, "Math.log")
-      .replace(/sin/g, "Math.sin")
-      .replace(/cos/g, "Math.cos")
-      .replace(/tan/g, "Math.tan")
+      .replace(/√x/g, "mathLib.sqrt")
+      .replace(/lg/g, "mathLib.log10")
+      .replace(/ln/g, "mathLib.ln")
+      .replace(/sin/g, "mathLib.sin")
+      .replace(/cos/g, "mathLib.cos")
+      .replace(/tan/g, "mathLib.tan")
       .replace(/xY/g, "**")
-      .replace(/1\/X/g, "1/") 
-      .replace(/X!/g, "fact(")
+      .replace(/1\/X/g, "mathLib.reciprocal")
+      .replace(/X!/g, "mathLib.factorial")
       .replace(/ANS/g, lastCalculation);
-
-    // Handle factorials
-    replaced = replaced.replace(/fact\((\d+)\)/g, (_, n) => factorial(Number(n)));
 
     return eval(replaced);
   } catch {
