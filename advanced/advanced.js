@@ -114,4 +114,3 @@ document.addEventListener("keydown", function (e) {
 shortcutToggleBtn.onclick = () => {
   keyboardShortcuts.classList.toggle("show");
 };
-
