@@ -15,9 +15,18 @@
       <label><input type="checkbox" id="toggleDark" /> Dark Mode</label>
     </div>
 
-    <input type="text" class="calculator-screen" id="result" placeholder="0" aria-label="Calculator Screen" />
+    <input
+      type="text"
+      class="calculator-screen"
+      id="result"
+      placeholder="0"
+      aria-label="Calculator Screen"
+      readonly
+    />
 
-    <div class="calculator-buttons" id="buttons"></div>
+    <div class="calculator-buttons" id="buttons">
+      <!-- Buttons will be rendered dynamically -->
+    </div>
 
     <button class="special-btn" id="lastCalcBtn" aria-label="Last Calculation">Last Calculation</button>
   </div>
@@ -30,50 +39,7 @@
   </footer>
 
   <!-- Scripts -->
-  <script type="module">
-    import mathLib from './mathLib.js';
-
-    const buttonsContainer = document.getElementById('buttons');
-    const result = document.getElementById('result');
-    const toggleDark = document.getElementById('toggleDark');
-    const lastCalcBtn = document.getElementById('lastCalcBtn');
-
-    const layout = [
-      ['C', 'ANS', '+-', '%'],
-      ['7', '8', '9', '÷'],
-      ['4', '5', '6', '×'],
-      ['1', '2', '3', '-'],
-      ['0', '.', '=', '+'],
-      ['<']
-    ];
-
-    let lastCalculations = [];
-    let lastCalcIndex = -1;
-    let firstValue = null;
-
-    function renderButtons() {
-      buttonsContainer.innerHTML = '';
-      layout.forEach(row => {
-        row.forEach(btn => {
-          const button = document.createElement('button');
-          button.textContent = btn;
-          button.onclick = () => handleButton(btn);
-
-          if (btn === 'C') {
-            button.classList.add('clear-btn');
-          } else if (['ANS', '+-', '%', '<'].includes(btn)) {
-            button.classList.add('special-btn');
-          } else if (['÷', '×', '-', '+', '='].includes(btn)) {
-            button.classList.add('orange');
-          }
-
-          buttonsContainer.appendChild(button);
-        });
-      });
-    }
-
-    function handleButton(value) {
-      if (value === '=') {
-        calculate();
-      } else if (value === '<') {
-        showPreviousCalculation();
+  <script src="footer/footerscript.js"></script>
+  <script type="module" src="calculator.js"></script>
+</body>
+</html>
