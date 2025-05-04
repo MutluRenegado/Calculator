@@ -1,4 +1,4 @@
-/* General Reset */
+0/* General Reset */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -120,7 +120,11 @@ h2 {
 
 /* Toggle section */
 .toggles {
-  text-align: right;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
   margin-bottom: 1rem;
 }
 
