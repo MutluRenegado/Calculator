@@ -113,9 +113,3 @@ document.addEventListener("DOMContentLoaded", () => {
       handleInput("⌫");
     }
   });
-
-  // Toggle keyboard shortcuts
-  shortcutToggleBtn.onclick = () => {
-    keyboardShortcuts.classList.toggle("show");
-  };
-});
