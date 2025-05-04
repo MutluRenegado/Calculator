@@ -208,7 +208,7 @@ body.dark-mode .calculator-toggle button:hover {
   }
 
   .calculator-buttons button {
-    font-size: 0.85rem; /* Increased font size */
+    font-size: 1rem; /* Increased font size by one more step */
     font-weight: bold; /* Added bold font */
     padding: 0.5rem;
   }
@@ -232,7 +232,7 @@ body.dark-mode .calculator-toggle button:hover {
   }
 
   .calculator-buttons button {
-    font-size: 0.75rem; /* Increased font size */
+    font-size: 0.85rem; /* Increased font size by one more step */
     font-weight: bold; /* Added bold font */
     padding: 0.4rem;
   }
