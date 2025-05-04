@@ -5,8 +5,8 @@
 }
 
 .calculator-buttons button {
-  padding: 15% !important; /* Relative padding for responsiveness */
-  font-size: 1.5rem !important; /* Adjust font size */
+  padding: 10px !important; /* Reduced to a fixed padding */
+  font-size: 1rem !important; /* Reduced font size */
   border-radius: 5px !important;
   border: 1px solid #ccc !important;
   cursor: pointer !important;
@@ -32,8 +32,8 @@
   }
 
   .calculator-buttons button {
-    font-size: 1.2rem !important; /* Reduce font size on smaller screens */
-    padding: 10% !important; /* Adjust padding */
+    font-size: 0.9rem !important; /* Further reduced font size for smaller screens */
+    padding: 8px !important; /* Reduced padding for smaller screens */
   }
 
   .clear-btn {
@@ -48,8 +48,8 @@
   }
 
   .calculator-buttons button {
-    font-size: 1.4rem !important;
-    padding: 12% !important;
+    font-size: 1rem !important; /* Medium font size */
+    padding: 10px !important; /* Matching the standard padding */
   }
 
   .clear-btn {
