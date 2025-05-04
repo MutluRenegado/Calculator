@@ -1,9 +1,11 @@
 // calculator.js
-
-const buttonsContainer = document.getElementById('buttons');
-const result = document.getElementById('result');
-const toggleDark = document.getElementById('toggleDark');
-const lastCalcBtn = document.getElementById('lastCalcBtn');
+document.addEventListener("DOMContentLoaded", () => {
+const display = document.getElementById("display");
+const buttonsContainer = document.getElementById("buttons-container");
+const darkModeToggle = document.getElementById("dark-mode-toggle");
+const lastCalcBtn = document.getElementById("last-calc-btn");
+const shortcutToggleBtn = document.getElementById("toggleShortcutsBtn");
+const keyboardShortcuts = document.getElementById("keyboardShortcuts");
 
 let lastCalculations = [];
 let lastCalcIndex = -1;
