@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const buttonsContainer = document.getElementById("buttons-container");
   const darkModeToggle = document.getElementById("dark-mode-toggle");
   const lastCalcBtn = document.getElementById("last-calc-btn");
-  const shortcutToggleBtn = document.getElementById("toggleShortcutsBtn");
   const keyboardShortcuts = document.getElementById("keyboardShortcuts");
 
   let lastCalculation = "";
@@ -113,9 +112,4 @@ document.addEventListener("DOMContentLoaded", () => {
       handleInput("⌫");
     }
   });
-
-  // Toggle keyboard shortcuts
-  shortcutToggleBtn.onclick = () => {
-    keyboardShortcuts.classList.toggle("show");
-  };
 });
