@@ -10,12 +10,14 @@ let lastCalcIndex = -1;
 let firstValue = null;
 
 const buttonsLayout = [
-  'ANS', '+-', '%', '<',
+ const buttonsLayout = [
+  'C', 'ANS', '+-', '%',
   '7', '8', '9', '÷',
   '4', '5', '6', '×',
   '1', '2', '3', '-',
   '0', '.', '=', '+',
 ];
+
 
 function renderButtons() {
   buttonsContainer.innerHTML = '';
