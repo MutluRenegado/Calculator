@@ -1,3 +1,5 @@
+import mathLib from './advanced/mathLib.js';
+
 const buttonsContainer = document.getElementById('buttons');
 const result = document.getElementById('result');
 const toggleDark = document.getElementById('toggleDark');
@@ -80,8 +82,9 @@ function buttonClicked(value) {
         firstValue = val;
         result.value = '';
       } else {
-        // Calculate percentage based on second number entered
-        result.value = (firstValue * val / 100).toString(); // Calculate percentage
+        // Calculate percentage based on second number entered using mathLib.percent
+        const percentResult = mathLib.percent(firstValue, val);
+        result.value = percentResult.toString();
         firstValue = null; // Reset after calculation
       }
     } else {
