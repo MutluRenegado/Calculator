@@ -38,3 +38,32 @@
     min-width: auto;
   }
 }
+
+.bottom-row {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.right-align {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.right-align button {
+  padding: 1rem;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: #ff9f00;
+  color: white;
+  cursor: pointer;
+  min-width: 60px;
+  min-height: 60px;
+  transition: background-color 0.2s ease;
+}
+
+.right-align button:hover {
+  background-color: #cc7a00;
+}
+
