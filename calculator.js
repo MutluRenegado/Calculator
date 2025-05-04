@@ -10,50 +10,57 @@ let lastCalculations = [];
 let lastCalcIndex = -1;
 let firstValue = null; // To store the first value for percentage calculation
 
-const buttonsLayout = {
-[  
+// Corrected buttonsLayout structure (1D array)
+const buttonsLayout = [
   'ANS', '+-', '%', '÷',
   '7', '8', '9', '×',
   '4', '5', '6', '-',
   '1', '2', '3', '+',
   '0', '.', '=', '<'
-]
-};
+];
 
 function renderButtons() {
+  // Ensure buttonsContainer exists
+  if (!buttonsContainer) {
+    console.error('Error: Buttons container not found!');
+    return;
+  }
+
   buttonsContainer.innerHTML = '';
   buttonsContainer.classList.add('basic');
   buttonsContainer.style.gridTemplateColumns = 'repeat(4, 1fr)';
 
-  buttonsLayout.forEach((row, rowIndex) => {
-    row.forEach((btn, colIndex) => {
-      const button = document.createElement('button');
-      button.textContent = btn;
-      button.onclick = () => buttonClicked(btn);
+  // Fixed rendering logic for 1D buttonsLayout array
+  buttonsLayout.forEach((btn, index) => {
+    const rowIndex = Math.floor(index / 4); // Calculate the row index
+    const colIndex = index % 4;            // Calculate the column index
 
-      if (btn === 'C') {
-        button.classList.add('clear-btn');
-        button.style.gridColumn = 'span 4';
-      }
+    const button = document.createElement('button');
+    button.textContent = btn;
+    button.onclick = () => buttonClicked(btn);
 
-      if (btn === 'ANS' || btn === '+-' || btn === '%' || btn === '<') {
-        button.classList.add('special-btn');
-      } else if (btn === '÷' || btn === '×' || btn === '-' || btn === '+' || btn === '=') {
-        if (btn === '=') {
-          button.classList.add('equals');
-        } else {
-          button.classList.add('main-func');
-        }
+    if (btn === 'C') {
+      button.classList.add('clear-btn');
+      button.style.gridColumn = 'span 4';
+    }
+
+    if (btn === 'ANS' || btn === '+-' || btn === '%' || btn === '<') {
+      button.classList.add('special-btn');
+    } else if (btn === '÷' || btn === '×' || btn === '-' || btn === '+' || btn === '=') {
+      if (btn === '=') {
+        button.classList.add('equals');
       } else {
-        button.classList.add('number');
+        button.classList.add('main-func');
       }
+    } else {
+      button.classList.add('number');
+    }
 
-      if ((rowIndex === 0 || colIndex === row.length - 1) && (btn !== 'C')) {
-        button.classList.add('lightning');
-      }
+    if ((rowIndex === 0 || colIndex === 3) && btn !== 'C') {
+      button.classList.add('lightning');
+    }
 
-      buttonsContainer.appendChild(button);
-    });
+    buttonsContainer.appendChild(button);
   });
 }
 
