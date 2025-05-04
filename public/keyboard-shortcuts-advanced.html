@@ -1,0 +1,75 @@
+# Usage of mathLib Functions in Advanced Calculator
+
+This document explains the functions available in the `mathLib` library and how to use them in expressions within the advanced calculator.
+
+## Available Functions
+
+The `mathLib` object provides the following functions:
+
+### Trigonometric Functions
+- `sin(x, deg = false)`: Sine of `x`. If `deg` is true, `x` is in degrees; otherwise, radians.
+- `cos(x, deg = false)`: Cosine of `x`.
+- `tan(x, deg = false)`: Tangent of `x`.
+
+### Inverse Trigonometric Functions
+- `asin(x, deg = false)`: Inverse sine of `x`.
+- `acos(x, deg = false)`: Inverse cosine of `x`.
+- `atan(x, deg = false)`: Inverse tangent of `x`.
+
+### Hyperbolic Functions
+- `sinh(x)`: Hyperbolic sine of `x`.
+- `cosh(x)`: Hyperbolic cosine of `x`.
+- `tanh(x)`: Hyperbolic tangent of `x`.
+
+### Power and Root Functions
+- `power(base, exponent)`: `base` raised to the power of `exponent`.
+- `sqrt(x)`: Square root of `x`.
+- `inverse(x)`: Reciprocal of `x` (1/x).
+
+### Logarithmic Functions
+- `log10(x)`: Base-10 logarithm of `x`.
+- `ln(x)`: Natural logarithm (base e) of `x`.
+- `logBase(x, base)`: Logarithm of `x` with specified `base`.
+
+### Factorial
+- `factorial(n)`: Factorial of `n` (n!).
+
+### Constants
+- `pi()`: Returns the value of π.
+- `e()`: Returns the value of Euler's number e.
+
+## How to Use in Expressions
+
+In the calculator input, you can use the following syntax for functions and constants:
+
+- Use `sin(x)`, `cos(x)`, `tan(x)` for trigonometric calculations.
+- Use `asin(x)`, `acos(x)`, `atan(x)` for inverse trig functions.
+- Use `sinh(x)`, `cosh(x)`, `tanh(x)` for hyperbolic functions.
+- Use `xY(base, exponent)` to calculate power (e.g., `xY(2,3)` = 2^3 = 8).
+- Use `√x(x)` for square root.
+- Use `1/X(x)` for reciprocal.
+- Use `lg(x)` for log base 10.
+- Use `ln(x)` for natural log.
+- Use `X!(n)` for factorial.
+- Use `π` and `e` for constants.
+- Use `ANS` to refer to the last calculated result.
+
+## Examples
+
+- `sin(30)` - sine of 30 radians.
+- `sin(30 deg)` - sine of 30 degrees (if degree mode is enabled).
+- `xY(2, 8)` - 2 raised to the power 8.
+- `√x(16)` - square root of 16.
+- `X!(5)` - factorial of 5 (120).
+- `lg(100)` - log base 10 of 100 (2).
+- `ln(e)` - natural log of e (1).
+- `1/X(4)` - reciprocal of 4 (0.25).
+
+## Notes
+
+- The calculator replaces these function calls internally with calls to the `mathLib` functions.
+- Use parentheses `()` to enclose function arguments.
+- Use operators `+`, `-`, `*`, `/` for arithmetic operations.
+- Use `ANS` to reuse the last result in new calculations.
+
+This should help you understand and use the functions defined in the calculator effectively.
