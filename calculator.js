@@ -1,21 +1,21 @@
-import mathLib from './mathLib.js'; // Importing mathLib
+import mathLib from './mathLib.js';
 
 const buttonsContainer = document.getElementById('buttons');
 const result = document.getElementById('result');
 const toggleDark = document.getElementById('toggleDark');
 const lastCalcBtn = document.getElementById('lastCalcBtn');
-const clearBtn = document.getElementById('clearBtn');
 
 let lastCalculations = [];
 let lastCalcIndex = -1;
-let firstValue = null; // To store the first value for percentage calculation
+let firstValue = null;
 
 const buttonsLayout = [
-  'ANS', '+-', '%', '÷',
-  '7', '8', '9', '×',
-  '4', '5', '6', '-',
-  '1', '2', '3', '+',
-  '0', '.', '=', '<'
+  'C', 'ANS', '+-', '%',
+  '7', '8', '9', '÷',
+  '4', '5', '6', '×',
+  '1', '2', '3', '-',
+  '0', '.', '=', '+',
+  '<'
 ];
 
 function renderButtons() {
@@ -23,35 +23,22 @@ function renderButtons() {
   buttonsContainer.classList.add('basic');
   buttonsContainer.style.gridTemplateColumns = 'repeat(4, 1fr)';
 
-  buttonsLayout.forEach((row, rowIndex) => {
-    row.forEach((btn, colIndex) => {
-      const button = document.createElement('button');
-      button.textContent = btn;
-      button.onclick = () => buttonClicked(btn);
+  buttonsLayout.forEach(btn => {
+    const button = document.createElement('button');
+    button.textContent = btn;
+    button.onclick = () => buttonClicked(btn);
 
-      if (btn === 'C') {
-        button.classList.add('clear-btn');
-        button.style.gridColumn = 'span 4';
-      }
+    if (btn === 'C') {
+      button.classList.add('clear-btn');
+    } else if (['ANS', '+-', '%', '<'].includes(btn)) {
+      button.classList.add('special-btn');
+    } else if (['÷', '×', '-', '+', '='].includes(btn)) {
+      button.classList.add('orange');
+    } else {
+      button.classList.add('number');
+    }
 
-      if (btn === 'ANS' || btn === '+-' || btn === '%' || btn === '<') {
-        button.classList.add('special-btn');
-      } else if (btn === '÷' || btn === '×' || btn === '-' || btn === '+' || btn === '=') {
-        if (btn === '=') {
-          button.classList.add('equals');
-        } else {
-          button.classList.add('main-func');
-        }
-      } else {
-        button.classList.add('number');
-      }
-
-      if ((rowIndex === 0 || colIndex === row.length - 1) && (btn !== 'C')) {
-        button.classList.add('lightning');
-      }
-
-      buttonsContainer.appendChild(button);
-    });
+    buttonsContainer.appendChild(button);
   });
 }
 
@@ -62,7 +49,7 @@ function buttonClicked(value) {
     showPreviousCalculation();
   } else if (value === 'C') {
     result.value = '';
-    firstValue = null; // Reset first value when cleared
+    firstValue = null;
   } else if (value === 'ANS') {
     if (lastCalculations.length > 0) {
       const lastAnswer = lastCalculations[lastCalculations.length - 1].split('=')[1].trim();
@@ -78,13 +65,11 @@ function buttonClicked(value) {
     let val = parseFloat(result.value);
     if (!isNaN(val) && result.value !== '') {
       if (firstValue === null) {
-        // First number entered, so store it as first value
         firstValue = val;
         result.value = '';
       } else {
-        // Calculate percentage based on second number entered
-        result.value = ((firstValue * val) / 100).toFixed(2); // Calculate percentage to 2 decimals
-        firstValue = null; // Reset after calculation
+        result.value = ((firstValue * val) / 100).toFixed(2);
+        firstValue = null;
       }
     } else {
       result.value = 'Error';
@@ -97,32 +82,14 @@ function buttonClicked(value) {
 function calculateResult() {
   try {
     let expression = result.value.replace(/÷/g, '/').replace(/×/g, '*');
-    expression = expression.replace(/(\d+)%/g, (match, p1) => (parseFloat(p1) / 100));
+    expression = expression.replace(/(\d+)%/g, (match, p1) => parseFloat(p1) / 100);
 
-    let answer;
+    let answer = eval(expression);
 
-    // Handling different operations
-    if (expression.includes('+')) {
-      let operands = expression.split('+');
-      answer = mathLib.add(parseFloat(operands[0]), parseFloat(operands[1]));
-    } else if (expression.includes('-')) {
-      let operands = expression.split('-');
-      answer = mathLib.subtract(parseFloat(operands[0]), parseFloat(operands[1]));
-    } else if (expression.includes('*') || expression.includes('×')) {
-      let operands = expression.split('*').length > 1 ? expression.split('*') : expression.split('×');
-      answer = mathLib.multiply(parseFloat(operands[0]), parseFloat(operands[1]));
-    } else if (expression.includes('/')) {
-      let operands = expression.split('/');
-      answer = mathLib.divide(parseFloat(operands[0]), parseFloat(operands[1]));
+    if (typeof answer === 'number' && !isNaN(answer)) {
+      answer = +answer.toFixed(2);
     } else {
-      // If no operators, just a number or function call
-      if (expression.match(/\d+/)) {
-        answer = parseFloat(expression);
-      }
-    }
-
-    if (typeof answer === 'number') {
-      answer = +answer.toFixed(2); // Limit to 2 decimal places
+      throw new Error();
     }
 
     if (result.value !== '') {
@@ -146,29 +113,10 @@ function showPreviousCalculation() {
   result.value = lastCalculations[lastCalcIndex];
 }
 
+// Init
+renderButtons();
 lastCalcBtn.style.display = 'none';
 
 toggleDark.addEventListener('change', () => {
   document.body.classList.toggle('dark', toggleDark.checked);
 });
-
-document.addEventListener('keydown', (event) => {
-  const key = event.key;
-  if ((key >= '0' && key <= '9') || key === '.') {
-    result.value += key;
-  } else if (key === 'Enter' || key === '=') {
-    calculateResult();
-  } else if (key === 'Backspace') {
-    result.value = result.value.slice(0, -1);
-  } else if (key === 'Escape' || key.toLowerCase() === 'c') {
-    result.value = '';
-    firstValue = null; // Reset first value
-  } else if (['+', '-', '*', '/'].includes(key)) {
-    let symbol = key === '*' ? '×' : key === '/' ? '÷' : key;
-    result.value += symbol;
-  } else if (key === '%') {
-    buttonClicked('%');
-  }
-});
-
-renderButtons();
