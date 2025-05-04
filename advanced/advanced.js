@@ -50,8 +50,10 @@ function evaluateExpression(expression) {
 
 // Handle input
 function handleInput(value) {
-  if (value === "AC" || value === "C") {
+  if (value === "AC") {
     display.value = "0";  // Clear display
+  } else if (value === "C") {
+    display.value = "0";  // Clear current entry
   } else if (value === "⌫") {
     display.value = display.value.slice(0, -1) || "0"; // Delete last character
   } else if (value === "=") {
@@ -69,7 +71,7 @@ function handleInput(value) {
   }
 }
 
-// Generate buttons
+// Generate buttons dynamically
 config.keys.forEach(key => {
   const button = document.createElement("button");
   button.textContent = key;
@@ -77,18 +79,12 @@ config.keys.forEach(key => {
   buttonsContainer.appendChild(button);
 });
 
-// Place "C" button above "Last Calculation" button
-const clearButton = document.createElement("button");
-clearButton.textContent = "C";
-clearButton.onclick = () => handleInput("C");
-buttonsContainer.insertBefore(clearButton, lastCalcBtn);
-
 // Dark mode toggle
 darkModeToggle.onchange = () => {
   document.body.classList.toggle("dark-mode");
 };
 
-// Recall last calc
+// Recall last calculation
 lastCalcBtn.onclick = () => {
   if (lastCalculation) display.value = lastCalculation;
 };
@@ -114,7 +110,7 @@ document.addEventListener("keydown", function (e) {
   }
 });
 
-// Toggle keyboard shortcuts visibility
+// Toggle keyboard shortcuts
 shortcutToggleBtn.onclick = () => {
   keyboardShortcuts.classList.toggle("show");
 };
