@@ -11,13 +11,15 @@ let lastCalculations = [];
 let lastCalcIndex = -1;
 let firstValue = null;
 
-const buttonsLayout = [
+const config = {
+  keys [
   'ANS', '%', '+-', '÷',
   '7', '8', '9', '×',
   '4', '5', '6', '-',
   '1', '2', '3', '+',
   '0', '<', '=', 'C'
-];
+]
+};
 
 function renderButtons() {
   buttonsContainer.innerHTML = '';
