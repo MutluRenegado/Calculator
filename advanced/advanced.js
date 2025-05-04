@@ -23,24 +23,23 @@ const config = {
   ]
 };
 
-// Evaluate expression using mathLib
 function evaluateExpression(expression) {
   try {
     let replaced = expression
-      .replace(/π/g, Math.PI)
-      .replace(/e/g, Math.E)
+      .replace(/π/g, "mathLib.pi()")
+      .replace(/\be\b/g, "mathLib.e()")
       .replace(/÷/g, "/")
       .replace(/×/g, "*")
       .replace(/√x/g, "mathLib.sqrt")
-      .replace(/lg/g, "mathLib.log10")
-      .replace(/ln/g, "mathLib.ln")
-      .replace(/sin/g, "mathLib.sin")
-      .replace(/cos/g, "mathLib.cos")
-      .replace(/tan/g, "mathLib.tan")
-      .replace(/xY/g, "**")
-      .replace(/1\/X/g, "mathLib.reciprocal")
-      .replace(/X!/g, "mathLib.factorial")
-      .replace(/ANS/g, lastCalculation);
+      .replace(/\blg\b/g, "mathLib.log10")
+      .replace(/\bln\b/g, "mathLib.ln")
+      .replace(/\bsin\b/g, "mathLib.sin")
+      .replace(/\bcos\b/g, "mathLib.cos")
+      .replace(/\btan\b/g, "mathLib.tan")
+      .replace(/\b1\/X\b/g, "mathLib.inverse")
+      .replace(/\bX!\b/g, "mathLib.factorial")
+      .replace(/\bANS\b/g, lastCalculation)
+      .replace(/\bxY\b/g, "**"); // Use ** operator for power
 
     return eval(replaced);
   } catch {
