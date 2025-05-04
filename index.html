@@ -1,60 +1,125 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Calculator</title>
-  <link rel="stylesheet" href="calculator.css" />
-</head>
-<body>
-  <div class="calculator" id="basic-calculator">
-    <h2>Simple Calculator</h2>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  padding: 2rem;
+}
 
-    <div class="toggles">
-      <label><input type="checkbox" id="toggleDark" /> Dark Mode</label>
-    </div>
+.calculator {
+  max-width: 400px;
+  margin: auto;
+  background: white;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
 
-    <input
-      type="text"
-      class="calculator-screen"
-      id="result"
-      placeholder="0"
-      aria-label="Calculator Screen"
-    />
+.calculator-screen {
+  width: 100%;
+  height: 60px;
+  font-size: 2rem;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  text-align: right;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+}
 
-    <div class="calculator-buttons" id="buttons">
-      <button id="clearBtn" class="orange">C</button>
-      <button>7</button>
-      <button>8</button>
-      <button>9</button>
-      <button class="orange">÷</button>
+.calculator-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
 
-      <button>4</button>
-      <button>5</button>
-      <button>6</button>
-      <button class="orange">×</button>
+.calculator-buttons button {
+  padding: 1.2rem;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: #e0e0e0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
 
-      <button>1</button>
-      <button>2</button>
-      <button>3</button>
-      <button class="orange">-</button>
+.calculator-buttons button:hover {
+  background-color: #d5d5d5;
+}
 
-      <button>0</button>
-      <button>.</button>
-      <button id="equalsBtn" class="orange">=</button>
-      <button class="orange">+</button>
-    </div>
+.orange {
+  background-color: #ff9f00;
+  color: white;
+}
 
-    <button class="special-btn" id="lastCalcBtn" aria-label="Last Calculation">Last Calculation</button>
-  </div>
+.orange:hover {
+  background-color: #cc7a00;
+}
 
-  <footer>
-    <div class="calculator-toggle">
-      <button onclick="window.location.href='index.html'">Simple Calculator</button>
-      <button onclick="window.location.href='advanced/advanced.html'">Advanced Calculator</button>
-    </div>
-  </footer>
+.special-btn {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
 
-  <script src="calculator.js"></script>
-</body>
-</html>
+.toggles {
+  text-align: right;
+  margin-bottom: 1rem;
+}
+
+footer {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.calculator-toggle button {
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: #555;
+  color: white;
+  cursor: pointer;
+}
+
+.calculator-toggle button:hover {
+  background-color: #333;
+}
+
+/* Dark Mode */
+body.dark-mode {
+  background-color: #121212;
+  color: white;
+}
+
+body.dark-mode .calculator {
+  background-color: #1e1e1e;
+}
+
+body.dark-mode .calculator-screen {
+  background-color: #333;
+  color: white;
+  border: 1px solid #555;
+}
+
+body.dark-mode .calculator-buttons button {
+  background-color: #444;
+  color: white;
+}
+
+body.dark-mode .calculator-buttons button:hover {
+  background-color: #666;
+}
+
+body.dark-mode .orange {
+  background-color: #ff9800;
+}
+
+body.dark-mode .special-btn {
+  background-color: #2196f3;
+}
