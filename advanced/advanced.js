@@ -13,13 +13,13 @@ let lastCalculation = "";
 // Button configuration
 const config = {
   keys: [
-    "AC", "2nd", "deg", "sin", "cos", "tan",
+    "2nd", "deg", "sin", "cos", "tan",
     "xY", "lg", "ln", "(", ")",
-    "√x", "⌫", "%", "÷",
+    "√x", "+-", "⌫", "%", "÷",
     "X!", "7", "8", "9", "×",
     "1/X", "4", "5", "6", "-",
     "π", "1", "2", "3", "+",
-    "ANS", "0", ".", "=", "+-"
+    "ANS", "0", ".", "=", "AC"
   ]
 };
 
@@ -51,7 +51,9 @@ function evaluateExpression(expression) {
 // Handle input
 function handleInput(value) {
   if (value === "AC") {
-    display.value = "0";  // Clear display
+    display.value = "0";  // Clear display (reset to zero)
+  } else if (value === "C") {
+    display.value = "0";  // Clear current input
   } else if (value === "⌫") {
     display.value = display.value.slice(0, -1) || "0"; // Delete last character
   } else if (value === "=") {
@@ -76,6 +78,12 @@ config.keys.forEach(key => {
   button.onclick = () => handleInput(key);
   buttonsContainer.appendChild(button);
 });
+
+// Create and place the "C" button above "Last Call"
+const clearButton = document.createElement("button");
+clearButton.textContent = "C";
+clearButton.onclick = () => handleInput("C");
+buttonsContainer.insertBefore(clearButton, lastCalcBtn);
 
 // Dark mode
 darkModeToggle.onchange = () => {
