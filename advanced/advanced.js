@@ -1,5 +1,5 @@
-// Import mathLib
-import * as mathLib from './mathLib.js';
+// Import mathLib from libMath.js
+import * as mathLib from './lib/libMath.js';
 
 const display = document.getElementById("display");
 const buttonsContainer = document.getElementById("buttons-container");
