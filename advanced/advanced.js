@@ -1,5 +1,5 @@
-// Import mathLib from libMath.js
-import * as mathLib from './lib/libMath.js';
+// Import mathLib
+import * as mathLib from './advanced/mathLib.js';
 
 const display = document.getElementById("display");
 const buttonsContainer = document.getElementById("buttons-container");
@@ -19,7 +19,7 @@ const config = {
     "X!", "7", "8", "9", "×",
     "1/X", "4", "5", "6", "-",
     "π", "1", "2", "3", "+",
-    "ANS", "0", ".", "=", "AC", "C"
+    "ANS", "0", ".", "=", "AC",
   ]
 };
 
@@ -40,7 +40,7 @@ function evaluateExpression(expression) {
       .replace(/\b1\/X\b/g, "mathLib.inverse")
       .replace(/\bX!\b/g, "mathLib.factorial")
       .replace(/\bANS\b/g, lastCalculation)
-      .replace(/\bxY\b/g, "**"); // Use ** operator for power
+      .replace(/\bxY\b/g, "mathLib.power"); // Use mathLib.power for exponentiation
 
     return eval(replaced);
   } catch {
