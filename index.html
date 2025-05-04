@@ -8,57 +8,73 @@
   <link rel="stylesheet" href="footer/footer.css" />
 </head>
 <body>
-  <div class="calculator" id="basic-calculator">
-    <h2>Simple Calculator</h2>
+  <div class="container">
+    <header>
+      <h1 class="page-title">Simple Calculator</h1>
+    </header>
 
-    <div class="toggles">
-      <label><input type="checkbox" id="toggleDark" /> Dark Mode</label>
+    <div class="calculator" id="basic-calculator">
+      <div class="toggles">
+        <label for="toggleDark">
+          <input type="checkbox" id="toggleDark" aria-label="Toggle Dark Mode" /> Dark Mode
+        </label>
+      </div>
+
+      <input
+        type="text"
+        class="calculator-screen"
+        id="result"
+        placeholder="0"
+        aria-label="Calculator Screen"
+        readonly
+      />
+
+      <div class="calculator-buttons" id="buttons">
+        <button class="clear-btn orange" id="clearBtn" aria-label="Clear Input">C</button>
+        <button aria-label="7">7</button>
+        <button aria-label="8">8</button>
+        <button aria-label="9">9</button>
+        <button class="orange" aria-label="Divide">÷</button>
+
+        <button aria-label="4">4</button>
+        <button aria-label="5">5</button>
+        <button aria-label="6">6</button>
+        <button class="orange" aria-label="Multiply">×</button>
+
+        <button aria-label="1">1</button>
+        <button aria-label="2">2</button>
+        <button aria-label="3">3</button>
+        <button class="orange" aria-label="Subtract">-</button>
+
+        <button aria-label="0">0</button>
+        <button aria-label="Decimal">.</button>
+        <button class="orange" id="equalsBtn" aria-label="Equals">=</button>
+        <button class="orange" aria-label="Add">+</button>
+      </div>
+
+      <button class="special-btn" id="lastCalcBtn" aria-label="Last Calculation">Last Calculation</button>
     </div>
 
-    <input
-      type="text"
-      class="calculator-screen"
-      id="result"
-      placeholder="0"
-      aria-label="Calculator Screen"
-    />
-
-    <div class="calculator-buttons" id="buttons">
-      <!-- Example buttons (extend as needed) -->
-      <button class="clear-btn orange" id="clearBtn">C</button>
-      <button>7</button>
-      <button>8</button>
-      <button>9</button>
-      <button class="orange">÷</button>
-
-      <button>4</button>
-      <button>5</button>
-      <button>6</button>
-      <button class="orange">×</button>
-
-      <button>1</button>
-      <button>2</button>
-      <button>3</button>
-      <button class="orange">-</button>
-
-      <button>0</button>
-      <button>.</button>
-      <button class="orange" id="equalsBtn">=</button>
-      <button class="orange">+</button>
-    </div>
-
-    <button class="special-btn" id="lastCalcBtn" aria-label="Last Calculation">Last Calculation</button>
+    <footer>
+      <nav class="calculator-toggle">
+        <button onclick="window.location.href='index.html'" aria-label="Switch to Simple Calculator">
+          Simple Calculator
+        </button>
+        <button onclick="window.location.href='advanced/advanced.html'" aria-label="Switch to Advanced Calculator">
+          Advanced Calculator
+        </button>
+      </nav>
+    </footer>
   </div>
-
- <footer>
-  <div class="calculator-toggle">
-    <button onclick="window.location.href='index.html'">Simple Calculator</button>
-    <button onclick="window.location.href='advanced/advanced.html'">Advanced Calculator</button>
-  </div>
-</footer>
 
   <!-- Scripts -->
   <script src="footer/footerscript.js"></script>
   <script src="calculator.js"></script>
+  <script>
+    // Dark mode toggle
+    document.getElementById('toggleDark').addEventListener('change', function () {
+      document.body.classList.toggle('dark-mode', this.checked);
+    });
+  </script>
 </body>
 </html>
