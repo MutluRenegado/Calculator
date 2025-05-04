@@ -1,24 +1,3 @@
-/* Basic Calculator Styles */
-.calculator {
-  padding: 10px !important;
-  width: 100% !important;
-  max-width: 400px !important;
-  box-sizing: border-box !important;
-  margin: 0 auto !important;
-}
-
-.calculator-screen {
-  width: 100% !important;
-  height: 48px !important;
-  font-size: 1.5rem !important;
-  text-align: right !important;
-  margin-bottom: 20px !important;
-  padding: 10px !important;
-  box-sizing: border-box !important;
-  border: 1px solid #ccc !important;
-  border-radius: 5px !important;
-}
-
 .calculator-buttons {
   display: grid !important;
   grid-template-columns: repeat(4, 1fr) !important;
@@ -26,92 +5,54 @@
 }
 
 .calculator-buttons button {
-  padding: 20px !important;
-  font-size: 1.2rem !important;
+  padding: 15% !important; /* Relative padding for responsiveness */
+  font-size: 1.5rem !important; /* Adjust font size */
   border-radius: 5px !important;
   border: 1px solid #ccc !important;
   cursor: pointer !important;
 }
 
 .clear-btn {
-  background-color: #f44336 !important;
-  color: white !important;
-  border: 1px solid #ccc !important;
+  grid-column: span 4 !important; /* Makes the clear button span the entire row */
+  margin-top: 10px !important; /* Adds spacing from the other buttons */
+  width: 90%; /* Make the button span most of the width */
+  padding: 15px !important; /* Add padding for a larger clickable area */
+  font-size: 1.2rem !important; /* Adjust font size for better visibility */
 }
 
-button:active {
-  transform: scale(0.95);
+.clear-button-container {
+  text-align: center; /* Center the button horizontally */
+  margin-top: 10px; /* Add spacing from the calculator buttons */
 }
 
-.special-btn {
-  background-color: #FF9800 !important;
-  color: white !important;
-  width: 100% !important;
-  padding: 15px !important;
-  font-size: 1.2rem !important;
-  border-radius: 5px !important;
-  border: 1px solid #ccc !important;
+@media (max-width: 600px) {
+  .calculator-buttons {
+    grid-template-columns: repeat(2, 1fr) !important; /* Adjusts to 2 columns on smaller screens */
+    gap: 5px !important;
+  }
+
+  .calculator-buttons button {
+    font-size: 1.2rem !important; /* Reduce font size on smaller screens */
+    padding: 10% !important; /* Adjust padding */
+  }
+
+  .clear-btn {
+    grid-column: span 2 !important; /* Adjust clear button for smaller screens */
+  }
 }
 
-.toggles {
-  margin-bottom: 20px !important;
-}
+@media (min-width: 601px) and (max-width: 900px) {
+  .calculator-buttons {
+    grid-template-columns: repeat(3, 1fr) !important; /* Adjust to 3 columns for medium screens */
+    gap: 8px !important;
+  }
 
-.toggles label {
-  margin-right: 10px !important;
-}
+  .calculator-buttons button {
+    font-size: 1.4rem !important;
+    padding: 12% !important;
+  }
 
-/* Light mode slight gold background and black text for top row and right column buttons */
-.calculator-buttons button:nth-child(-n+4),
-.calculator-buttons button:nth-child(4n) {
-  background-color: #fff9e6 !important;
-  color: black !important;
-}
-
-/* Light mode gold background for buttons C, Ans, +-, % */
-.clear-btn,
-.calculator-buttons button.special-btn:nth-child(-n+5) {
-  background-color: gold !important;
-  color: black !important;
-}
-
-/* Light mode gold background for third column buttons */
-.calculator-buttons button:nth-child(4n-1) {
-  background-color: gold !important;
-  color: black !important;
-}
-
-body.dark {
-  background-color: #121212 !important;
-  color: #e0e0e0 !important;
-}
-
-body.dark .calculator {
-  background-color: #1e1e1e !important;
-  color: #e0e0e0 !important;
-  border-radius: 8px !important;
-  padding: 20px !important;
-}
-
-body.dark .calculator-screen {
-  background-color: #333 !important;
-  color: #e0e0e0 !important;
-  border: 1px solid #555 !important;
-}
-
-body.dark .calculator-buttons button,
-body.dark .special-btn,
-body.dark .clear-btn {
-  background-color: #333 !important;
-  color: #e0e0e0 !important;
-  border: 1px solid #555 !important;
-}
-
-body.dark .clear-btn {
-  background-color: #b00020 !important;
-}
-
-body.dark button:active {
-  background-color: #555 !important;
-  transform: scale(0.95);
+  .clear-btn {
+    grid-column: span 3 !important;
+  }
 }
