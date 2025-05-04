@@ -1,4 +1,4 @@
-import mathLib from './advanced/mathLib.js';
+import mathLib from './mathLib.js'; // Importing mathLib
 
 const buttonsContainer = document.getElementById('buttons');
 const result = document.getElementById('result');
@@ -11,11 +11,11 @@ let lastCalcIndex = -1;
 let firstValue = null; // To store the first value for percentage calculation
 
 const buttonsLayout = [
-  ['C', 'ANS', '+-', '%', '÷'],
-  ['7', '8', '9', '×'],
-  ['4', '5', '6', '-'],
-  ['1', '2', '3', '+'],
-  ['0', '.', '=', '<']
+  'ANS', '+-', '%', '÷',
+  '7', '8', '9', '×',
+  '4', '5', '6', '-',
+  '1', '2', '3', '+',
+  '0', '.', '=', '<'
 ];
 
 function renderButtons() {
@@ -82,9 +82,8 @@ function buttonClicked(value) {
         firstValue = val;
         result.value = '';
       } else {
-        // Calculate percentage based on second number entered using mathLib.percent
-        const percentResult = mathLib.percent(firstValue, val);
-        result.value = percentResult.toString();
+        // Calculate percentage based on second number entered
+        result.value = ((firstValue * val) / 100).toFixed(2); // Calculate percentage to 2 decimals
         firstValue = null; // Reset after calculation
       }
     } else {
@@ -100,9 +99,30 @@ function calculateResult() {
     let expression = result.value.replace(/÷/g, '/').replace(/×/g, '*');
     expression = expression.replace(/(\d+)%/g, (match, p1) => (parseFloat(p1) / 100));
 
-    let answer = eval(expression);
+    let answer;
+
+    // Handling different operations
+    if (expression.includes('+')) {
+      let operands = expression.split('+');
+      answer = mathLib.add(parseFloat(operands[0]), parseFloat(operands[1]));
+    } else if (expression.includes('-')) {
+      let operands = expression.split('-');
+      answer = mathLib.subtract(parseFloat(operands[0]), parseFloat(operands[1]));
+    } else if (expression.includes('*') || expression.includes('×')) {
+      let operands = expression.split('*').length > 1 ? expression.split('*') : expression.split('×');
+      answer = mathLib.multiply(parseFloat(operands[0]), parseFloat(operands[1]));
+    } else if (expression.includes('/')) {
+      let operands = expression.split('/');
+      answer = mathLib.divide(parseFloat(operands[0]), parseFloat(operands[1]));
+    } else {
+      // If no operators, just a number or function call
+      if (expression.match(/\d+/)) {
+        answer = parseFloat(expression);
+      }
+    }
+
     if (typeof answer === 'number') {
-      answer = +answer.toFixed(8);
+      answer = +answer.toFixed(2); // Limit to 2 decimal places
     }
 
     if (result.value !== '') {
@@ -130,11 +150,6 @@ lastCalcBtn.style.display = 'none';
 
 toggleDark.addEventListener('change', () => {
   document.body.classList.toggle('dark', toggleDark.checked);
-});
-
-const keyboardShortcutsBtn = document.getElementById('keyboardShortcutsBtn');
-keyboardShortcutsBtn.addEventListener('click', () => {
-  window.open('public/keyboard-shortcuts.html', '_blank');
 });
 
 document.addEventListener('keydown', (event) => {
