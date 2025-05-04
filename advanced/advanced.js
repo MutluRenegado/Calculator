@@ -19,7 +19,7 @@ const config = {
     "X!", "7", "8", "9", "×",
     "1/X", "4", "5", "6", "-",
     "π", "1", "2", "3", "+",
-    "ANS", "0", ".", "=", "AC"
+    "ANS", "0", ".", "=", "AC", "C"
   ]
 };
 
@@ -50,10 +50,8 @@ function evaluateExpression(expression) {
 
 // Handle input
 function handleInput(value) {
-  if (value === "AC") {
-    display.value = "0";  // Clear display (reset to zero)
-  } else if (value === "C") {
-    display.value = "0";  // Clear current input
+  if (value === "AC" || value === "C") {
+    display.value = "0";  // Clear display
   } else if (value === "⌫") {
     display.value = display.value.slice(0, -1) || "0"; // Delete last character
   } else if (value === "=") {
@@ -79,13 +77,13 @@ config.keys.forEach(key => {
   buttonsContainer.appendChild(button);
 });
 
-// Create and place the "C" button above "Last Call"
+// Place "C" button above "Last Calculation" button
 const clearButton = document.createElement("button");
 clearButton.textContent = "C";
 clearButton.onclick = () => handleInput("C");
 buttonsContainer.insertBefore(clearButton, lastCalcBtn);
 
-// Dark mode
+// Dark mode toggle
 darkModeToggle.onchange = () => {
   document.body.classList.toggle("dark-mode");
 };
@@ -116,7 +114,7 @@ document.addEventListener("keydown", function (e) {
   }
 });
 
-// Keyboard shortcut display
+// Toggle keyboard shortcuts visibility
 shortcutToggleBtn.onclick = () => {
   keyboardShortcuts.classList.toggle("show");
 };
