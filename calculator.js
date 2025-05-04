@@ -12,7 +12,7 @@ let lastCalcIndex = -1;
 let firstValue = null;
 
 const config = {
-  keys [
+  keys: [
   'ANS', '%', '+-', '÷',
   '7', '8', '9', '×',
   '4', '5', '6', '-',
