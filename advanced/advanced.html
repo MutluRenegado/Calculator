@@ -11,11 +11,13 @@
     <h2>Advanced Calculator</h2>
 
     <div class="toggles">
-      <button id="keyboardShortcutsBtn" onclick="window.location.href = 'keyboard-shortcuts-advanced.html';">Keyboard Shortcuts</button>
-      <label>
-        <input type="checkbox" id="dark-mode-toggle" />
-        Dark Mode
-      </label>
+      <button id="keyboardShortcutsBtn" style="margin-right: 10px;" onclick="window.location.href = '/Calculator/public/keyboard-shortcuts-advanced.html';">Keyboard Shortcuts</button>
+      <div class="dark-toggle-wrapper">
+        <label>
+          <input type="checkbox" id="dark-mode-toggle" />
+          Dark Mode
+        </label>
+      </div>
     </div>
 
     <input
@@ -32,7 +34,8 @@
     </div>
 
     <button class="special-btn" id="last-calc-btn" aria-label="Last Calculation">Last Calculation</button>
-
+    
+    <!-- Keyboard shortcuts section -->
     <div id="keyboardShortcuts" class="keyboard-map" style="display: none;">
       <h3>Keyboard Shortcuts</h3>
       <ul>
@@ -49,11 +52,12 @@
 
   <footer>
     <div class="calculator-toggle">
-      <button onclick="window.location.href='/Calculator/index.html'">Simple Calculator</button>
-      <button onclick="window.location.href='/Calculator/advanced/advanced.html'">Advanced Calculator</button>
+      <button onclick="window.location.href='/index.html'">Simple Calculator</button>
+      <button onclick="window.location.href='/advanced/advanced.html'">Advanced Calculator</button>
     </div>
   </footer>
 
+  <!-- JavaScript file -->
   <script type="module" src="advanced.js"></script>
 </body>
 </html>
