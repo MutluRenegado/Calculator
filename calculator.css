@@ -1,117 +1,107 @@
 /* Basic Calculator Styles */
 .calculator {
-  padding: 10px !important;
-  width: 100% !important;
-  max-width: 400px !important;
-  box-sizing: border-box !important;
-  margin: 0 auto !important;
+  padding: 10px;
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+  margin: 0 auto;
 }
 
 .calculator-screen {
-  width: 100% !important;
-  height: 48px !important;
-  font-size: 1.5rem !important;
-  text-align: right !important;
-  margin-bottom: 20px !important;
-  padding: 10px !important;
-  box-sizing: border-box !important;
-  border: 1px solid #ccc !important;
-  border-radius: 5px !important;
+  width: 100%;
+  height: 48px;
+  font-size: 1.5rem;
+  text-align: right;
+  margin-bottom: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .calculator-buttons {
-  display: grid !important;
-  grid-template-columns: repeat(4, 1fr) !important;
-  gap: 10px !important;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
 }
 
 .calculator-buttons button {
-  padding: 20px !important;
-  font-size: 1.2rem !important;
-  border-radius: 5px !important;
-  border: 1px solid #ccc !important;
-  cursor: pointer !important;
-}
-
-.clear-btn {
-  background-color: #f44336 !important;
-  color: white !important;
-  border: 1px solid #ccc !important;
+  padding: 20px;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition: transform 0.1s ease-in-out;
 }
 
 button:active {
   transform: scale(0.95);
 }
 
-.special-btn {
-  background-color: #FF9800 !important;
-  color: white !important;
-  width: 100% !important;
-  padding: 15px !important;
-  font-size: 1.2rem !important;
-  border-radius: 5px !important;
-  border: 1px solid #ccc !important;
+/* Button Styles */
+.clear-btn {
+  background-color: #f44336;
+  color: white;
 }
 
+.special-btn {
+  background-color: #FF9800;
+  color: white;
+}
+
+/* Toggles section */
 .toggles {
-  margin-bottom: 20px !important;
+  margin-bottom: 20px;
 }
 
 .toggles label {
-  margin-right: 10px !important;
+  margin-right: 10px;
 }
 
-/* Light mode slight gold background and black text for top row and right column buttons */
+/* Light mode enhancements */
 .calculator-buttons button:nth-child(-n+4),
 .calculator-buttons button:nth-child(4n) {
-  background-color: #fff9e6 !important;
-  color: black !important;
+  background-color: #fff9e6;
+  color: black;
 }
 
-/* Light mode gold background for buttons C, Ans, +-, % */
 .clear-btn,
-.calculator-buttons button.special-btn:nth-child(-n+5) {
-  background-color: gold !important;
-  color: black !important;
-}
-
-/* Light mode gold background for third column buttons */
+.calculator-buttons button.special-btn:nth-child(-n+5),
 .calculator-buttons button:nth-child(4n-1) {
-  background-color: gold !important;
-  color: black !important;
+  background-color: gold;
+  color: black;
 }
 
+/* Dark Mode */
 body.dark {
-  background-color: #121212 !important;
-  color: #e0e0e0 !important;
+  background-color: #121212;
+  color: #e0e0e0;
 }
 
 body.dark .calculator {
-  background-color: #1e1e1e !important;
-  color: #e0e0e0 !important;
-  border-radius: 8px !important;
-  padding: 20px !important;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  padding: 20px;
 }
 
 body.dark .calculator-screen {
-  background-color: #333 !important;
-  color: #e0e0e0 !important;
-  border: 1px solid #555 !important;
+  background-color: #333;
+  color: #e0e0e0;
+  border: 1px solid #555;
 }
 
 body.dark .calculator-buttons button,
 body.dark .special-btn,
 body.dark .clear-btn {
-  background-color: #333 !important;
-  color: #e0e0e0 !important;
-  border: 1px solid #555 !important;
+  background-color: #333;
+  color: #e0e0e0;
+  border: 1px solid #555;
 }
 
 body.dark .clear-btn {
-  background-color: #b00020 !important;
+  background-color: #b00020;
 }
 
 body.dark button:active {
-  background-color: #555 !important;
-  transform: scale(0.95);
+  background-color: #555;
 }
