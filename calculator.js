@@ -1,16 +1,18 @@
 const buttons = [
-  // Left column buttons
+  // Number and operation buttons
+  { text: '7' }, { text: '8' }, { text: '9' }, { text: '*' },
+  { text: '4' }, { text: '5' }, { text: '6' }, { text: '-' },
+  { text: '1' }, { text: '2' }, { text: '3' }, { text: '+' },
+  { text: '0' }, { text: '.', class: 'special-btn' }, { text: '=', class: 'special-btn' },
+  
+  // Right column special buttons
   { text: 'C', class: 'special-btn' },
   { text: 'Ans', class: 'special-btn' },
   { text: '+-', class: 'special-btn' },
   { text: '%', class: 'special-btn' },
   
-  // Rest of the buttons in order
-  { text: '/', class: '' },
-  { text: '7' }, { text: '8' }, { text: '9' }, { text: '*' },
-  { text: '4' }, { text: '5' }, { text: '6' }, { text: '-' },
-  { text: '1' }, { text: '2' }, { text: '3' }, { text: '+' },
-  { text: '0' }, { text: '.', class: 'special-btn' }, { text: '=', class: 'special-btn' }
+  // Division button (placing it after the special buttons)
+  { text: '/' }
 ];
 
 const calculatorButtons = document.getElementById('buttons');
