@@ -1,5 +1,3 @@
-import mathLib from './mathLib.js'; // Importing mathLib
-
 const buttonsContainer = document.getElementById('buttons');
 const result = document.getElementById('result');
 const toggleDark = document.getElementById('toggleDark');
@@ -11,15 +9,16 @@ let lastCalculations = [];
 let lastCalcIndex = -1;
 let firstValue = null; // To store the first value for percentage calculation
 
-// Corrected buttonsLayout structure (1D array)
-const buttonsLayout = [
-  '÷', '%', '+-', 'ANS',
-  '×', '9', '8', '7',
-  '-', '6', '5', '4',
-  '+', '3', '2', '1',
-  '<', '=', '.', '0',
-  'C'
-];
+// Corrected buttonsLayout structure (Reversed order)
+const buttonsLayout = {
+  keys: [
+    'ANS', '+-', '%', '÷',
+    '7', '8', '9', '×',
+    '6', '5', '4', '-',
+    '3', '2', '1', '+',
+    '0', '.', '=', '<'
+  ]
+};
 
 function renderButtons() {
   // Ensure buttonsContainer exists
@@ -32,8 +31,8 @@ function renderButtons() {
   buttonsContainer.classList.add('basic');
   buttonsContainer.style.gridTemplateColumns = 'repeat(4, 1fr)';
 
-  // Fixed rendering logic for 1D buttonsLayout array
-  buttonsLayout.forEach((btn, index) => {
+  // Fixed rendering logic for reversed buttonsLayout array
+  buttonsLayout.keys.forEach((btn, index) => {
     const rowIndex = Math.floor(index / 4); // Calculate the row index
     const colIndex = index % 4;            // Calculate the column index
 
@@ -115,16 +114,16 @@ function calculateResult() {
     // Handling different operations
     if (expression.includes('+')) {
       let operands = expression.split('+');
-      answer = mathLib.add(parseFloat(operands[0]), parseFloat(operands[1]));
+      answer = parseFloat(operands[0]) + parseFloat(operands[1]);
     } else if (expression.includes('-')) {
       let operands = expression.split('-');
-      answer = mathLib.subtract(parseFloat(operands[0]), parseFloat(operands[1]));
+      answer = parseFloat(operands[0]) - parseFloat(operands[1]);
     } else if (expression.includes('*') || expression.includes('×')) {
       let operands = expression.split('*').length > 1 ? expression.split('*') : expression.split('×');
-      answer = mathLib.multiply(parseFloat(operands[0]), parseFloat(operands[1]));
+      answer = parseFloat(operands[0]) * parseFloat(operands[1]);
     } else if (expression.includes('/')) {
       let operands = expression.split('/');
-      answer = mathLib.divide(parseFloat(operands[0]), parseFloat(operands[1]));
+      answer = parseFloat(operands[0]) / parseFloat(operands[1]);
     } else {
       // If no operators, just a number or function call
       if (expression.match(/\d+/)) {
@@ -178,7 +177,7 @@ if (ansBtn) {
       result.value += lastAnswer;
     }
   });
-}
+});
 
 document.addEventListener('keydown', (event) => {
   const key = event.key;
