@@ -1,88 +1,74 @@
-const display = document.getElementById('display');
+const result = document.getElementById('result');
 const buttonsContainer = document.getElementById('buttons');
+const clearBtn = document.getElementById('clearBtn');
+const toggleDark = document.getElementById('toggleDark');
 
-let currentInput = '';
-let answer = '';
+// Define the calculator buttons
+const buttons = [
+  { text: 'Ans', class: 'special-btn' },
+  { text: '+-', class: 'special-btn' },
+  { text: '%', class: 'special-btn' },
+  { text: '/', class: '' },
+  { text: '7' }, { text: '8' }, { text: '9' }, { text: '*' },
+  { text: '4' }, { text: '5' }, { text: '6' }, { text: '-' },
+  { text: '1' }, { text: '2' }, { text: '3' }, { text: '+' },
+  { text: '0' }, { text: '.', class: 'special-btn' }, { text: '=', class: 'special-btn' }
+];
 
-const buttonsLayout = {
-  keys: [
-    'C', '', '', '<',
-    'ANS', '+-', '%', '÷',
-    '7', '8', '9', '×',
-    '4', '5', '6', '-',
-    '1', '2', '3', '+',
-    '0', '.', '', '='
-  ]
-};
+// Track last answer
+let lastAnswer = '';
+let expression = '';
 
-buttonsLayout.keys.forEach(key => {
-  const button = document.createElement('button');
-  button.textContent = key;
+function renderButtons() {
+  buttons.forEach(btn => {
+    const button = document.createElement('button');
+    button.textContent = btn.text;
+    if (btn.class) button.classList.add(btn.class);
+    button.addEventListener('click', () => handleButtonClick(btn.text));
+    buttonsContainer.appendChild(button);
+  });
+}
 
-  // Add special class for styling
-  if (key === 'C') button.classList.add('clear');
-  if (key === '=') button.classList.add('equals');
-  if (['+', '-', '×', '÷'].includes(key)) button.classList.add('operator');
-
-  if (key !== '') {
-    button.addEventListener('click', () => handleInput(key));
-  } else {
-    button.disabled = true;
-    button.style.visibility = 'hidden';
-  }
-
-  buttonsContainer.appendChild(button);
-});
-
-function handleInput(key) {
-  switch (key) {
+function handleButtonClick(value) {
+  switch (value) {
     case 'C':
-      currentInput = '';
-      display.textContent = '0';
-      break;
-    case '<':
-      currentInput = currentInput.slice(0, -1);
-      display.textContent = currentInput || '0';
+      expression = '';
+      result.value = '';
       break;
     case '=':
       try {
-        const result = eval(currentInput
-          .replace(/÷/g, '/')
-          .replace(/×/g, '*')
-        );
-        answer = result;
-        display.textContent = result;
-        currentInput = result.toString();
-      } catch {
-        display.textContent = 'Error';
-        currentInput = '';
+        expression = eval(expression).toString();
+        result.value = expression;
+        lastAnswer = expression;
+      } catch (e) {
+        result.value = 'Error';
+        expression = '';
       }
       break;
-    case 'ANS':
-      currentInput += answer.toString();
-      display.textContent = currentInput;
+    case 'Ans':
+      expression += lastAnswer;
+      result.value = expression;
       break;
     case '+-':
-      if (currentInput) {
-        if (currentInput.startsWith('-')) {
-          currentInput = currentInput.slice(1);
-        } else {
-          currentInput = '-' + currentInput;
-        }
-        display.textContent = currentInput;
-      }
-      break;
-    case '%':
-      try {
-        currentInput = (parseFloat(currentInput) / 100).toString();
-        display.textContent = currentInput;
-      } catch {
-        display.textContent = 'Error';
-        currentInput = '';
+      if (expression) {
+        expression = (parseFloat(expression) * -1).toString();
+        result.value = expression;
       }
       break;
     default:
-      currentInput += key;
-      display.textContent = currentInput;
+      expression += value;
+      result.value = expression;
   }
 }
+
+clearBtn.addEventListener('click', () => {
+  expression = '';
+  result.value = '';
+});
+
+toggleDark.addEventListener('change', (e) => {
+  document.body.classList.toggle('dark', e.target.checked);
+});
+
+// Initialize
+renderButtons();
