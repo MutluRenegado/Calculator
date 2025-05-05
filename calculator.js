@@ -3,6 +3,8 @@ import mathLib from './mathLib.js'; // Importing mathLib
 const buttonsContainer = document.getElementById('buttons');
 const result = document.getElementById('result');
 const toggleDark = document.getElementById('toggleDark');
+const ansBtn = document.getElementById('ansBtn');
+const lastCalcBtn = document.getElementById('lastCalcBtn');
 const clearBtn = document.getElementById('clearBtn');
 
 let lastCalculations = [];
@@ -32,6 +34,9 @@ function renderButtons() {
 
   // Fixed rendering logic for 1D buttonsLayout array
   buttonsLayout.forEach((btn, index) => {
+    const rowIndex = Math.floor(index / 4); // Calculate the row index
+    const colIndex = index % 4;            // Calculate the column index
+
     const button = document.createElement('button');
     button.textContent = btn;
     button.onclick = () => buttonClicked(btn);
@@ -53,7 +58,7 @@ function renderButtons() {
       button.classList.add('number');
     }
 
-    if ((index === 0 || (index % 4 === 3)) && btn !== 'C') {
+    if ((rowIndex === 0 || colIndex === 3) && btn !== 'C') {
       button.classList.add('lightning');
     }
 
@@ -84,11 +89,13 @@ function buttonClicked(value) {
     let val = parseFloat(result.value);
     if (!isNaN(val) && result.value !== '') {
       if (firstValue === null) {
+        // First number entered, so store it as first value
         firstValue = val;
         result.value = '';
       } else {
-        result.value = ((firstValue * val) / 100).toFixed(2);
-        firstValue = null;
+        // Calculate percentage based on second number entered
+        result.value = ((firstValue * val) / 100).toFixed(2); // Calculate percentage to 2 decimals
+        firstValue = null; // Reset after calculation
       }
     } else {
       result.value = 'Error';
@@ -105,6 +112,7 @@ function calculateResult() {
 
     let answer;
 
+    // Handling different operations
     if (expression.includes('+')) {
       let operands = expression.split('+');
       answer = mathLib.add(parseFloat(operands[0]), parseFloat(operands[1]));
@@ -118,6 +126,7 @@ function calculateResult() {
       let operands = expression.split('/');
       answer = mathLib.divide(parseFloat(operands[0]), parseFloat(operands[1]));
     } else {
+      // If no operators, just a number or function call
       if (expression.match(/\d+/)) {
         answer = parseFloat(expression);
       }
@@ -148,9 +157,28 @@ function showPreviousCalculation() {
   result.value = lastCalculations[lastCalcIndex];
 }
 
+lastCalcBtn.style.display = 'none';
+
+const staticClearBtn = document.getElementById('clearBtn');
+if (staticClearBtn) {
+  staticClearBtn.addEventListener('click', () => {
+    result.value = '';
+    firstValue = null; // Reset first value when cleared
+  });
+}
+
 toggleDark.addEventListener('change', () => {
   document.body.classList.toggle('dark', toggleDark.checked);
 });
+
+if (ansBtn) {
+  ansBtn.addEventListener('click', () => {
+    if (lastCalculations.length > 0) {
+      const lastAnswer = lastCalculations[lastCalculations.length - 1].split('=')[1].trim();
+      result.value += lastAnswer;
+    }
+  });
+}
 
 document.addEventListener('keydown', (event) => {
   const key = event.key;
@@ -162,7 +190,7 @@ document.addEventListener('keydown', (event) => {
     result.value = result.value.slice(0, -1);
   } else if (key === 'Escape' || key.toLowerCase() === 'c') {
     result.value = '';
-    firstValue = null;
+    firstValue = null; // Reset first value
   } else if (['+', '-', '*', '/'].includes(key)) {
     let symbol = key === '*' ? '×' : key === '/' ? '÷' : key;
     result.value += symbol;
@@ -171,4 +199,6 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
-renderButtons();
+document.addEventListener('DOMContentLoaded', () => {
+  renderButtons();
+});
