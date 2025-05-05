@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Simple Calculator</title>
+  <title>Calculator</title>
   <link rel="stylesheet" href="calculator.css" />
+  <link rel="stylesheet" href="footer/footer.css" />
 </head>
 <body>
   <div class="calculator" id="basic-calculator">
@@ -19,12 +20,11 @@
       class="calculator-screen"
       id="result"
       placeholder="0"
-      readonly
       aria-label="Calculator Screen"
+      readonly
     />
 
     <div class="calculator-buttons" id="buttons"></div>
-    
   </div>
 
   <footer>
@@ -34,6 +34,8 @@
     </div>
   </footer>
 
+  <!-- Scripts -->
+  <script src="footer/footerscript.js"></script>
   <script type="module" src="calculator.js"></script>
 </body>
 </html>
