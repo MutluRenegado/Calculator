@@ -113,3 +113,9 @@ body.dark button:active {
   background-color: #555;
   transform: scale(0.95);
 }
+
+button:focus {
+  outline: none;
+  background-color: #ccc;
+}
+
