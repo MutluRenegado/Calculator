@@ -12,11 +12,12 @@ let firstValue = null; // To store the first value for percentage calculation
 
 // Corrected buttonsLayout structure (1D array)
 const buttonsLayout = [
-  'ANS', '+-', '%', '÷',
-  '7', '8', '9', '×',
-  '4', '5', '6', '-',
-  '1', '2', '3', '+',
-  '0', '.', '=', '<'
+  '÷', '%', '+-', 'ANS',
+  '×', '9', '8', '7',
+  '-', '6', '5', '4',
+  '+', '3', '2', '1',
+  '<', '=', '.', '0',
+  'C'
 ];
 
 function renderButtons() {
@@ -156,6 +157,14 @@ function showPreviousCalculation() {
 }
 
 lastCalcBtn.style.display = 'none';
+
+const staticClearBtn = document.getElementById('clearBtn');
+if (staticClearBtn) {
+  staticClearBtn.addEventListener('click', () => {
+    result.value = '';
+    firstValue = null; // Reset first value when cleared
+  });
+}
 
 toggleDark.addEventListener('change', () => {
   document.body.classList.toggle('dark', toggleDark.checked);
