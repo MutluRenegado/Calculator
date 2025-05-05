@@ -1,202 +1,134 @@
-import mathLib from './mathLib.js'; // Importing mathLib
-
-const buttonsContainer = document.getElementById('buttons');
-const result = document.getElementById('result');
-const toggleDark = document.getElementById('toggleDark');
-const ansBtn = document.getElementById('ansBtn');
-const lastCalcBtn = document.getElementById('lastCalcBtn');
-const clearBtn = document.getElementById('clearBtn');
-
-let lastCalculations = [];
-let lastCalcIndex = -1;
-let firstValue = null; // To store the first value for percentage calculation
-
-// Corrected buttonsLayout structure (1D array)
-const buttonsLayout = [
-  '÷', '%', '+-', 'ANS',
-  '×', '9', '8', '7',
-  '-', '6', '5', '4',
-  '+', '3', '2', '1',
-  '<', '=', '.', '0',
-  'C'
-];
-
-function renderButtons() {
-  // Ensure buttonsContainer exists
-  if (!buttonsContainer) {
-    console.error('Error: Buttons container not found!');
-    return;
-  }
-
-  buttonsContainer.innerHTML = '';
-  buttonsContainer.classList.add('basic');
-  buttonsContainer.style.gridTemplateColumns = 'repeat(4, 1fr)';
-
-  // Fixed rendering logic for 1D buttonsLayout array
-  buttonsLayout.forEach((btn, index) => {
-    const rowIndex = Math.floor(index / 4); // Calculate the row index
-    const colIndex = index % 4;            // Calculate the column index
-
-    const button = document.createElement('button');
-    button.textContent = btn;
-    button.onclick = () => buttonClicked(btn);
-
-    if (btn === 'C') {
-      button.classList.add('clear-btn');
-      button.style.gridColumn = 'span 4';
-    }
-
-    if (btn === 'ANS' || btn === '+-' || btn === '%' || btn === '<') {
-      button.classList.add('special-btn');
-    } else if (btn === '÷' || btn === '×' || btn === '-' || btn === '+' || btn === '=') {
-      if (btn === '=') {
-        button.classList.add('equals');
-      } else {
-        button.classList.add('main-func');
-      }
-    } else {
-      button.classList.add('number');
-    }
-
-    if ((rowIndex === 0 || colIndex === 3) && btn !== 'C') {
-      button.classList.add('lightning');
-    }
-
-    buttonsContainer.appendChild(button);
-  });
+/* Basic Calculator Styles */
+.calculator {
+  padding: 10px !important;
+  width: 100% !important;
+  max-width: 400px !important;
+  box-sizing: border-box !important;
+  margin: 0 auto !important;
 }
 
-function buttonClicked(value) {
-  if (value === '=') {
-    calculateResult();
-  } else if (value === '<') {
-    showPreviousCalculation();
-  } else if (value === 'C') {
-    result.value = '';
-    firstValue = null; // Reset first value when cleared
-  } else if (value === 'ANS') {
-    if (lastCalculations.length > 0) {
-      const lastAnswer = lastCalculations[lastCalculations.length - 1].split('=')[1].trim();
-      result.value += lastAnswer;
-    }
-  } else if (value === '+-') {
-    if (result.value) {
-      result.value = result.value.startsWith('-')
-        ? result.value.slice(1)
-        : '-' + result.value;
-    }
-  } else if (value === '%') {
-    let val = parseFloat(result.value);
-    if (!isNaN(val) && result.value !== '') {
-      if (firstValue === null) {
-        // First number entered, so store it as first value
-        firstValue = val;
-        result.value = '';
-      } else {
-        // Calculate percentage based on second number entered
-        result.value = ((firstValue * val) / 100).toFixed(2); // Calculate percentage to 2 decimals
-        firstValue = null; // Reset after calculation
-      }
-    } else {
-      result.value = 'Error';
-    }
-  } else {
-    result.value += value === '÷' ? '/' : value === '×' ? '*' : value;
-  }
+.calculator-screen {
+  width: 100% !important;
+  height: 48px !important;
+  font-size: 1.5rem !important;
+  text-align: right !important;
+  margin-bottom: 20px !important;
+  padding: 10px !important;
+  box-sizing: border-box !important;
+  border: 1px solid #ccc !important;
+  border-radius: 5px !important;
 }
 
-function calculateResult() {
-  try {
-    let expression = result.value.replace(/÷/g, '/').replace(/×/g, '*');
-    expression = expression.replace(/(\d+)%/g, (match, p1) => (parseFloat(p1) / 100));
-
-    let answer;
-
-    // Handling different operations
-    if (expression.includes('+')) {
-      let operands = expression.split('+');
-      answer = mathLib.add(parseFloat(operands[0]), parseFloat(operands[1]));
-    } else if (expression.includes('-')) {
-      let operands = expression.split('-');
-      answer = mathLib.subtract(parseFloat(operands[0]), parseFloat(operands[1]));
-    } else if (expression.includes('*') || expression.includes('×')) {
-      let operands = expression.split('*').length > 1 ? expression.split('*') : expression.split('×');
-      answer = mathLib.multiply(parseFloat(operands[0]), parseFloat(operands[1]));
-    } else if (expression.includes('/')) {
-      let operands = expression.split('/');
-      answer = mathLib.divide(parseFloat(operands[0]), parseFloat(operands[1]));
-    } else {
-      // If no operators, just a number or function call
-      if (expression.match(/\d+/)) {
-        answer = parseFloat(expression);
-      }
-    }
-
-    if (typeof answer === 'number') {
-      answer = +answer.toFixed(2); // Limit to 2 decimal places
-    }
-
-    if (result.value !== '') {
-      lastCalculations.push(result.value + ' = ' + answer);
-      if (lastCalculations.length > 10) lastCalculations.shift();
-      lastCalcIndex = lastCalculations.length;
-    }
-
-    result.value = answer;
-  } catch {
-    result.value = 'Error';
-  }
+.calculator-buttons {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 10px !important;
+  /* direction: rtl !important;  Remove to make buttons flow left to right */
 }
 
-function showPreviousCalculation() {
-  if (lastCalculations.length === 0) {
-    result.value = 'No last calculation';
-    return;
-  }
-  lastCalcIndex = (lastCalcIndex - 1 + lastCalculations.length) % lastCalculations.length;
-  result.value = lastCalculations[lastCalcIndex];
+.calculator-buttons button {
+  direction: ltr !important; /* Keep button text left to right */
 }
 
-lastCalcBtn.style.display = 'none';
-
-const staticClearBtn = document.getElementById('clearBtn');
-if (staticClearBtn) {
-  staticClearBtn.addEventListener('click', () => {
-    result.value = '';
-    firstValue = null; // Reset first value when cleared
-  });
+.calculator-buttons button {
+  padding: 20px !important;
+  font-size: 1.2rem !important;
+  border-radius: 5px !important;
+  border: 1px solid #ccc !important;
+  cursor: pointer !important;
 }
 
-toggleDark.addEventListener('change', () => {
-  document.body.classList.toggle('dark', toggleDark.checked);
-});
-
-if (ansBtn) {
-  ansBtn.addEventListener('click', () => {
-    if (lastCalculations.length > 0) {
-      const lastAnswer = lastCalculations[lastCalculations.length - 1].split('=')[1].trim();
-      result.value += lastAnswer;
-    }
-  });
+.clear-btn {
+  background-color: #f44336 !important;
+  color: white !important;
+  border: 1px solid #ccc !important;
+  width: 100% !important;
+  padding: 20px !important;
+  font-size: 1.2rem !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+  margin-top: 10px !important;
+  min-width: 60px !important;
+  min-height: 48px !important;
+  display: inline-block !important;
+  text-align: center !important;
+  vertical-align: middle !important;
 }
 
-document.addEventListener('keydown', (event) => {
-  const key = event.key;
-  if ((key >= '0' && key <= '9') || key === '.') {
-    result.value += key;
-  } else if (key === 'Enter' || key === '=') {
-    calculateResult();
-  } else if (key === 'Backspace') {
-    result.value = result.value.slice(0, -1);
-  } else if (key === 'Escape' || key.toLowerCase() === 'c') {
-    result.value = '';
-    firstValue = null; // Reset first value
-  } else if (['+', '-', '*', '/'].includes(key)) {
-    let symbol = key === '*' ? '×' : key === '/' ? '÷' : key;
-    result.value += symbol;
-  } else if (key === '%') {
-    buttonClicked('%');
-  }
-});
+button:active {
+  transform: scale(0.95);
+}
 
-renderButtons();
+.special-btn {
+  background-color: #FF9800 !important;
+  color: white !important;
+  width: 100% !important;
+  padding: 15px !important;
+  font-size: 1.2rem !important;
+  border-radius: 5px !important;
+  border: 1px solid #ccc !important;
+}
+
+.toggles {
+  margin-bottom: 20px !important;
+}
+
+.toggles label {
+  margin-right: 10px !important;
+}
+
+/* Light mode slight gold background and black text for top row and right column buttons */
+.calculator-buttons button:nth-child(-n+4),
+.calculator-buttons button:nth-child(4n) {
+  background-color: #fff9e6 !important;
+  color: black !important;
+}
+
+/* Light mode gold background for buttons C, Ans, +-, % */
+.clear-btn,
+.calculator-buttons button.special-btn:nth-child(-n+5) {
+  background-color: gold !important;
+  color: black !important;
+}
+
+/* Light mode gold background for third column buttons */
+.calculator-buttons button:nth-child(4n-1) {
+  background-color: gold !important;
+  color: black !important;
+}
+
+body.dark {
+  background-color: #121212 !important;
+  color: #e0e0e0 !important;
+}
+
+body.dark .calculator {
+  background-color: #1e1e1e !important;
+  color: #e0e0e0 !important;
+  border-radius: 8px !important;
+  padding: 20px !important;
+}
+
+body.dark .calculator-screen {
+  background-color: #333 !important;
+  color: #e0e0e0 !important;
+  border: 1px solid #555 !important;
+}
+
+body.dark .calculator-buttons button,
+body.dark .special-btn,
+body.dark .clear-btn {
+  background-color: #333 !important;
+  color: #e0e0e0 !important;
+  border: 1px solid #555 !important;
+}
+
+body.dark .clear-btn {
+  background-color: #b00020 !important;
+}
+
+body.dark button:active {
+  background-color: #555 !important;
+  transform: scale(0.95);
+}
