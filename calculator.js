@@ -1,95 +1,86 @@
+const result = document.getElementById('result');
+const buttonsContainer = document.getElementById('buttons');
+const clearBtn = document.getElementById('clearBtn');
+const toggleDark = document.getElementById('toggleDark');
+
 const buttons = [
-  { text: '/', class: '' },
-  { text: '7' }, { text: '8' }, { text: '9' }, { text: '*' },
-  { text: '4' }, { text: '5' }, { text: '6' }, { text: '-' },
-  { text: '1' }, { text: '2' }, { text: '3' }, { text: '+' },
-  { text: '0' }, { text: '.', class: 'special-btn' }, { text: '=', class: 'special-btn' },
+  { text: '7' }, { text: '8' }, { text: '9' }, { text: '/' },
+  { text: '4' }, { text: '5' }, { text: '6' }, { text: '*' },
+  { text: '1' }, { text: '2' }, { text: '3' }, { text: '-' },
+  { text: '0' }, { text: '.', class: 'special-btn' }, { text: '=', class: 'special-btn' }, { text: '+' },
   { text: 'C', class: 'special-btn' },
   { text: 'Ans', class: 'special-btn' },
   { text: '+-', class: 'special-btn' },
   { text: '%', class: 'special-btn' }
 ];
 
-const buttonsContainer = document.getElementById("buttons");
-const resultInput = document.getElementById("result");
-let lastAnswer = '';
-let darkToggle = document.getElementById("toggleDark");
+let ans = '';
+let currentInput = '';
+
+function updateDisplay(value) {
+  result.value = value;
+}
 
 buttons.forEach(btn => {
-  const button = document.createElement("button");
-  button.innerText = btn.text;
-  button.className = btn.class || '';
-  button.addEventListener("click", () => handleInput(btn.text));
+  const button = document.createElement('button');
+  button.textContent = btn.text;
+  if (btn.class) button.classList.add(btn.class);
+  button.addEventListener('click', () => handleInput(btn.text));
   buttonsContainer.appendChild(button);
 });
 
-document.getElementById("clearBtn").addEventListener("click", () => {
-  resultInput.value = '';
+clearBtn.addEventListener('click', () => {
+  currentInput = '';
+  updateDisplay('0');
 });
 
 function handleInput(value) {
-  if (value === '=') {
-    try {
-      let res = eval(resultInput.value.replace('%', '/100'));
-      resultInput.value = res;
-      lastAnswer = res;
-    } catch {
-      resultInput.value = 'Error';
-    }
-  } else if (value === 'C') {
-    resultInput.value = '';
-  } else if (value === 'Ans') {
-    resultInput.value += lastAnswer;
-  } else if (value === '+-') {
-    if (resultInput.value.startsWith('-')) {
-      resultInput.value = resultInput.value.slice(1);
-    } else {
-      resultInput.value = '-' + resultInput.value;
-    }
-  } else {
-    resultInput.value += value;
+  switch (value) {
+    case '=':
+      try {
+        currentInput = eval(currentInput).toString();
+        ans = currentInput;
+        updateDisplay(currentInput);
+      } catch {
+        updateDisplay('Error');
+      }
+      break;
+    case 'C':
+      currentInput = '';
+      updateDisplay('0');
+      break;
+    case 'Ans':
+      currentInput += ans;
+      updateDisplay(currentInput);
+      break;
+    case '+-':
+      currentInput = currentInput.startsWith('-') ? currentInput.slice(1) : '-' + currentInput;
+      updateDisplay(currentInput);
+      break;
+    default:
+      currentInput += value;
+      updateDisplay(currentInput);
   }
 }
 
-// Dark mode toggle
-darkToggle.addEventListener("change", () => {
-  document.body.classList.toggle("dark", darkToggle.checked);
-});
-
-// Keyboard input
-document.addEventListener("keydown", (e) => {
+// Keyboard support
+document.addEventListener('keydown', e => {
   const key = e.key;
-
-  const validKeys = '0123456789/*-+.=%';
-  if (validKeys.includes(key)) {
+  const allowed = '0123456789+-*/.=';
+  if (allowed.includes(key)) {
     handleInput(key);
-    highlightButton(key);
   } else if (key === 'Enter') {
     handleInput('=');
-    highlightButton('=');
   } else if (key === 'Backspace') {
-    resultInput.value = resultInput.value.slice(0, -1);
+    currentInput = currentInput.slice(0, -1);
+    updateDisplay(currentInput || '0');
   } else if (key === 'Escape') {
-    resultInput.value = '';
+    currentInput = '';
+    updateDisplay('0');
   }
 });
 
-// Button press effect via keyboard
-function highlightButton(key) {
-  const map = {
-    '*': '*',
-    '/': '/',
-    '+': '+',
-    '-': '-',
-    '=': '=',
-    '.': '.',
-    '%': '%'
-  };
-
-  const button = Array.from(document.querySelectorAll("button"))
-    .find(btn => btn.innerText === (map[key] || key));
-  if (button) {
-    button.classList.add("pressed");
-    setTimeout(() => button.classList.remove("pressed"), 150);
-  }
-}
+// Dark mode toggle
+toggleDark.addEventListener('change', () => {
+  document.body.classList.toggle('dark');
+});
