@@ -1,37 +1,129 @@
-/* Bottom Row (C and + aligned right) */
-.bottom-row {
-  margin-top: 0.5rem;
-  display: flex;
-  justify-content: flex-end;
+/* Basic Calculator Styles */
+.calculator {
+  padding: 10px !important;
+  width: 100% !important;
+  max-width: 400px !important;
+  box-sizing: border-box !important;
+  margin: 0 auto !important;
 }
 
-.right-align {
-  display: flex;
-  gap: 0.5rem;
+.calculator-screen {
+  width: 100% !important;
+  height: 48px !important;
+  font-size: 1.5rem !important;
+  text-align: right !important;
+  margin-bottom: 20px !important;
+  padding: 10px !important;
+  box-sizing: border-box !important;
+  border: 1px solid #ccc !important;
+  border-radius: 5px !important;
 }
 
-.right-align button {
-  padding: 1rem;
-  font-size: 1.2rem;
-  border: none;
-  border-radius: 0.5rem;
-  background-color: #ff9f00;
-  color: white;
-  cursor: pointer;
-  min-width: 60px;
-  min-height: 60px;
-  transition: background-color 0.2s ease;
+.calculator-buttons {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 10px !important;
+  /* direction: rtl !important;  Remove to make buttons flow left to right */
 }
 
-.right-align button:hover {
-  background-color: #cc7a00;
+.calculator-buttons button {
+  direction: ltr !important; /* Keep button text left to right */
 }
 
-/* Dark Mode override for bottom row */
-body.dark-mode .right-align button {
-  background-color: #ff9800;
+.calculator-buttons button {
+  padding: 20px !important;
+  font-size: 1.2rem !important;
+  border-radius: 5px !important;
+  border: 1px solid #ccc !important;
+  cursor: pointer !important;
 }
 
-body.dark-mode .right-align button:hover {
-  background-color: #e68900;
+.clear-btn {
+  background-color: #f44336 !important;
+  color: white !important;
+  border: 1px solid #ccc !important;
+  width: 100% !important;
+  padding: 20px !important;
+  font-size: 1.2rem !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+  margin-top: 10px !important;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+.special-btn {
+  background-color: #FF9800 !important;
+  color: white !important;
+  width: 100% !important;
+  padding: 15px !important;
+  font-size: 1.2rem !important;
+  border-radius: 5px !important;
+  border: 1px solid #ccc !important;
+}
+
+.toggles {
+  margin-bottom: 20px !important;
+}
+
+.toggles label {
+  margin-right: 10px !important;
+}
+
+/* Light mode slight gold background and black text for top row and right column buttons */
+.calculator-buttons button:nth-child(-n+4),
+.calculator-buttons button:nth-child(4n) {
+  background-color: #fff9e6 !important;
+  color: black !important;
+}
+
+/* Light mode gold background for buttons C, Ans, +-, % */
+.clear-btn,
+.calculator-buttons button.special-btn:nth-child(-n+5) {
+  background-color: gold !important;
+  color: black !important;
+}
+
+/* Light mode gold background for third column buttons */
+.calculator-buttons button:nth-child(4n-1) {
+  background-color: gold !important;
+  color: black !important;
+}
+
+body.dark {
+  background-color: #121212 !important;
+  color: #e0e0e0 !important;
+}
+
+body.dark .calculator {
+  background-color: #1e1e1e !important;
+  color: #e0e0e0 !important;
+  border-radius: 8px !important;
+  padding: 20px !important;
+}
+
+body.dark .calculator-screen {
+  background-color: #333 !important;
+  color: #e0e0e0 !important;
+  border: 1px solid #555 !important;
+}
+
+body.dark .calculator-buttons button,
+body.dark .special-btn,
+body.dark .clear-btn {
+  background-color: #333 !important;
+  color: #e0e0e0 !important;
+  border: 1px solid #555 !important;
+}
+
+body.dark .clear-btn {
+  background-color: #b00020 !important;
+}
+
+body.dark button:active {
+  background-color: #555 !important;
+  transform: scale(0.95);
 }
