@@ -1,26 +1,27 @@
+/* Basic Calculator Styles */
 .calculator {
-  padding: 10px;
-  width: 100%;
-  max-width: 400px;
-  box-sizing: border-box;
-  margin: 0 auto;
+  padding: 10px !important;
+  width: 100% !important;
+  max-width: 400px !important;
+  box-sizing: border-box !important;
+  margin: 0 auto !important;
 }
 
 .calculator-screen {
-  width: 100%;
-  height: 48px;
-  font-size: 1.5rem;
-  text-align: right;
-  margin-bottom: 20px;
-  padding: 10px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  width: 100% !important;
+  height: 48px !important;
+  font-size: 1.5rem !important;
+  text-align: right !important;
+  margin-bottom: 20px !important;
+  padding: 10px !important;
+  box-sizing: border-box !important;
+  border: 1px solid #ccc !important;
+  border-radius: 5px !important;
 }
 
 .calculator-buttons {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr); /* 4 columns */
   gap: 10px;
 }
 
@@ -30,6 +31,24 @@
   border-radius: 5px;
   border: 1px solid #ccc;
   cursor: pointer;
+}
+
+.clear-btn {
+  background-color: #f44336;
+  color: white;
+  border: 1px solid #ccc;
+  width: 100%;
+  padding: 20px;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  box-sizing: border-box;
+  margin-top: 10px;
+  min-width: 60px;
+  min-height: 48px;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
 }
 
 button:active {
@@ -49,19 +68,20 @@ button:active {
   margin-right: 10px;
 }
 
-/* Light mode styles */
+/* Light mode */
 .calculator-buttons button:nth-child(-n+4),
 .calculator-buttons button:nth-child(4n) {
   background-color: #fff9e6;
   color: black;
 }
 
-.calculator-buttons button:nth-child(4n-1) {
+/* Light mode gold background for buttons C, Ans, +-, % */
+.clear-btn,
+.calculator-buttons button.special-btn:nth-child(-n+5) {
   background-color: gold;
   color: black;
 }
 
-/* Dark mode styles */
 body.dark {
   background-color: #121212;
   color: #e0e0e0;
@@ -69,6 +89,7 @@ body.dark {
 
 body.dark .calculator {
   background-color: #1e1e1e;
+  color: #e0e0e0;
   border-radius: 8px;
   padding: 20px;
 }
@@ -79,13 +100,16 @@ body.dark .calculator-screen {
   border: 1px solid #555;
 }
 
-body.dark .calculator-buttons button,
-body.dark .special-btn {
+body.dark .calculator-buttons button {
   background-color: #333;
   color: #e0e0e0;
-  border: 1px solid #555;
 }
 
-body.dark .calculator-buttons button:active {
+body.dark .clear-btn {
+  background-color: #b00020;
+}
+
+body.dark button:active {
   background-color: #555;
+  transform: scale(0.95);
 }
