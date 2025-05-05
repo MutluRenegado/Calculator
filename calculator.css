@@ -1,22 +1,22 @@
 /* Basic Calculator Styles */
 .calculator {
-  padding: 10px !important;
-  width: 100% !important;
-  max-width: 400px !important;
-  box-sizing: border-box !important;
-  margin: 0 auto !important;
+  padding: 10px;
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+  margin: 0 auto;
 }
 
 .calculator-screen {
-  width: 100% !important;
-  height: 48px !important;
-  font-size: 1.5rem !important;
-  text-align: right !important;
-  margin-bottom: 20px !important;
-  padding: 10px !important;
-  box-sizing: border-box !important;
-  border: 1px solid #ccc !important;
-  border-radius: 5px !important;
+  width: 100%;
+  height: 48px;
+  font-size: 1.5rem;
+  text-align: right;
+  margin-bottom: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .calculator-buttons {
@@ -33,6 +33,7 @@
   cursor: pointer;
 }
 
+/* Clear button styles */
 .clear-btn {
   background-color: #f44336;
   color: white;
@@ -68,14 +69,13 @@ button:active {
   margin-right: 10px;
 }
 
-/* Light mode */
+/* Light mode styles */
 .calculator-buttons button:nth-child(-n+4),
 .calculator-buttons button:nth-child(4n) {
   background-color: #fff9e6;
   color: black;
 }
 
-/* Light mode gold background for buttons C, Ans, +-, % */
 .clear-btn,
 .calculator-buttons button.special-btn:nth-child(-n+5) {
   background-color: gold;
