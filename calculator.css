@@ -13,9 +13,9 @@
   text-align: right;
   margin-bottom: 20px;
   padding: 10px;
+  box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 5px;
-  box-sizing: border-box;
 }
 
 .calculator-buttons {
@@ -30,48 +30,38 @@
   border-radius: 5px;
   border: 1px solid #ccc;
   cursor: pointer;
-  direction: ltr;
-}
-
-/* Special Buttons */
-.special-btn,
-.clear-btn {
-  background-color: gold;
-  color: black;
-}
-
-.clear-btn {
-  width: 100%;
-  padding: 20px;
-  font-size: 1.2rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  margin-top: 10px;
 }
 
 button:active {
   transform: scale(0.95);
 }
 
-/* Top row and right column */
-.calculator-buttons button:nth-child(-n+4),
-.calculator-buttons button:nth-child(4n) {
-  background-color: #fff9e6;
-  color: black;
-}
-
-/* Third column */
-.calculator-buttons button:nth-child(4n-1) {
-  background-color: gold;
-  color: black;
+.special-btn {
+  background-color: #FF9800;
+  color: white;
 }
 
 .toggles {
   margin-bottom: 20px;
 }
 
-/* Dark Mode */
+.toggles label {
+  margin-right: 10px;
+}
+
+/* Light mode styles */
+.calculator-buttons button:nth-child(-n+4),
+.calculator-buttons button:nth-child(4n) {
+  background-color: #fff9e6;
+  color: black;
+}
+
+.calculator-buttons button:nth-child(4n-1) {
+  background-color: gold;
+  color: black;
+}
+
+/* Dark mode styles */
 body.dark {
   background-color: #121212;
   color: #e0e0e0;
@@ -90,17 +80,12 @@ body.dark .calculator-screen {
 }
 
 body.dark .calculator-buttons button,
-body.dark .special-btn,
-body.dark .clear-btn {
+body.dark .special-btn {
   background-color: #333;
   color: #e0e0e0;
   border: 1px solid #555;
 }
 
-body.dark .clear-btn {
-  background-color: #b00020;
-}
-
-body.dark button:active {
+body.dark .calculator-buttons button:active {
   background-color: #555;
 }
