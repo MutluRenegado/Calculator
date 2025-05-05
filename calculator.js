@@ -3,6 +3,7 @@ import mathLib from './mathLib.js'; // Importing mathLib
 const buttonsContainer = document.getElementById('buttons');
 const result = document.getElementById('result');
 const toggleDark = document.getElementById('toggleDark');
+const ansBtn = document.getElementById('ansBtn');
 const lastCalcBtn = document.getElementById('lastCalcBtn');
 const clearBtn = document.getElementById('clearBtn');
 
@@ -169,6 +170,15 @@ if (staticClearBtn) {
 toggleDark.addEventListener('change', () => {
   document.body.classList.toggle('dark', toggleDark.checked);
 });
+
+if (ansBtn) {
+  ansBtn.addEventListener('click', () => {
+    if (lastCalculations.length > 0) {
+      const lastAnswer = lastCalculations[lastCalculations.length - 1].split('=')[1].trim();
+      result.value += lastAnswer;
+    }
+  });
+}
 
 document.addEventListener('keydown', (event) => {
   const key = event.key;
