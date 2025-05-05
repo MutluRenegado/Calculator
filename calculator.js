@@ -29,6 +29,7 @@ buttons.forEach(button => {
   calculatorButtons.appendChild(btnElement);
 });
 
+// Function to handle button clicks (either from UI or keyboard)
 function handleButtonClick(value) {
   if (value === 'C') {
     resultScreen.value = ''; // Clear screen
@@ -50,3 +51,32 @@ function handleButtonClick(value) {
     resultScreen.value += value; // Append button value to the screen
   }
 }
+
+// Keyboard event listener
+document.addEventListener('keydown', (event) => {
+  // Map keys to calculator buttons
+  const key = event.key;
+  
+  if (key >= '0' && key <= '9') {
+    handleButtonClick(key); // Handle number key presses
+  } else if (key === 'Enter' || key === '=') {
+    handleButtonClick('='); // Equals key
+  } else if (key === 'Backspace' || key === 'C') {
+    handleButtonClick('C'); // Clear key
+  } else if (key === '%') {
+    handleButtonClick('%'); // Percent key
+  } else if (key === '+') {
+    handleButtonClick('+'); // Plus key
+  } else if (key === '-') {
+    handleButtonClick('-'); // Minus key
+  } else if (key === '*') {
+    handleButtonClick('*'); // Multiplication key
+  } else if (key === '/') {
+    handleButtonClick('/'); // Division key
+  } else if (key === '.') {
+    handleButtonClick('.'); // Decimal point key
+  } else if (key === 'ArrowUp' || key === 'ArrowDown') {
+    // Do nothing for arrow keys or others you don't want to handle
+    return;
+  }
+});
