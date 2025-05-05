@@ -1,5 +1,3 @@
-import mathLib from './mathLib.js'; // Importing mathLib
-
 const buttonsContainer = document.getElementById('buttons');
 const result = document.getElementById('result');
 const toggleDark = document.getElementById('toggleDark');
