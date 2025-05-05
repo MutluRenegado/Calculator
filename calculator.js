@@ -1,9 +1,7 @@
+let expression = '';
+let lastAnswer = 0;
 const result = document.getElementById('result');
-const buttonsContainer = document.getElementById('buttons');
-const clearBtn = document.getElementById('clearBtn');
-const toggleDark = document.getElementById('toggleDark');
 
-// Define the calculator buttons
 const buttons = [
   { text: 'C', class: 'special-btn' },
   { text: 'Ans', class: 'special-btn' },
@@ -16,19 +14,15 @@ const buttons = [
   { text: '0' }, { text: '.', class: 'special-btn' }, { text: '=', class: 'special-btn' }
 ];
 
-// Track last answer
-let lastAnswer = '';
-let expression = '';
+const buttonContainer = document.getElementById('buttons');
 
-function renderButtons() {
-  buttons.forEach(btn => {
-    const button = document.createElement('button');
-    button.textContent = btn.text;
-    if (btn.class) button.classList.add(btn.class);
-    button.addEventListener('click', () => handleButtonClick(btn.text));
-    buttonsContainer.appendChild(button);
-  });
-}
+buttons.forEach(btn => {
+  const button = document.createElement('button');
+  button.textContent = btn.text;
+  if (btn.class) button.classList.add(btn.class);
+  button.addEventListener('click', () => handleButtonClick(btn.text));
+  buttonContainer.appendChild(button);
+});
 
 function handleButtonClick(value) {
   switch (value) {
@@ -62,14 +56,7 @@ function handleButtonClick(value) {
   }
 }
 
-clearBtn.addEventListener('click', () => {
-  expression = '';
-  result.value = '';
+// Dark mode toggle
+document.getElementById('toggleDark').addEventListener('change', function () {
+  document.body.classList.toggle('dark', this.checked);
 });
-
-toggleDark.addEventListener('change', (e) => {
-  document.body.classList.toggle('dark', e.target.checked);
-});
-
-// Initialize
-renderButtons();
