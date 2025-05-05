@@ -1,16 +1,18 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
-  transition: background-color 0.3s;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s ease;
 }
 
 .calculator {
   padding: 20px;
   max-width: 400px;
-  margin: auto;
-  background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .calculator-screen {
@@ -18,8 +20,9 @@ body {
   height: 48px;
   font-size: 1.5rem;
   text-align: right;
-  padding: 10px;
   margin-bottom: 20px;
+  padding: 10px;
+  box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
@@ -35,39 +38,53 @@ body {
   font-size: 1.2rem;
   border-radius: 5px;
   border: 1px solid #ccc;
-  background-color: #f9f9f9;
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s;
+  transition: transform 0.1s ease;
 }
 
 .calculator-buttons button:active,
-button.pressed {
-  background-color: #d0d0d0;
+button:active {
   transform: scale(0.95);
+}
+
+.special-btn {
+  background-color: #ffe0e0;
+  color: red;
 }
 
 .clear-btn {
   background-color: #f44336;
   color: white;
   width: 100%;
-  padding: 15px;
+  margin-top: 10px;
+  padding: 20px;
   font-size: 1.2rem;
   border-radius: 5px;
   border: none;
-  margin-top: 10px;
   cursor: pointer;
 }
 
-.special-btn {
-  background-color: #FF9800;
-  color: white;
-}
-
 .toggles {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
-/* Dark mode styles */
+footer {
+  margin-top: 40px;
+  text-align: center;
+}
+
+footer .calculator-toggle button {
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  margin: 10px;
+  border-radius: 8px;
+  border: none;
+  background-color: #2196f3;
+  color: white;
+  cursor: pointer;
+}
+
+/* Dark Mode */
 body.dark {
   background-color: #121212;
   color: #e0e0e0;
@@ -75,21 +92,32 @@ body.dark {
 
 body.dark .calculator {
   background-color: #1e1e1e;
+  color: #e0e0e0;
 }
 
 body.dark .calculator-screen {
   background-color: #333;
   color: #e0e0e0;
-  border-color: #555;
+  border: 1px solid #555;
 }
 
 body.dark .calculator-buttons button,
 body.dark .clear-btn {
   background-color: #333;
   color: #e0e0e0;
-  border-color: #555;
+  border: 1px solid #555;
+}
+
+body.dark .special-btn {
+  background-color: #5a0000;
+  color: red;
 }
 
 body.dark .clear-btn {
   background-color: #b00020;
+}
+
+body.dark footer .calculator-toggle button {
+  background-color: #333;
+  border: 1px solid #555;
 }
