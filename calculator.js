@@ -5,6 +5,7 @@ const toggleDark = document.getElementById('toggleDark');
 
 // Define the calculator buttons
 const buttons = [
+  { text: 'C', class: 'special-btn' },
   { text: 'Ans', class: 'special-btn' },
   { text: '+-', class: 'special-btn' },
   { text: '%', class: 'special-btn' },
