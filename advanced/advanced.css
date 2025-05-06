@@ -138,7 +138,8 @@ footer {
 
 .calculator-toggle {
   display: flex;
-  justify-content: center;
+  flex-direction: column; /* Stack vertically */
+  align-items: center;    /* Center horizontally */
   gap: 1rem;
 }
 
