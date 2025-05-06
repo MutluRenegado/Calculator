@@ -46,7 +46,7 @@ A modern and responsive calculator web application featuring both **Basic** and 
 ├── calculator.js # JavaScript logic for basic calculator
 │
 ├── advanced/
-│ ├── index.html # Advanced (scientific) calculator UI
+│ ├── advanced.html # Advanced (scientific) calculator UI
 │ ├── advanced.css # Styles for advanced calculator
 │ └── advanced.js # JavaScript logic for advanced calculator
 │
