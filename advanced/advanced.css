@@ -233,6 +233,17 @@ body.dark-mode .calculator-toggle button:hover {
     padding: 0.75rem;
     font-size: 1rem;
   }
+
+  .calculator-toggle {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .calculator-toggle button {
+    width: 100%;
+    max-width: 250px;
+  }
 }
 
 @media (max-width: 400px) {
@@ -256,5 +267,16 @@ body.dark-mode .calculator-toggle button:hover {
   .toggle-shortcuts-btn {
     padding: 0.75rem;
     font-size: 0.9rem;
+  }
+
+  .calculator-toggle {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .calculator-toggle button {
+    width: 100%;
+    max-width: 220px;
   }
 }
