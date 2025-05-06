@@ -4,6 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Calculator</title>
+  <meta name="description" content="A simple and advanced calculator app for everyday use. Supports dark mode and responsive layout." />
+  <meta name="keywords" content="calculator, simple calculator, advanced calculator, online calculator, dark mode" />
+  <meta name="author" content="Your Name" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QE6VJE6JRC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-QE6VJE6JRC');
+  </script>
+
+  <!-- Google AdSense (replace ca-pub-XXXXXXXXXX with your actual publisher ID) -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX"
+     crossorigin="anonymous"></script>
+
   <link rel="stylesheet" href="calculator.css" />
 </head>
 <body>
@@ -23,6 +40,17 @@
       <button onclick="window.location.href='advanced/advanced.html'">Advanced Calculator</button>
     </div>
   </footer>
+
+  <!-- Ko-fi Floating Chat Button -->
+  <script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
+  <script>
+    kofiWidgetOverlay.draw('donatemutlu', {
+      'type': 'floating-chat',
+      'floating-chat.donateButton.text': 'Support me',
+      'floating-chat.donateButton.background-color': '#00b9fe',
+      'floating-chat.donateButton.text-color': '#fff'
+    });
+  </script>
 
   <script src="calculator.js" type="module"></script>
 </body>
