@@ -7,10 +7,10 @@ const buttons = [
   { text: '7' }, { text: '8' }, { text: '9' }, { text: '/' },
   { text: '4' }, { text: '5' }, { text: '6' }, { text: '*' },
   { text: '1' }, { text: '2' }, { text: '3' }, { text: '-' },
-  { text: '0' }, { text: '.', class: 'special-btn' }, { text: 'Delete', class: 'special-btn' }, { text: '+' },
-  { text: '=', class: 'special-btn' },
-  { text: 'Ans', class: 'special-btn' },
+  { text: '0' }, { text: '.', class: 'special-btn' }, { text: '⌫', class: 'special-btn' }, { text: '+' },
   { text: '+-', class: 'special-btn' },
+  { text: 'Ans', class: 'special-btn' },
+  { text: '=', class: 'special-btn' },
   { text: '%', class: 'special-btn' }
 ];
 
