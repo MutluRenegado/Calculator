@@ -27,16 +27,23 @@
     gtag('config', 'G-QE6VJE6JRC');
   </script>
 
-  <!-- Google AdSense (replace with your actual client ID) -->
+  <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX"
-     crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script>
 
   <link rel="stylesheet" href="advanced.css" />
 
   <style>
-    /* Adjust the position of the Ko-fi floating chat button */
-    .kofi-button {
-      bottom: calc(100px + 50px) !important; /* Adjust the 50px to the height of your button */
+    /* Move Ko-fi button up one button height (~60px) */
+    #kofi-widget-overlay {
+      bottom: 110px !important;
+      z-index: 9999 !important;
+    }
+
+    @media (max-width: 768px) {
+      #kofi-widget-overlay {
+        bottom: 120px !important;
+      }
     }
   </style>
 </head>
@@ -69,7 +76,6 @@
 
     <button class="special-btn" id="last-calc-btn" aria-label="Last Calculation">Last Calculation</button>
     
-    <!-- Keyboard shortcuts section -->
     <div id="keyboardShortcuts" class="keyboard-map" style="display: none;">
       <h3>Keyboard Shortcuts</h3>
       <ul>
