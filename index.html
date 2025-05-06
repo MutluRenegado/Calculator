@@ -4,7 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Calculator</title>
+  <meta name="description" content="A simple and advanced online calculator with dark mode support." />
+  <meta name="keywords" content="calculator, online calculator, math, basic calculator, advanced calculator" />
+  <meta name="author" content="Your Name or Brand" />
   <link rel="stylesheet" href="calculator.css" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QE6VJE6JRC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-QE6VJE6JRC');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" crossorigin="anonymous"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-XXXXXXXXXXXXXXXX", // Replace with your AdSense ID
+      enable_page_level_ads: true
+    });
+  </script>
 </head>
 <body>
   <div class="calculator" id="basic-calculator">
@@ -21,6 +42,14 @@
     <div class="calculator-toggle">
       <button onclick="window.location.href='index.html'">Simple Calculator</button>
       <button onclick="window.location.href='advanced/advanced.html'">Advanced Calculator</button>
+    </div>
+
+    <!-- Buy Me a Coffee Button -->
+    <div style="margin-top: 20px; text-align: center;">
+      <a href="https://www.buymeacoffee.com/yourusername" target="_blank">
+        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" 
+             alt="Buy Me A Coffee" style="height: 45px; width: 162px;">
+      </a>
     </div>
   </footer>
 
