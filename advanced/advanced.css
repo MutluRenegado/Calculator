@@ -270,7 +270,7 @@ body.dark-mode .calculator-toggle button:hover {
   }
 
   .calculator-toggle {
-    flex-direction: column;
+    flex-direction: column;  /* Ensure buttons are stacked */
     align-items: center;
     gap: 1rem;
   }
