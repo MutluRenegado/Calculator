@@ -45,7 +45,7 @@ function handleInput(value) {
         updateDisplay('Error');
       }
       break;
-    case 'Delete':
+    case '⌫': // Handle delete (backspace)
       currentInput = currentInput.slice(0, -1); // Remove the last character
       updateDisplay(currentInput || '0');
       break;
@@ -72,7 +72,7 @@ document.addEventListener('keydown', e => {
   } else if (key === 'Enter') {
     handleInput('=');
   } else if (key === 'Backspace') {
-    handleInput('Delete');
+    handleInput('⌫'); // Trigger delete on backspace
   } else if (key === 'Escape') {
     currentInput = '';
     updateDisplay('0');
