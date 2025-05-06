@@ -1,20 +1,37 @@
-/calculator-project
+Calculator/
+├── 📁 .github/
 │
-├── index.html              # Basic calculator
-├── calculator.css          # Shared or basic CSS
-├── calculator.js           # Shared or basic JS
+├── 📁 app/
+│   └── consent.html
 │
-├── advanced/               # Advanced calculator
-│   ├── index.html          # Advanced calculator HTML (renamed)
-│   ├── advanced.css        # Advanced-specific CSS (rename from calculator.css)
-│   └── advanced.js         # Advanced-specific JS (rename from calculator.js)
+├── 📁 footer/
+│   ├── footer.css
+│   └── footerscripts.js
 │
-├── app/
-│   └── consent.html        # App-related files
+├── 📁 lib/
+│   ├── libMathjs/
+│   └── SimLibMathjs/
 │
-├── meta/                   # Documentation and licensing
+├── 📁 meta/
+│   ├── LICENSE
+│   └── README.md
+│
+├── 📁 public/
+│   ├── keyboard shortcuts-advanced.html
+│   └── keyboard shortcuts.html
+│
+├── 📁 target/
+│   ├── maven-archiver/
+│   │   └── pom.properties
+│   ├── my-project-1.0-SNAPSHOT.jar
 │   ├── README.md
-│   └── LICENSE             # Correct spelling and capitalization
-├── footer/                   # Documentation and licensing
-│   ├── footerscript.js
-│   └── footer.css
+│   ├── calculator.css
+│   ├── calculator.js
+│   └── index.html
+│
+├── 📄 advanced.css
+├── 📄 advanced.html
+├── 📄 advanced.js
+├── 📄 index.html
+├── 📄 pom.xml
+└── 📄 project structure
