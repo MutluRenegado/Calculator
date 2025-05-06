@@ -28,7 +28,7 @@ The Basic Calculator is designed for everyday use, providing a simple yet powerf
 - **Keyboard Support**: Perform calculations directly from your keyboard with support for key presses.
 - **Dynamic Button Layout**: Buttons are dynamically arranged to suit different screen sizes and devices, improving usability.
 
-### 🔸 Advanced Calculator (`/advanced/index.html`)
+### 🔸 Advanced Calculator (`/advanced/advanced.html`)
 
 For users who need more advanced functionalities, the **Advanced Calculator** offers a wide range of scientific features. It is ideal for students, professionals, and anyone needing to perform complex calculations. Some of the features include:
 
@@ -74,11 +74,7 @@ The project is organized to provide clarity, maintainability, and extensibility.
 ├── LICENSE # License file (Defines usage rights and restrictions)
 ├── README.md # Project overview (auto-synced from meta/README.md)
 ├── .gitignore # Git ignore rules (Prevent unnecessary files from being tracked by Git)
-└── CNAME # Optional GitHub Pages custom domain (For custom domain configuration)
-
-yaml
-Copy
-Edit
+└── CNAME # Optional GitHub Pages custom domain (For custom domain configuran)
 
 ---
 
@@ -91,6 +87,7 @@ To start using or developing this project, follow the steps below:
 ```bash
 git clone https://github.com/MutluRenegado/Calculator.git
 cd Calculator
+
 2. Open the App:
 Basic Calculator: Open index.html in your browser to use the basic version of the calculator.
 
