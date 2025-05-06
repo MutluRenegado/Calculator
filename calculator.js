@@ -7,8 +7,8 @@ const buttons = [
   { text: '7' }, { text: '8' }, { text: '9' }, { text: '/' },
   { text: '4' }, { text: '5' }, { text: '6' }, { text: '*' },
   { text: '1' }, { text: '2' }, { text: '3' }, { text: '-' },
-  { text: '0' }, { text: '.', class: 'special-btn' }, { text: '=', class: 'special-btn' }, { text: '+' },
-  { text: 'C', class: 'special-btn' },
+  { text: '0' }, { text: '.', class: 'special-btn' }, { text: 'Delete', class: 'special-btn' }, { text: '+' },
+  { text: '=', class: 'special-btn' },
   { text: 'Ans', class: 'special-btn' },
   { text: '+-', class: 'special-btn' },
   { text: '%', class: 'special-btn' }
@@ -45,9 +45,9 @@ function handleInput(value) {
         updateDisplay('Error');
       }
       break;
-    case 'C':
-      currentInput = '';
-      updateDisplay('0');
+    case 'Delete':
+      currentInput = currentInput.slice(0, -1); // Remove the last character
+      updateDisplay(currentInput || '0');
       break;
     case 'Ans':
       currentInput += ans;
@@ -72,8 +72,7 @@ document.addEventListener('keydown', e => {
   } else if (key === 'Enter') {
     handleInput('=');
   } else if (key === 'Backspace') {
-    currentInput = currentInput.slice(0, -1);
-    updateDisplay(currentInput || '0');
+    handleInput('Delete');
   } else if (key === 'Escape') {
     currentInput = '';
     updateDisplay('0');
