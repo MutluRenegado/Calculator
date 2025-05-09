@@ -5,42 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Calculator</title>
 
+  <!-- Consent Mode Setup (before GTM) -->
   <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-  if (localStorage.getItem('consentMode') === null) {
-    gtag('consent', 'default', {
+    window.dataLayer = window.dataLayer || [];
+
+    // Default consent settings
+    dataLayer.push({
+      event: 'default_consent',
       'ad_storage': 'denied',
       'analytics_storage': 'denied',
       'personalization_storage': 'denied',
       'functionality_storage': 'denied',
       'security_storage': 'denied'
     });
-  } else {
-    gtag('consent', 'default', JSON.parse(localStorage.getItem('consentMode')));
-  }
-</script>
 
-<!-- Google Tag Manager -->
-<script>
-  (function(w, d, s, l, i) {
-    w[l] = w[l] || [];
-    w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-    var f = d.getElementsByTagName(s)[0],
-      j = d.createElement(s),
-      dl = l != 'dataLayer' ? '&l=' + l : '';
-    j.async = true;
-    j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-    f.parentNode.insertBefore(j, f);
-  })(window, document, 'script', 'dataLayer', 'GTM-W2GFK3NL');
-</script>
-<!-- End Google Tag Manager -->
+    // Check if user has given consent before and apply it
+    const savedConsent = localStorage.getItem('consentMode');
+    if (savedConsent) {
+      try {
+        const parsed = JSON.parse(savedConsent);
+        dataLayer.push({ event: 'update_consent', ...parsed });
+      } catch (e) {
+        console.warn('Invalid consent data in localStorage');
+      }
+    }
+  </script>
+
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){
+      w[l]=w[l]||[];
+      w[l].push({'gtm.start': new Date().getTime(), event:'gtm.js'});
+      var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),
+          dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-W2GFK3NL');
+  </script>
+  <!-- End Google Tag Manager -->
+
   <!-- SEO -->
   <meta name="description" content="A simple and advanced calculator app for everyday use. Supports dark mode and responsive layout." />
   <meta name="keywords" content="calculator, simple calculator, advanced calculator, online calculator, dark mode" />
-  <meta name="author" content="Your Name" />
+  <meta name="author" content="Mutlu Renegado" />
   <meta name="robots" content="index, follow" />
 
   <!-- Open Graph Meta Tags -->
@@ -50,14 +59,20 @@
   <meta property="og:url" content="https://mutlurenegado.github.io/Calculator/" />
   <meta property="og:type" content="website" />
 
+  <!-- Styles -->
   <link rel="stylesheet" href="calculator.css" />
 </head>
+
 <body>
   <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W2GFK3NL"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W2GFK3NL"
+            height="0" width="0"
+            style="display:none;visibility:hidden"></iframe>
+  </noscript>
   <!-- End Google Tag Manager (noscript) -->
 
+  <!-- Calculator App -->
   <div class="calculator" id="basic-calculator">
     <h2>Simple Calculator</h2>
     <div class="toggles">
@@ -86,6 +101,7 @@
     });
   </script>
 
+  <!-- App Script -->
   <script src="calculator.js" type="module"></script>
 </body>
 </html>
