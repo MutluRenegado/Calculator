@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "GTM Consent Manager",
+  "version": "1.0",
+  "description": "Manage Google Tag Manager Consent for Users",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/gtm-icon.png",
+      "48": "icons/gtm-icon.png",
+      "128": "icons/gtm-icon.png"
+    }
+  },
+  "icons": {
+    "16": "icons/gtm-icon.png",
+    "48": "icons/gtm-icon.png",
+    "128": "icons/gtm-icon.png"
+  }
+}
