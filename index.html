@@ -5,47 +5,150 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Calculator</title>
 
-  <!-- Consent Mode Setup (before GTM) -->
   <script>
-    window.dataLayer = window.dataLayer || [];
+// Define dataLayer and gtag function
+window.dataLayer = window.dataLayer || [];
+function gtag() { window.dataLayer.push(arguments); }
 
-    // Default consent settings
-    dataLayer.push({
-      event: 'default_consent',
-      'ad_storage': 'denied',
-      'analytics_storage': 'denied',
-      'personalization_storage': 'denied',
-      'functionality_storage': 'denied',
-      'security_storage': 'denied'
+// Google Tag Manager initialization, moved to function to load later
+function loadGTM() {
+    if (window.gtmLoaded) return; // Prevent double loading
+    window.gtmLoaded = true;
+
+    (function(w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l !== 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-W2GFK3NL');
+}
+
+// Set default consent before any tags load
+function setDefaultConsent() {
+    gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'analytics_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'functionality_storage': 'denied',
+        'personalization_storage': 'denied',
+        'security_storage': 'denied'
+    });
+}
+
+// Save consent persistently
+function saveConsent(consent) {
+    const expires = new Date();
+    expires.setFullYear(expires.getFullYear() + 1);
+    document.cookie = `consentData=${JSON.stringify(consent)}; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
+    localStorage.setItem('consentData', JSON.stringify(consent));
+}
+
+// Retrieve consent
+function getConsent() {
+    try {
+        const cookie = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('consentData='));
+        if (cookie) return JSON.parse(cookie.split('=')[1]);
+
+        const localStorageConsent = localStorage.getItem('consentData');
+        return localStorageConsent ? JSON.parse(localStorageConsent) : null;
+    } catch (error) {
+        console.error('Error parsing consent data:', error);
+        return null;
+    }
+}
+
+// Update consent and load GTM
+function updateConsent(adStorage, analyticsStorage, adUserData, adPersonalization, functionalityStorage, personalizationStorage, securityStorage) {
+    const consent = {
+        ad_storage: adStorage,
+        analytics_storage: analyticsStorage,
+        ad_user_data: adUserData,
+        ad_personalization: adPersonalization,
+        functionality_storage: functionalityStorage,
+        personalization_storage: personalizationStorage,
+        security_storage: securityStorage,
+    };
+
+    gtag('consent', 'update', consent);
+    saveConsent(consent);
+    loadGTM();  // Load GTM only after consent is applied
+}
+
+// Apply consent on page load
+document.addEventListener('DOMContentLoaded', () => {
+    const consent = getConsent();
+    if (consent) {
+        console.log('Applying saved consent:', consent);
+        gtag('consent', 'update', consent);
+        loadGTM();
+    } else {
+        console.warn('No saved consent found. Setting default consent.');
+        setDefaultConsent();
+    }
+});
+
+// Event listeners for user consent actions
+document.addEventListener('DOMContentLoaded', () => {
+    const attachEventListeners = () => {
+        const acceptButton = document.querySelector('.fc-cta-consent');
+        const rejectButton = document.querySelector('.fc-cta-do-not-consent');
+        const manageButton = document.querySelector('.fc-cta-manage-options');
+        const confirmButton = document.querySelector('.fc-confirm-choices');
+
+        if (acceptButton && !acceptButton.dataset.listener) {
+            acceptButton.dataset.listener = "true";
+            acceptButton.addEventListener('click', () => {
+                console.log('Accept button clicked');
+                updateConsent('granted', 'granted', 'granted', 'granted', 'granted', 'granted', 'granted');
+            });
+        }
+
+        if (rejectButton && !rejectButton.dataset.listener) {
+            rejectButton.dataset.listener = "true";
+            rejectButton.addEventListener('click', () => {
+                console.log('Reject button clicked');
+                updateConsent('denied', 'denied', 'denied', 'denied', 'denied', 'denied', 'denied');
+            });
+        }
+
+        if (manageButton && !manageButton.dataset.listener) {
+            manageButton.dataset.listener = "true";
+            manageButton.addEventListener('click', () => {
+                console.log('Manage Options button clicked');
+            });
+        }
+
+        if (confirmButton && !confirmButton.dataset.listener) {
+            confirmButton.dataset.listener = "true";
+            confirmButton.addEventListener('click', () => {
+                console.log('Confirm Choices button clicked');
+            });
+        }
+    };
+
+    attachEventListeners();
+
+    // React to dynamic DOM updates
+    const observer = new MutationObserver((mutationsList) => {
+        for (const mutation of mutationsList) {
+            if (mutation.type === 'childList') {
+                console.log('DOM updated, re-attaching listeners');
+                attachEventListeners();
+            }
+        }
     });
 
-    // Check if user has given consent before and apply it
-    const savedConsent = localStorage.getItem('consentMode');
-    if (savedConsent) {
-      try {
-        const parsed = JSON.parse(savedConsent);
-        dataLayer.push({ event: 'update_consent', ...parsed });
-      } catch (e) {
-        console.warn('Invalid consent data in localStorage');
-      }
-    }
-  </script>
-
-  <!-- Google Tag Manager -->
-  <script>
-    (function(w,d,s,l,i){
-      w[l]=w[l]||[];
-      w[l].push({'gtm.start': new Date().getTime(), event:'gtm.js'});
-      var f=d.getElementsByTagName(s)[0],
-          j=d.createElement(s),
-          dl=l!='dataLayer'?'&l='+l:'';
-      j.async=true;
-      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-      f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-W2GFK3NL');
-  </script>
-  <!-- End Google Tag Manager -->
-
+    observer.observe(document.body, { childList: true, subtree: true });
+});
+</script>
+  
   <!-- SEO -->
   <meta name="description" content="A simple and advanced calculator app for everyday use. Supports dark mode and responsive layout." />
   <meta name="keywords" content="calculator, simple calculator, advanced calculator, online calculator, dark mode" />
