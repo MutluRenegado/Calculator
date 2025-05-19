@@ -5,6 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Calculator</title>
 
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="A simple and advanced calculator app for everyday use. Supports dark mode and responsive layout." />
+  <meta name="keywords" content="calculator, simple calculator, advanced calculator, online calculator, dark mode" />
+  <meta name="author" content="Mutlu Renegado" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Simple Calculator" />
+  <meta property="og:description" content="A simple and advanced calculator app for everyday use, featuring dark mode and a responsive design." />
+  <meta property="og:image" content="URL_TO_IMAGE_THUMBNAIL" />
+  <meta property="og:url" content="https://mutlurenegado.github.io/Calculator/" />
+  <meta property="og:type" content="website" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="calculator.css" />
+
   <!-- Google Tag Manager Script -->
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -13,7 +29,6 @@
     function loadGTM() {
       if (window.gtmLoaded) return;
       window.gtmLoaded = true;
-
       (function(w, d, s, l, i) {
         w[l] = w[l] || [];
         w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
@@ -47,115 +62,62 @@
 
     function getConsent() {
       try {
-        const cookie = document.cookie
-          .split('; ')
-          .find(row => row.startsWith('consentData='));
-        if (cookie) return JSON.parse(cookie.split('=')[1]);
-
-        const localStorageConsent = localStorage.getItem('consentData');
-        return localStorageConsent ? JSON.parse(localStorageConsent) : null;
-      } catch (error) {
-        console.error('Error parsing consent data:', error);
+        const cookie = document.cookie.split('; ').find(row => row.startsWith('consentData='));
+        return cookie ? JSON.parse(cookie.split('=')[1]) : JSON.parse(localStorage.getItem('consentData'));
+      } catch {
         return null;
       }
     }
 
-    function updateConsent(adStorage, analyticsStorage, adUserData, adPersonalization, functionalityStorage, personalizationStorage, securityStorage) {
+    function updateConsent(ad, analytics, userData, personalization, func, pers, sec) {
       const consent = {
-        ad_storage: adStorage,
-        analytics_storage: analyticsStorage,
-        ad_user_data: adUserData,
-        ad_personalization: adPersonalization,
-        functionality_storage: functionalityStorage,
-        personalization_storage: personalizationStorage,
-        security_storage: securityStorage,
+        ad_storage: ad,
+        analytics_storage: analytics,
+        ad_user_data: userData,
+        ad_personalization: personalization,
+        functionality_storage: func,
+        personalization_storage: pers,
+        security_storage: sec
       };
-
       gtag('consent', 'update', consent);
       saveConsent(consent);
       loadGTM();
     }
 
+    function attachConsentListeners() {
+      const selectors = [
+        ['.fc-cta-consent', () => updateConsent('granted', 'granted', 'granted', 'granted', 'granted', 'granted', 'granted')],
+        ['.fc-cta-do-not-consent', () => updateConsent('denied', 'denied', 'denied', 'denied', 'denied', 'denied', 'denied')],
+        ['.fc-cta-manage-options', () => {}],
+        ['.fc-confirm-choices', () => {}]
+      ];
+
+      selectors.forEach(([selector, handler]) => {
+        const el = document.querySelector(selector);
+        if (el && !el.dataset.listener) {
+          el.dataset.listener = "true";
+          el.addEventListener('click', handler);
+        }
+      });
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       const consent = getConsent();
       if (consent) {
-        console.log('Applying saved consent:', consent);
         gtag('consent', 'update', consent);
         loadGTM();
       } else {
-        console.warn('No saved consent found. Setting default consent.');
         setDefaultConsent();
       }
-    });
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const attachEventListeners = () => {
-        const acceptButton = document.querySelector('.fc-cta-consent');
-        const rejectButton = document.querySelector('.fc-cta-do-not-consent');
-        const manageButton = document.querySelector('.fc-cta-manage-options');
-        const confirmButton = document.querySelector('.fc-confirm-choices');
-
-        if (acceptButton && !acceptButton.dataset.listener) {
-          acceptButton.dataset.listener = "true";
-          acceptButton.addEventListener('click', () => {
-            console.log('Accept button clicked');
-            updateConsent('granted', 'granted', 'granted', 'granted', 'granted', 'granted', 'granted');
-          });
+      attachConsentListeners();
+      new MutationObserver(mutations => {
+        for (const m of mutations) {
+          if (m.type === 'childList') attachConsentListeners();
         }
-
-        if (rejectButton && !rejectButton.dataset.listener) {
-          rejectButton.dataset.listener = "true";
-          rejectButton.addEventListener('click', () => {
-            console.log('Reject button clicked');
-            updateConsent('denied', 'denied', 'denied', 'denied', 'denied', 'denied', 'denied');
-          });
-        }
-
-        if (manageButton && !manageButton.dataset.listener) {
-          manageButton.dataset.listener = "true";
-          manageButton.addEventListener('click', () => {
-            console.log('Manage Options button clicked');
-          });
-        }
-
-        if (confirmButton && !confirmButton.dataset.listener) {
-          confirmButton.dataset.listener = "true";
-          confirmButton.addEventListener('click', () => {
-            console.log('Confirm Choices button clicked');
-          });
-        }
-      };
-
-      attachEventListeners();
-
-      const observer = new MutationObserver((mutationsList) => {
-        for (const mutation of mutationsList) {
-          if (mutation.type === 'childList') {
-            console.log('DOM updated, re-attaching listeners');
-            attachEventListeners();
-          }
-        }
-      });
-
-      observer.observe(document.body, { childList: true, subtree: true });
+      }).observe(document.body, { childList: true, subtree: true });
     });
   </script>
-  
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="A simple and advanced calculator app for everyday use. Supports dark mode and responsive layout." />
-  <meta name="keywords" content="calculator, simple calculator, advanced calculator, online calculator, dark mode" />
-  <meta name="author" content="Mutlu Renegado" />
-  <meta name="robots" content="index, follow" />
-  
-  <!-- Open Graph Meta Tags -->
-  <meta property="og:title" content="Simple Calculator" />
-  <meta property="og:description" content="A simple and advanced calculator app for everyday use, featuring dark mode and a responsive design." />
-  <meta property="og:image" content="URL_TO_IMAGE_THUMBNAIL" />
-  <meta property="og:url" content="https://mutlurenegado.github.io/Calculator/" />
-  <meta property="og:type" content="website" />
-  
-  <!-- External Stylesheets -->
-  <link rel="stylesheet" href="calculator.css" />
 </head>
 
 <body>
@@ -163,9 +125,9 @@
   <noscript>
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W2GFK3NL"
             height="0" width="0"
-            style="display:none;visibility:hidden"></iframe>
+            style="display:none;visibility:hidden"
+            title="GTM"></iframe>
   </noscript>
-  <!-- End Google Tag Manager (noscript) -->
 
   <!-- Calculator App Container -->
   <div class="calculator" id="basic-calculator">
@@ -187,17 +149,19 @@
   </footer>
 
   <!-- Ko-fi Floating Chat Button -->
-  <script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
+  <script defer src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
   <script>
-    kofiWidgetOverlay.draw('donatemutlu', {
-      'type': 'floating-chat',
-      'floating-chat.donateButton.text': 'Support me',
-      'floating-chat.donateButton.background-color': '#00b9fe',
-      'floating-chat.donateButton.text-color': '#fff'
+    window.addEventListener('DOMContentLoaded', () => {
+      kofiWidgetOverlay.draw('donatemutlu', {
+        'type': 'floating-chat',
+        'floating-chat.donateButton.text': 'Support me',
+        'floating-chat.donateButton.background-color': '#00b9fe',
+        'floating-chat.donateButton.text-color': '#fff'
+      });
     });
   </script>
 
   <!-- App Script -->
-  <script src="calculator.js" type="module"></script>
+  <script defer src="calculator.js" type="module"></script>
 </body>
 </html>
