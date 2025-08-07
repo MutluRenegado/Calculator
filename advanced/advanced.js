@@ -54,26 +54,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Handle input
   function handleInput(value) {
-    if (value === "AC") {
-      display.value = "0";  // Clear display
-    } else if (value === "C") {
-      display.value = "0";  // Clear current entry
-    } else if (value === "⌫") {
-      display.value = display.value.slice(0, -1) || "0"; // Delete last character
-    } else if (value === "=") {
-      const result = evaluateExpression(display.value);
-      lastCalculation = result;
-      display.value = result;
-    } else if (value === "+-") {
-      display.value = display.value.startsWith("-")
-        ? display.value.slice(1)
-        : "-" + display.value;
-    } else {
-      display.value = display.value === "0" || display.value === "Error"
-        ? value
-        : display.value + value;
-    }
+  const isDigit = /^[0-9]$/.test(value); // Match single digit 0–9
+
+  if (value === "AC") {
+    display.value = "0";  // Clear display
+  } else if (value === "C") {
+    display.value = "0";  // Clear current entry
+  } else if (value === "⌫") {
+    display.value = display.value.slice(0, -1) || "0"; // Delete last character
+  } else if (value === "=") {
+    const result = evaluateExpression(display.value);
+    lastCalculation = result;
+    display.value = result;
+  } else if (value === "+-") {
+    display.value = display.value.startsWith("-")
+      ? display.value.slice(1)
+      : "-" + display.value;
+  } else {
+    const newValue = isDigit ? `(${value})` : value;
+
+    display.value =
+      display.value === "0" || display.value === "Error"
+        ? newValue
+        : display.value + newValue;
   }
+}
 
   // Generate buttons dynamically
   config.keys.forEach(key => {
