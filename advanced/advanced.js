@@ -52,33 +52,40 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Handle input
+  // Handle input and auto-wrap digits in parentheses
   function handleInput(value) {
-  const isDigit = /^[0-9]$/.test(value); // Match single digit 0–9
+    const isDigit = /^[0-9]$/.test(value); // Check if input is a single digit
 
-  if (value === "AC") {
-    display.value = "0";  // Clear display
-  } else if (value === "C") {
-    display.value = "0";  // Clear current entry
-  } else if (value === "⌫") {
-    display.value = display.value.slice(0, -1) || "0"; // Delete last character
-  } else if (value === "=") {
-    const result = evaluateExpression(display.value);
-    lastCalculation = result;
-    display.value = result;
-  } else if (value === "+-") {
-    display.value = display.value.startsWith("-")
-      ? display.value.slice(1)
-      : "-" + display.value;
-  } else {
-    const newValue = isDigit ? `(${value})` : value;
+    switch (value) {
+      case "AC":
+      case "C":
+        display.value = "0";
+        break;
 
-    display.value =
-      display.value === "0" || display.value === "Error"
-        ? newValue
-        : display.value + newValue;
+      case "⌫":
+        display.value = display.value.slice(0, -1) || "0";
+        break;
+
+      case "=":
+        const result = evaluateExpression(display.value);
+        lastCalculation = result;
+        display.value = result;
+        break;
+
+      case "+-":
+        display.value = display.value.startsWith("-")
+          ? display.value.slice(1)
+          : "-" + display.value;
+        break;
+
+      default:
+        const newValue = isDigit ? `(${value})` : value;
+        display.value =
+          display.value === "0" || display.value === "Error"
+            ? newValue
+            : display.value + newValue;
+    }
   }
-}
 
   // Generate buttons dynamically
   config.keys.forEach(key => {
@@ -113,13 +120,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (validKeys.includes(key)) {
       handleInput(key);
     } else if (key === "Enter" || key === "=") {
-      handleInput("="); 
+      handleInput("=");
     } else if (key === "Backspace") {
       handleInput("⌫");
     }
   });
 
-  // Toggle keyboard shortcuts
+  // Toggle keyboard shortcuts section
   shortcutToggleBtn.onclick = () => {
     keyboardShortcuts.classList.toggle("show");
   };
