@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let lastCalculation = "";
 
-  // Button configuration
   const config = {
     keys: [
       "2nd", "deg", "sin", "cos", "tan",
@@ -24,10 +23,8 @@ document.addEventListener("DOMContentLoaded", () => {
     ]
   };
 
-  // Evaluate expression using mathLib
   function evaluateExpression(expression) {
     try {
-      // Replace constants and operators
       let replaced = expression
         .replace(/π/g, "mathLib.pi()")
         .replace(/\be\b/g, "mathLib.e()")
@@ -35,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .replace(/×/g, "*")
         .replace(/ANS/g, lastCalculation);
 
-      // Replace functions with mathLib calls
       replaced = replaced.replace(/√x\(([^)]+)\)/g, "mathLib.sqrt($1)");
       replaced = replaced.replace(/lg\(([^)]+)\)/g, "mathLib.log10($1)");
       replaced = replaced.replace(/ln\(([^)]+)\)/g, "mathLib.ln($1)");
@@ -52,9 +48,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Handle input and auto-wrap digits in parentheses
   function handleInput(value) {
-    const isDigit = /^[0-9]$/.test(value); // Check if input is a single digit
+    const isDigit = /^[0-9]$/.test(value);
 
     switch (value) {
       case "AC":
@@ -79,15 +74,28 @@ document.addEventListener("DOMContentLoaded", () => {
         break;
 
       default:
-        const newValue = isDigit ? `(${value})` : value;
+        const specialKeys = [
+          "2nd", "deg", "sin", "cos", "tan", "xY", "lg", "ln", "(", ")", 
+          "√x", "+-", "⌫", "%", "÷", "X!", "×", "1/X", "-", "+", ".", 
+          "ANS", "π", "e"
+        ];
+
+        let newValue;
+        if (isDigit && !specialKeys.includes(value)) {
+          newValue = `(${value})`;  // Wrap digits
+        } else {
+          newValue = value;
+        }
+
         display.value =
           display.value === "0" || display.value === "Error"
             ? newValue
             : display.value + newValue;
+        break;
     }
   }
 
-  // Generate buttons dynamically
+  // Generate buttons
   config.keys.forEach(key => {
     const button = document.createElement("button");
     button.textContent = key;
@@ -95,12 +103,12 @@ document.addEventListener("DOMContentLoaded", () => {
     buttonsContainer.appendChild(button);
   });
 
-  // Dark mode toggle
+  // Dark mode
   darkModeToggle.onchange = () => {
     document.body.classList.toggle("dark-mode");
   };
 
-  // Recall last calculation
+  // Last calculation recall
   lastCalcBtn.onclick = () => {
     if (lastCalculation) display.value = lastCalculation;
   };
@@ -108,6 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Keyboard support
   document.addEventListener("keydown", function (e) {
     const key = e.key;
+    const digitKey = /^[0-9]$/.test(key);
     const validKeys = "0123456789+-*/().%";
 
     if (e.ctrlKey && key === "d") {
@@ -117,16 +126,19 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    if (validKeys.includes(key)) {
+    if (digitKey) {
+      handleInput(key); // Will be wrapped
+    } else if (validKeys.includes(key)) {
       handleInput(key);
     } else if (key === "Enter" || key === "=") {
+      e.preventDefault();
       handleInput("=");
     } else if (key === "Backspace") {
       handleInput("⌫");
     }
   });
 
-  // Toggle keyboard shortcuts section
+  // Toggle shortcut section
   shortcutToggleBtn.onclick = () => {
     keyboardShortcuts.classList.toggle("show");
   };
