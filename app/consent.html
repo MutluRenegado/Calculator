@@ -56,17 +56,16 @@
     function saveConsentSettings(settings) {
       localStorage.setItem('consentMode', JSON.stringify(settings));
       gtag('consent', 'update', settings);
+      document.getElementById('consent-banner').style.display = 'none'; // Hide after selection
     }
 
     document.addEventListener('DOMContentLoaded', function() {
       let consentSettings = localStorage.getItem('consentMode');
-      let settings = consentSettings ? JSON.parse(consentSettings) : {
-        'ad_storage': 'denied',
-        'analytics_storage': 'denied',
-        'personalization_storage': 'denied',
-        'functionality_storage': 'denied',
-        'security_storage': 'denied'
-      };
+      if (consentSettings) {
+        document.getElementById('consent-banner').style.display = 'none';
+      } else {
+        document.getElementById('consent-banner').style.display = 'block';
+      }
 
       document.getElementById('allow-all').addEventListener('click', function() {
         const allowSettings = {
