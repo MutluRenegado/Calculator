@@ -5,64 +5,92 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Simple Calculator</title>
 
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="A simple and advanced calculator app for everyday use. Supports dark mode and responsive layout." />
-  <meta name="keywords" content="calculator, simple calculator, advanced calculator, online calculator, dark mode" />
-  <meta name="author" content="Mutlu Renegado" />
-  <meta name="robots" content="index, follow" />
-
-  <!-- Open Graph Meta Tags -->
-  <meta property="og:title" content="Simple Calculator" />
-  <meta property="og:description" content="A simple and advanced calculator app for everyday use, featuring dark mode and a responsive design." />
-  <meta property="og:image" content="URL_TO_IMAGE_THUMBNAIL" />
-  <meta property="og:url" content="https://mutlurenegado.github.io/Calculator/" />
-  <meta property="og:type" content="website" />
-
   <!-- Styles -->
   <link rel="stylesheet" href="calculator.css" />
 
-  <!-- Consent and GTM -->
+  <!-- Consent + GTM -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
 
-    // Set default or saved consent
-    if (localStorage.getItem('consentMode') === null) {
-      gtag('consent', 'default', {
-        'ad_storage': 'denied',
-        'analytics_storage': 'denied',
-        'personalization_storage': 'denied',
-        'functionality_storage': 'denied',
-        'security_storage': 'denied'
-      });
-    } else {
-      gtag('consent', 'default', JSON.parse(localStorage.getItem('consentMode')));
+    // Load GTM container immediately
+    (function(w,d,s,l,i){
+      w[l]=w[l]||[];
+      w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
+      var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),
+          dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-W2GFK3NL');
+
+    // Helper: update consent and hide banner
+    function setConsent(consent) {
+      gtag('consent', 'update', consent);
+      localStorage.setItem('consentMode', JSON.stringify(consent));
+      const banner = document.getElementById('consent-banner');
+      if (banner) banner.style.display = 'none';
     }
 
-    // Load GTM immediately
-    (function(w, d, s, l, i) {
-      w[l] = w[l] || [];
-      w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-      var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s),
-          dl = l != 'dataLayer' ? '&l=' + l : '';
-      j.async = true;
-      j.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-W2GFK3NL' + dl;
-      f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-W2GFK3NL');
+    // Accept all
+    function acceptAllConsent() {
+      setConsent({
+        ad_storage: 'granted',
+        analytics_storage: 'granted',
+        personalization_storage: 'granted',
+        functionality_storage: 'granted',
+        security_storage: 'granted'
+      });
+    }
+
+    // Deny all
+    function denyAllConsent() {
+      setConsent({
+        ad_storage: 'denied',
+        analytics_storage: 'denied',
+        personalization_storage: 'denied',
+        functionality_storage: 'denied',
+        security_storage: 'denied'
+      });
+    }
+
+    // On page load, set default consent if no previous choice
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedConsent = localStorage.getItem('consentMode');
+      if (!savedConsent) {
+        gtag('consent', 'default', {
+          ad_storage: 'denied',
+          analytics_storage: 'denied',
+          personalization_storage: 'denied',
+          functionality_storage: 'denied',
+          security_storage: 'denied'
+        });
+      } else {
+        gtag('consent', 'default', JSON.parse(savedConsent));
+        // hide banner if already answered
+        document.getElementById('consent-banner').style.display = 'none';
+      }
+    });
   </script>
 </head>
 
 <body>
-  <!-- Google Tag Manager (noscript) -->
+  <!-- GTM noscript -->
   <noscript>
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W2GFK3NL"
-            height="0" width="0"
-            style="display:none;visibility:hidden"
+            height="0" width="0" style="display:none;visibility:hidden"
             title="GTM"></iframe>
   </noscript>
 
-  <!-- Calculator App Container -->
+  <!-- Consent Banner -->
+  <div id="consent-banner" style="position:fixed;bottom:0;left:0;width:100%;background:#222;color:#fff;padding:10px;text-align:center;z-index:9999;">
+    <span>We use cookies and tracking for analytics and ads. Do you accept?</span>
+    <button onclick="acceptAllConsent()" style="margin-left:10px;">Accept</button>
+    <button onclick="denyAllConsent()" style="margin-left:5px;">Deny</button>
+  </div>
+
+  <!-- Calculator App -->
   <div class="calculator" id="basic-calculator">
     <h2>Simple Calculator</h2>
     <div class="toggles">
@@ -73,7 +101,7 @@
     <button class="clear-btn" id="clearBtn">C</button>
   </div>
 
-  <!-- Footer Section -->
+  <!-- Footer -->
   <footer>
     <div class="calculator-toggle">
       <button onclick="window.location.href='index.html'" aria-label="Go to Simple Calculator">Simple Calculator</button>
@@ -94,7 +122,7 @@
     });
   </script>
 
-  <!-- App Script -->
+  <!-- Calculator Script -->
   <script defer src="calculator.js" type="module"></script>
 </body>
 </html>
