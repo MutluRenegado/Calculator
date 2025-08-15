@@ -2,93 +2,166 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Consent Mode Example</title>
-  <!-- Google Tag Manager -->
-  <script>
-    (function(w,d,s,l,i){
-      w[l]=w[l]||[];
-      w[l].push({'gtm.start': new Date().getTime(), event:'gtm.js'});
-      var f=d.getElementsByTagName(s)[0],
-          j=d.createElement(s),
-          dl=l!='dataLayer'?'&l='+l:'';
-      j.async=true;
-      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-      f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-W2GFK3NL');
-  </script>
-  <!-- End Google Tag Manager -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simple Calculator</title>
 
-  <!-- Consent Mode Configuration -->
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="A simple and advanced calculator app for everyday use. Supports dark mode and responsive layout." />
+  <meta name="keywords" content="calculator, simple calculator, advanced calculator, online calculator, dark mode" />
+  <meta name="author" content="Mutlu Renegado" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Simple Calculator" />
+  <meta property="og:description" content="A simple and advanced calculator app for everyday use, featuring dark mode and a responsive design." />
+  <meta property="og:image" content="URL_TO_IMAGE_THUMBNAIL" />
+  <meta property="og:url" content="https://mutlurenegado.github.io/Calculator/" />
+  <meta property="og:type" content="website" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="calculator.css" />
+
+  <!-- Google Tag Manager Script -->
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
+    function gtag() { window.dataLayer.push(arguments); }
 
-    var consentSettings = localStorage.getItem('consentMode');
-    gtag('consent', 'default', consentSettings ? JSON.parse(consentSettings) : {
-      'ad_storage': 'denied',
-      'analytics_storage': 'denied',
-      'personalization_storage': 'denied',
-      'functionality_storage': 'denied',
-      'security_storage': 'denied'
+    function loadGTM() {
+      if (window.gtmLoaded) return;
+      window.gtmLoaded = true;
+      (function(w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l !== 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-W2GFK3NL');
+    }
+
+    function setDefaultConsent() {
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'analytics_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'functionality_storage': 'denied',
+        'personalization_storage': 'denied',
+        'security_storage': 'denied'
+      });
+    }
+
+    function saveConsent(consent) {
+      const expires = new Date();
+      expires.setFullYear(expires.getFullYear() + 1);
+      document.cookie = `consentData=${JSON.stringify(consent)}; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
+      localStorage.setItem('consentData', JSON.stringify(consent));
+    }
+
+    function getConsent() {
+      try {
+        const cookie = document.cookie.split('; ').find(row => row.startsWith('consentData='));
+        return cookie ? JSON.parse(cookie.split('=')[1]) : JSON.parse(localStorage.getItem('consentData'));
+      } catch {
+        return null;
+      }
+    }
+
+    function updateConsent(ad, analytics, userData, personalization, func, pers, sec) {
+      const consent = {
+        ad_storage: ad,
+        analytics_storage: analytics,
+        ad_user_data: userData,
+        ad_personalization: personalization,
+        functionality_storage: func,
+        personalization_storage: pers,
+        security_storage: sec
+      };
+      gtag('consent', 'update', consent);
+      saveConsent(consent);
+      loadGTM();
+    }
+
+    function attachConsentListeners() {
+      const selectors = [
+        ['.fc-cta-consent', () => updateConsent('granted', 'granted', 'granted', 'granted', 'granted', 'granted', 'granted')],
+        ['.fc-cta-do-not-consent', () => updateConsent('denied', 'denied', 'denied', 'denied', 'denied', 'denied', 'denied')],
+        ['.fc-cta-manage-options', () => {}],
+        ['.fc-confirm-choices', () => {}]
+      ];
+
+      selectors.forEach(([selector, handler]) => {
+        const el = document.querySelector(selector);
+        if (el && !el.dataset.listener) {
+          el.dataset.listener = "true";
+          el.addEventListener('click', handler);
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const consent = getConsent();
+      if (consent) {
+        gtag('consent', 'update', consent);
+        loadGTM();
+      } else {
+        setDefaultConsent();
+      }
+
+      attachConsentListeners();
+      new MutationObserver(mutations => {
+        for (const m of mutations) {
+          if (m.type === 'childList') attachConsentListeners();
+        }
+      }).observe(document.body, { childList: true, subtree: true });
     });
   </script>
 </head>
+
 <body>
   <!-- Google Tag Manager (noscript) -->
   <noscript>
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W2GFK3NL"
-            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+            height="0" width="0"
+            style="display:none;visibility:hidden"
+            title="GTM"></iframe>
   </noscript>
-  <!-- End Google Tag Manager (noscript) -->
 
-  <h1>Consent Mode Example Page</h1>
-  <p>This page demonstrates Google Tag Manager with Consent Mode enabled.</p>
-
-  <div id="consent-banner" style="position: fixed; bottom: 10px; left: 10px; background: #f1f1f1; border: 1px solid #ccc; padding: 15px; max-width: 300px; font-family: Arial, sans-serif; font-size: 14px; z-index: 1000;">
-    <h3>We Value Your Privacy</h3>
-    <p>We use cookies and similar technologies to enhance your browsing experience, serve personalized content and ads, and analyze site traffic. You can choose to allow all cookies or customize your preferences. Your consent helps us improve our services.</p>
-    <button id="allow-all" style="margin-top: 10px; margin-right: 5px;">Allow All</button>
-    <button id="deny-all" style="margin-top: 10px;">Deny All</button>
+  <!-- Calculator App Container -->
+  <div class="calculator" id="basic-calculator">
+    <h2>Simple Calculator</h2>
+    <div class="toggles">
+      <label><input type="checkbox" id="toggleDark" /> Dark Mode</label>
+    </div>
+    <input type="text" class="calculator-screen" id="result" placeholder="0" aria-label="Calculator Screen" readonly />
+    <div class="calculator-buttons" id="buttons"></div>
+    <button class="clear-btn" id="clearBtn">C</button>
   </div>
 
+  <!-- Footer Section -->
+  <footer>
+    <div class="calculator-toggle">
+      <button onclick="window.location.href='index.html'" aria-label="Go to Simple Calculator">Simple Calculator</button>
+      <button onclick="window.location.href='advanced/advanced.html'" aria-label="Go to Advanced Calculator">Advanced Calculator</button>
+    </div>
+  </footer>
+
+  <!-- Ko-fi Floating Chat Button -->
+  <script defer src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
   <script>
-    function saveConsentSettings(settings) {
-      localStorage.setItem('consentMode', JSON.stringify(settings));
-      gtag('consent', 'update', settings);
-      document.getElementById('consent-banner').style.display = 'none'; // Hide after selection
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      let consentSettings = localStorage.getItem('consentMode');
-      if (consentSettings) {
-        document.getElementById('consent-banner').style.display = 'none';
-      } else {
-        document.getElementById('consent-banner').style.display = 'block';
-      }
-
-      document.getElementById('allow-all').addEventListener('click', function() {
-        const allowSettings = {
-          'ad_storage': 'granted',
-          'analytics_storage': 'granted',
-          'personalization_storage': 'granted',
-          'functionality_storage': 'granted',
-          'security_storage': 'granted'
-        };
-        saveConsentSettings(allowSettings);
-      });
-
-      document.getElementById('deny-all').addEventListener('click', function() {
-        const denySettings = {
-          'ad_storage': 'denied',
-          'analytics_storage': 'denied',
-          'personalization_storage': 'denied',
-          'functionality_storage': 'denied',
-          'security_storage': 'denied'
-        };
-        saveConsentSettings(denySettings);
+    window.addEventListener('DOMContentLoaded', () => {
+      kofiWidgetOverlay.draw('donatemutlu', {
+        'type': 'floating-chat',
+        'floating-chat.donateButton.text': 'Support me',
+        'floating-chat.donateButton.background-color': '#00b9fe',
+        'floating-chat.donateButton.text-color': '#fff'
       });
     });
   </script>
+
+  <!-- App Script -->
+  <script defer src="calculator.js" type="module"></script>
 </body>
 </html>
