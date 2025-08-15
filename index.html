@@ -120,7 +120,42 @@
   </script>
 </head>
 
-<body>
+<!-- Consent Banner -->
+<div id="consent-popup" style="display:none; position:fixed; bottom:20px; right:20px; background:white; border:1px solid #ccc; padding:15px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.2); z-index:9999; max-width:280px;">
+  <h3 style="margin-top:0;">Manage Consent</h3>
+  <label><input type="checkbox" id="adStorage" /> Ad Storage</label><br/>
+  <label><input type="checkbox" id="analyticsStorage" /> Analytics Storage</label><br/>
+  <label><input type="checkbox" id="adUserData" /> Ad User Data</label><br/>
+  <label><input type="checkbox" id="adPersonalization" /> Ad Personalization</label><br/>
+  <label><input type="checkbox" id="funcStorage" /> Functionality Storage</label><br/>
+  <label><input type="checkbox" id="persStorage" /> Personalization Storage</label><br/>
+  <label><input type="checkbox" id="secStorage" /> Security Storage</label><br/>
+  <button id="saveConsent" style="margin-top:10px; padding:8px; background-color:#007bff; color:white; border:none; border-radius:4px; cursor:pointer;">Save</button>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const stored = getConsent();
+  if (!stored) {
+    document.getElementById('consent-popup').style.display = 'block';
+  }
+
+  document.getElementById('saveConsent').addEventListener('click', function() {
+    updateConsent(
+      document.getElementById('adStorage').checked ? 'granted' : 'denied',
+      document.getElementById('analyticsStorage').checked ? 'granted' : 'denied',
+      document.getElementById('adUserData').checked ? 'granted' : 'denied',
+      document.getElementById('adPersonalization').checked ? 'granted' : 'denied',
+      document.getElementById('funcStorage').checked ? 'granted' : 'denied',
+      document.getElementById('persStorage').checked ? 'granted' : 'denied',
+      document.getElementById('secStorage').checked ? 'granted' : 'denied'
+    );
+    document.getElementById('consent-popup').style.display = 'none';
+  });
+});
+</script>
+
+  <body>
   <!-- Google Tag Manager (noscript) -->
   <noscript>
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W2GFK3NL"
