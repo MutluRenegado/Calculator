@@ -5,92 +5,131 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Simple Calculator</title>
 
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="A simple and advanced calculator app for everyday use. Supports dark mode and responsive layout." />
+  <meta name="keywords" content="calculator, simple calculator, advanced calculator, online calculator, dark mode" />
+  <meta name="author" content="Mutlu Renegado" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Simple Calculator" />
+  <meta property="og:description" content="A simple and advanced calculator app for everyday use, featuring dark mode and a responsive design." />
+  <meta property="og:image" content="URL_TO_IMAGE_THUMBNAIL" />
+  <meta property="og:url" content="https://mutlurenegado.github.io/Calculator/" />
+  <meta property="og:type" content="website" />
+
   <!-- Styles -->
   <link rel="stylesheet" href="calculator.css" />
 
-  <!-- Consent + GTM -->
+  <!-- Google Tag Manager Script -->
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
+    function gtag() { window.dataLayer.push(arguments); }
 
-    // Load GTM container immediately
-    (function(w,d,s,l,i){
-      w[l]=w[l]||[];
-      w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
-      var f=d.getElementsByTagName(s)[0],
-          j=d.createElement(s),
-          dl=l!='dataLayer'?'&l='+l:'';
-      j.async=true;
-      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-      f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-W2GFK3NL');
-
-    // Helper: update consent and hide banner
-    function setConsent(consent) {
-      gtag('consent', 'update', consent);
-      localStorage.setItem('consentMode', JSON.stringify(consent));
-      const banner = document.getElementById('consent-banner');
-      if (banner) banner.style.display = 'none';
+    function loadGTM() {
+      if (window.gtmLoaded) return;
+      window.gtmLoaded = true;
+      (function(w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l !== 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-W2GFK3NL');
     }
 
-    // Accept all
-    function acceptAllConsent() {
-      setConsent({
-        ad_storage: 'granted',
-        analytics_storage: 'granted',
-        personalization_storage: 'granted',
-        functionality_storage: 'granted',
-        security_storage: 'granted'
+    function setDefaultConsent() {
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'analytics_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'functionality_storage': 'denied',
+        'personalization_storage': 'denied',
+        'security_storage': 'denied'
       });
     }
 
-    // Deny all
-    function denyAllConsent() {
-      setConsent({
-        ad_storage: 'denied',
-        analytics_storage: 'denied',
-        personalization_storage: 'denied',
-        functionality_storage: 'denied',
-        security_storage: 'denied'
-      });
+    function saveConsent(consent) {
+      const expires = new Date();
+      expires.setFullYear(expires.getFullYear() + 1);
+      document.cookie = `consentData=${JSON.stringify(consent)}; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
+      localStorage.setItem('consentData', JSON.stringify(consent));
     }
 
-    // On page load, set default consent if no previous choice
-    document.addEventListener('DOMContentLoaded', () => {
-      const savedConsent = localStorage.getItem('consentMode');
-      if (!savedConsent) {
-        gtag('consent', 'default', {
-          ad_storage: 'denied',
-          analytics_storage: 'denied',
-          personalization_storage: 'denied',
-          functionality_storage: 'denied',
-          security_storage: 'denied'
-        });
-      } else {
-        gtag('consent', 'default', JSON.parse(savedConsent));
-        // hide banner if already answered
-        document.getElementById('consent-banner').style.display = 'none';
+    function getConsent() {
+      try {
+        const cookie = document.cookie.split('; ').find(row => row.startsWith('consentData='));
+        return cookie ? JSON.parse(cookie.split('=')[1]) : JSON.parse(localStorage.getItem('consentData'));
+      } catch {
+        return null;
       }
+    }
+
+    function updateConsent(ad, analytics, userData, personalization, func, pers, sec) {
+      const consent = {
+        ad_storage: ad,
+        analytics_storage: analytics,
+        ad_user_data: userData,
+        ad_personalization: personalization,
+        functionality_storage: func,
+        personalization_storage: pers,
+        security_storage: sec
+      };
+      gtag('consent', 'update', consent);
+      saveConsent(consent);
+      loadGTM();
+    }
+
+    function attachConsentListeners() {
+      const selectors = [
+        ['.fc-cta-consent', () => updateConsent('granted', 'granted', 'granted', 'granted', 'granted', 'granted', 'granted')],
+        ['.fc-cta-do-not-consent', () => updateConsent('denied', 'denied', 'denied', 'denied', 'denied', 'denied', 'denied')],
+        ['.fc-cta-manage-options', () => {}],
+        ['.fc-confirm-choices', () => {}]
+      ];
+
+      selectors.forEach(([selector, handler]) => {
+        const el = document.querySelector(selector);
+        if (el && !el.dataset.listener) {
+          el.dataset.listener = "true";
+          el.addEventListener('click', handler);
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const consent = getConsent();
+      if (consent) {
+        gtag('consent', 'update', consent);
+        loadGTM();
+      } else {
+        setDefaultConsent();
+      }
+
+      attachConsentListeners();
+      new MutationObserver(mutations => {
+        for (const m of mutations) {
+          if (m.type === 'childList') attachConsentListeners();
+        }
+      }).observe(document.body, { childList: true, subtree: true });
     });
   </script>
 </head>
 
 <body>
-  <!-- GTM noscript -->
+  <!-- Google Tag Manager (noscript) -->
   <noscript>
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W2GFK3NL"
-            height="0" width="0" style="display:none;visibility:hidden"
+            height="0" width="0"
+            style="display:none;visibility:hidden"
             title="GTM"></iframe>
   </noscript>
 
-  <!-- Consent Banner -->
-  <div id="consent-banner" style="position:fixed;bottom:0;left:0;width:100%;background:#222;color:#fff;padding:10px;text-align:center;z-index:9999;">
-    <span>We use cookies and tracking for analytics and ads. Do you accept?</span>
-    <button onclick="acceptAllConsent()" style="margin-left:10px;">Accept</button>
-    <button onclick="denyAllConsent()" style="margin-left:5px;">Deny</button>
-  </div>
-
-  <!-- Calculator App -->
+  <!-- Calculator App Container -->
   <div class="calculator" id="basic-calculator">
     <h2>Simple Calculator</h2>
     <div class="toggles">
@@ -101,7 +140,7 @@
     <button class="clear-btn" id="clearBtn">C</button>
   </div>
 
-  <!-- Footer -->
+  <!-- Footer Section -->
   <footer>
     <div class="calculator-toggle">
       <button onclick="window.location.href='index.html'" aria-label="Go to Simple Calculator">Simple Calculator</button>
@@ -122,7 +161,7 @@
     });
   </script>
 
-  <!-- Calculator Script -->
+  <!-- App Script -->
   <script defer src="calculator.js" type="module"></script>
 </body>
 </html>
