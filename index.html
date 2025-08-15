@@ -24,7 +24,7 @@
   <!-- Styles -->
   <link rel="stylesheet" href="calculator.css" />
 
-  <!-- Google Tag Manager Script -->
+  <!-- Google Tag Manager + Consent Logic -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { window.dataLayer.push(arguments); }
@@ -42,6 +42,17 @@
         j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
         f.parentNode.insertBefore(j, f);
       })(window, document, 'script', 'dataLayer', 'GTM-W2GFK3NL');
+    }
+
+    function insertNoScriptIframe() {
+      const placeholder = document.getElementById('gtm-noscript-placeholder');
+      if (placeholder && !placeholder.dataset.loaded) {
+        placeholder.dataset.loaded = "true";
+        placeholder.innerHTML = `
+          <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W2GFK3NL"
+                  height="0" width="0" style="display:none" title="GTM"></iframe>
+        `;
+      }
     }
 
     function setDefaultConsent() {
@@ -84,7 +95,12 @@
       };
       gtag('consent', 'update', consent);
       saveConsent(consent);
-      loadGTM();
+
+      // Load GTM + noscript only if granted
+      if (ad === 'granted' || analytics === 'granted') {
+        loadGTM();
+        insertNoScriptIframe();
+      }
     }
 
     function attachConsentListeners() {
@@ -108,7 +124,10 @@
       const consent = getConsent();
       if (consent) {
         gtag('consent', 'update', consent);
-        loadGTM();
+        if (consent.ad_storage === 'granted' || consent.analytics_storage === 'granted') {
+          loadGTM();
+          insertNoScriptIframe();
+        }
       } else {
         setDefaultConsent();
       }
@@ -124,13 +143,8 @@
 </head>
 
 <body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript>
-    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W2GFK3NL"
-            height="0" width="0"
-            style="display:none;visibility:hidden"
-            title="GTM"></iframe>
-  </noscript>
+  <!-- GTM noscript placeholder (only loads after consent) -->
+  <noscript id="gtm-noscript-placeholder"></noscript>
 
   <!-- Calculator App Container -->
   <div class="calculator" id="basic-calculator">
